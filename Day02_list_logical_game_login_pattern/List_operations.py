@@ -91,6 +91,7 @@ l1 = [3,6,44,96,43,2,67,3,22,68]
 l1.sort()
 print(l1[-1]) # 1st method
 
+
 # 2nd Method
 largest = 0
 for x in l1:
@@ -98,7 +99,7 @@ for x in l1:
         largest = x
 print(largest)
 
-#Squred List with List Comprehension
+# Squred List with List Comprehension
 def squared_list_genrator(a : int , b : int) -> list :
     """ 
         It generates a List of squared numbers with

@@ -4,7 +4,7 @@
 """
 
 
-#Student Marks Checks with if-else Logic
+# Student Marks Checks with if-else Logic
 marks = 50
 
 if marks<33:
@@ -15,7 +15,7 @@ elif marks>=70 and marks<=100:
     print("First distinction")
 
 
-#Lottery win 
+# Lottery win 
 ticket_no = 5246
 winners = [1203,5246,4128,6324,2565,1456,8651]
 
@@ -27,7 +27,7 @@ else:
     print("Sorry , Better luck next time")
 
 
-#Boolean Logic Check
+# Boolean Logic Check
 a=123
 b = None
 
@@ -43,16 +43,16 @@ print(a or b)
 print(a and b)
 print(not a)
 
-#Nested Loop and Conditions to find biggest number out of three
+# Nested Loop and Conditions to find biggest number out of three
 a=52
 b=41
 c=78
 
 if a>b:
     if a>c:
-        print("A is bigger") #here, if a is bigger then b and c then A is biggest
+        print("A is bigger") # here, if a is bigger then b and c then A is biggest
     else:
-        print("C is bigger") #if a>b but , c is bigger then a ,then C is biggest
+        print("C is bigger") # if a>b but , c is bigger then a ,then C is biggest
 else:
     if b>c:
         print("B is bigger")
@@ -77,7 +77,7 @@ else:
     print("Invalid marks")
 
 
-#Loops and enumerate and iterator , pass,continue ,break 
+# Loops and enumerate and iterator , pass,continue ,break 
 for i in range(10):
     print(i)
 
@@ -88,7 +88,6 @@ while j<5:
 
 fruits = ["apple","banana","grape", "mango"]
 
-# print(enumerate(fruits))
 print(list(enumerate(fruits)))
 
 for i,fruit in enumerate(fruits):
@@ -108,7 +107,7 @@ for i in range(10):
     print(i)
 
 for i in range(10): #indentation error
-    continue
+    pass
 
 
 

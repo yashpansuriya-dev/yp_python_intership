@@ -1,5 +1,10 @@
-#Challenge : Build a number guessing game with a limited number of attempts.
+'''
+Challenge : Build a number guessing game with a limited number of attempts.
+'''
+
 import random
+
+# ------------------------------------------------------------------
 
 def game_start(attempts : int, a : int , b : int) -> None:
     """ 
@@ -28,8 +33,9 @@ def game_start(attempts : int, a : int , b : int) -> None:
         if(n == user_n):
             print("You Won")
             break
-        else:
-            attempts -= 1
+        # Else when user failed to guess number
+        else: 
+            attempts -= 1 
             print("You guess was incorrect ! Try Again")
             print(f"No. of attempts left - {attempts}")        
             print(" \u2764\uFE0F " * attempts)
