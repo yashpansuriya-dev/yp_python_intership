@@ -1,11 +1,19 @@
+"""
+    Recap Of Concepts learned in Week 1 . 
+"""
+
+# -------------------------------------------------------------------
+
 def factorial(n: int) -> int:
     return 1 if n==1 else n*factorial(n-1)
 
-
+# -------------------------------------------------------------------
 
 def main() -> None:
-    print("hello world")
-    print(factorial(5))
+
+    """ Main Function. """
+
+    print("Factorial of 5 is : ",factorial(5))
 
     # Varriables
     a = 5
@@ -75,7 +83,6 @@ def main() -> None:
     print("cube of 3 is : ",cube(3))
 
     # MAP FILTER
-
     numbers = [1,2,3,4,5,6,7,8,9]
     cube_nums = list(map(cube , numbers))
     print("Cube of numbers is : ",cube_nums)
@@ -103,6 +110,7 @@ def main() -> None:
 
     print(str.endswith("sh"))
 
+# -------------------------------------------------------------------
 
 if __name__ == "__main__" :
     """ Main Function ."""

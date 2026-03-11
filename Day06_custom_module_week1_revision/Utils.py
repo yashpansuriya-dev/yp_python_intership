@@ -3,10 +3,13 @@ utils.py
 Reusable helper functions used across multiple Python projects.
 """
 
+# -------------------------------------------------------------------
+
 import random
 import string
 from datetime import datetime
 
+# -------------------------------------------------------------------
 
 def generate_password(length: int = 12) -> str:
     """

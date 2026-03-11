@@ -9,7 +9,7 @@ name = "Yash Pansuriya"
 
 print(name.lower()) # Converts to Lower case
 print(name.upper()) # Upper case
-print(name.capitalize()) # Yash Pansuriya - like this 
+print(name.capitalize()) # Yash pansuriya - like this 
 
 print(name[2:7]) # includes 2 to 6 .
 print(name[::-1]) # reverse string
