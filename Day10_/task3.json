@@ -1,0 +1,10 @@
+{
+    "name": "yash pansuriya",
+    "age": 20,
+    "marks": {
+        "phy": 98,
+        "che": 88,
+        "maths": 76
+    },
+    "cgpa": 8.5
+}

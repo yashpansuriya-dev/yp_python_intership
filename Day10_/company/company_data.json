@@ -1,0 +1,86 @@
+{
+  "company": "TechForce Global",
+  "location": "India",
+  "employees": [
+    {
+      "id": 101,
+      "name": "Yash Chauhan",
+      "age": 21,
+      "department": "Engineering",
+      "salary": 85000,
+      "skills": ["Python", "React", "MongoDB"],
+      "projects": [
+        {
+          "name": "Expense Tracker",
+          "status": "completed",
+          "technologies": ["MERN"]
+          
+        },
+        {
+          "name": "Chat App",
+          "status": "in-progress",
+          "technologies": ["Node", "Socket.IO"]
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "Rahul Sharma",
+      "age": 26,
+      "department": "Data Science",
+      "salary": 95000,
+      "skills": ["Python", "Pandas", "Machine Learning"],
+      "projects": [
+        {
+          "name": "Stock Predictor",
+          "status": "completed",
+          "technologies": ["Python", "TensorFlow"]
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "name": "Priya Patel",
+      "age": 24,
+      "department": "Engineering",
+      "salary": 78000,
+      "skills": ["JavaScript", "Angular", "Node"],
+      "projects": [
+        {
+          "name": "Internal Dashboard",
+          "status": "in-progress",
+          "technologies": ["Angular", "Node"]
+        }
+      ]
+    },
+    {
+      "id": 104,
+      "name": "Amit Verma",
+      "age": 29,
+      "department": "DevOps",
+      "salary": 90000,
+      "skills": ["Docker", "Kubernetes", "AWS"],
+      "projects": [
+        {
+          "name": "Deployment Automation",
+          "status": "completed",
+          "technologies": ["AWS", "Docker"]
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "client_id": "C201",
+      "name": "Flipkart",
+      "country": "India",
+      "active_projects": 2
+    },
+    {
+      "client_id": "C202",
+      "name": "Amazon",
+      "country": "USA",
+      "active_projects": 1
+    }
+  ]
+}

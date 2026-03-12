@@ -1,0 +1,14 @@
+{
+    "name": "yash",
+    "number": "762423533",
+    "marks": {
+        "maths": 97,
+        "phy": 80,
+        "che": 96
+    },
+    "hobby": [
+        "dance",
+        "movie",
+        "coding"
+    ]
+}
