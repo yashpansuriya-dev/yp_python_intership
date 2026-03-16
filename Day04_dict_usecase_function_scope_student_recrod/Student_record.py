@@ -11,7 +11,7 @@
 
 import string
 
-# ---------------------------------------------------------------------
+# ----------------------------------------------------------------------
 
 # All Functions of student - add , delete , list , search
 
@@ -53,15 +53,15 @@ def student_search(name: string, stu_record: list) -> dict|None:
     print("Here is detail of ", name)
     
 
-    for c in stu_record:
+    for student in stu_record:
         # Iterates through all student record 
         # and print who matches name
-
-        if c['name'] == name:
-            print(f"\n Roll no. : {c['roll_no']} ,\
-                        Name : {c['name']},\
-                        Marks : {c['marks']}")
-            return c
+    
+        if student['name'] == name:
+            print(f"\n Roll no. : {student['roll_no']} ,\
+                        Name : {student['name']},\
+                        Marks : {student['marks']}")
+            return student
         else:
             pass
 
@@ -81,16 +81,20 @@ def student_list(stu_record: list) -> None:
         Returns :
             None : It just prints .
     """
-    print("Here are Details of Students : ")
+    if(len(stu_record) > 0):
+        print("Here are Details of Students : ")
 
-    print("-----------------------------------------------------")
-    print("\n| Roll no      |       Name      |       Marks    |")
+        print("-----------------------------------------------------")
+        print("\n| Roll no      |       Name      |       Marks    |")
 
-    for c in stu_record:
-        # Prints every record
-        print(f"\n|      {c['roll_no']}      |       {c['name']}      |       {c['marks']}    |")
-    
-    print("-----------------------------------------------------")
+        for c in stu_record:
+            # Prints every record
+            print(f"\n|      {c['roll_no']}      |       {c['name']}      |       {c['marks']}    |")
+        
+        print("-----------------------------------------------------")
+        return "Success"
+    else:
+        return None
 
         
 # Deleting student
@@ -114,20 +118,22 @@ def student_del(name: string, stu_record: list) -> dict|None:
         stu_record.remove(del_student)  # remove the dict student
         return del_student
     
+
+# Fetching Highest marks
 def highest_marks(stu_record : list) -> dict:
     highest_mark_student = {}
     max_marks = 0
 
-    for student in stu_record:
-        if student['marks'] > max_marks:
-            max_marks = student['marks']
-            highest_mark_student = student
-    
-    print(f"The Highest mark student is {highest_mark_student['name']}")
-    return highest_mark_student
-
-
-            
+    if(len(stu_record) > 0):
+        for student in stu_record:
+            if student['marks'] > max_marks:
+                max_marks = student['marks']
+                highest_mark_student = student
+        
+        print(f"The Highest mark student is {highest_mark_student['name']}")
+        return highest_mark_student
+    else:
+        return None
 
 
 # ---------------------------------------------------------------------

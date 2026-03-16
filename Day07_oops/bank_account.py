@@ -35,7 +35,7 @@ class BankAccount:
             return
         self.curr_money -= amount
     
-    def get_balance(self):
+    def get_balance(self) -> float:
         """ Returns current balance."""
         return self.curr_money
     
@@ -50,6 +50,9 @@ class SavingAccount(BankAccount):
         which adds to current balance
     """
     def monthly_interest(self, interest):
+        if interest < 0:
+            print("Interest must be positive")
+            return
         final_interest = (self.curr_money * interest) / 100
         self.curr_money += final_interest    
     
