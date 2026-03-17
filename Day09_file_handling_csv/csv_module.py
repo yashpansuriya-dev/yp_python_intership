@@ -49,7 +49,7 @@ def generate_csv(file_name: str, rows: int = 10) -> None:
 # -------------------------------------------------------------------
 
 def main() -> None:
-    generate_csv("sample_data.csv")
+    generate_csv("Files/sample_data.csv")
 
     print("CSV file generated.")
 

@@ -11,14 +11,14 @@ import json
 def save_contacts(contacts: list) -> None:
     """save contacts list into a json file."""
     # write python list to json file
-    with open("contacts.json", "w", encoding="utf-8") as file:
+    with open("Files/contacts.json", "w", encoding="utf-8") as file:
         json.dump(contacts, file, indent=4)
 
 
 def read_contacts() -> list:
     """read contacts from json file."""
     # read json file and convert it to python object
-    with open("contacts.json", "r", encoding="utf-8") as file:
+    with open("Files/contacts.json", "r", encoding="utf-8") as file:
         data = json.load(file)
 
     return data

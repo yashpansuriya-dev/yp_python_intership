@@ -138,16 +138,16 @@ def main() -> None:
             ["Vikram", 11, "photography"],]
     
     # Printing CSV as Dict
-    writing_csv("new_csv.csv" , fields, rows)
+    writing_csv("Files/new_csv.csv" , fields, rows)
 
-    details_dict = csv_to_dict("new_csv.csv")
+    details_dict = csv_to_dict("Files/new_csv.csv")
     print("CSV Into Dictinary : ",details_dict)
 
-    print("\nWith DictReader : ", csv_to_dict2("new_csv.csv"))
+    print("\nWith DictReader : ", csv_to_dict2("Files/new_csv.csv"))
 
     # Printing CSV as Table
     print("\n Printing CSV : ")
-    data = reading_csv("new_csv.csv")
+    data = reading_csv("Files/new_csv.csv")
     fields = data[0]
     rows = data[1]
 
@@ -159,7 +159,7 @@ def main() -> None:
     filter_rows = [row for row in rows if int(row[1]) > 18]
 
     # Adding FIlter data into new file
-    with open("filtered.csv" , "w", newline="") as f:
+    with open("Files/filtered.csv" , "w", newline="") as f:
         writer = csv.writer(f)
 
         writer.writerow(fields)

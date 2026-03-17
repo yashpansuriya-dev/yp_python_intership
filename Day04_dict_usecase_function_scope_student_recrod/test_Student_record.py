@@ -1,5 +1,10 @@
-import pytest
+"""
+    A testing file , where each tests each function of 
+    student record , with different parameters.
+"""
+# ------------------------------------------------------------------
 
+import pytest
 from Student_record import (
     student_add,
     student_del,

@@ -27,10 +27,10 @@ def main() -> None:
 
     log_writer("...mailslot_create: creating mailslot for terminate",
                "INFO ",
-               "log.txt")   
+               "Files/log.txt")   
     log_writer("........router_forward_getOI:         source address:   9.67.116.98",
                "TRACE",
-               "log.txt")
+               "Files/log.txt")
 
 # -------------------------------------------------------------------
 

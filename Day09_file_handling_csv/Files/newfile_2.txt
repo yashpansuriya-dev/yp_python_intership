@@ -1,0 +1,8 @@
+Python is one of the most popular programming languages.
+ It’s simple to use, packed with features and supported by a wide
+ range of libraries and frameworks. Its clean syntax makes it
+ beginner-friendly.
+Data Structures 
+Python offers versatile collections
+ of data types, including lists, string, tuples, sets, dictionaries
+ and arrays. In this section, we will learn about each data types in detail

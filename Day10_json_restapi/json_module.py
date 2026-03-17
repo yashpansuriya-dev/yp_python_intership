@@ -74,7 +74,7 @@ def write_json_file() -> None:
         }
     }
 
-    with open("yash_info.json", "w", encoding="utf-8") as file:
+    with open("Files/yash_info.json", "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4)
 
     print("Data written to yash_info.json\n")
@@ -83,7 +83,7 @@ def write_json_file() -> None:
 def read_json_file() -> None:
     """Read JSON data from a file."""
     try:
-        with open("yash_info.json", "r", encoding="utf-8") as file:
+        with open("Files/yash_info.json", "r", encoding="utf-8") as file:
             data = json.load(file)
 
         print("JSON file -> Python object")

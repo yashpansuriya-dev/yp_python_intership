@@ -100,11 +100,11 @@ def main() -> None:
     "range of libraries and frameworks. Its clean syntax makes it\n " \
     "beginner-friendly."
 
-    write_file("newfile_2.txt", text)
+    write_file("Files/newfile_2.txt", text)
 
-    print("new_file2.txt : ", read_file("newfile_2.txt"))
+    print("new_file2.txt : ", read_file("Files/newfile_2.txt"))
 
-    print("\n Two Line : ", read_lines("newfile_2.txt", 2))
+    print("\n Two Line : ", read_lines("Files/newfile_2.txt", 2))
 
 
     new_text = "\nData Structures \nPython offers versatile collections\n " \
@@ -113,9 +113,9 @@ def main() -> None:
     "in detail"
 
     print("\nAppending new Text : ")
-    append_file("newfile_2.txt", new_text)
+    append_file("Files/newfile_2.txt", new_text)
 
-    print("\n\nnew_file2.txt : ", read_file("newfile_2.txt"))
+    print("\n\nnew_file2.txt : ", read_file("Files/newfile_2.txt"))
 
 # -------------------------------------------------------------------
 

@@ -62,10 +62,10 @@ def main() -> None:
     print(student_details_json)
 
     # Save json to file
-    save_file("task3.json", student_details)
+    save_file("Files/task3.json", student_details)
 
     # Reload data
-    new_json_data = load_file("task3.json")
+    new_json_data = load_file("Files/task3.json")
     print(new_json_data)
 
     # Verify the data
