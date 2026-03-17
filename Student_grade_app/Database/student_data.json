@@ -3,18 +3,27 @@
         "roll_num": 1,
         "name": "yash",
         "marks": [
-            99,
-            54,
-            85
+            85,
+            45,
+            76
         ]
     },
     {
         "roll_num": 2,
         "name": "rahul",
         "marks": [
+            56,
+            74,
+            89
+        ]
+    },
+    {
+        "roll_num": 3,
+        "name": "diya",
+        "marks": [
+            45,
             89,
-            47,
-            69
+            95
         ]
     }
 ]

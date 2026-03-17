@@ -22,6 +22,12 @@ import json
 from Model.student import Student
 
 # -------------------------------------------------------------------
+class InputValidationError(Exception):
+    pass
+
+class StudentNotFoundError(Exception):
+    pass
+
 
 class StudentManager:
     """
@@ -29,6 +35,9 @@ class StudentManager:
         and it has functionality of add, delete, list, update marks,
         seach students .
     """
+
+
+
     def __init__(self):
         """
             Constructor that initializes , list of 
@@ -41,23 +50,31 @@ class StudentManager:
             It takes input such as name, marks, roll number
             from student , and add it to list as dict.
         """
-        self.students.append({'roll_num': roll_num , 
-                              'name': name,
-                              'marks': marks})
-    
+        # self.students.append({'roll_num': roll_num , 
+        #                       'name': name,
+        #                       'marks': marks})
+        try:
+            self._validate_name(name)
+            self._validate_roll(roll_num)
+            self._validate_marks(marks)
+            student = Student(roll_num, name, marks)
+            self.students.append(student)
+        except InputValidationError as e:
+            print("Validation Error:", e)
+        except Exception as e:
+            print("Unexpected Error:", e)
+
     def search_student(self, name: str):
         """
             It searches student by name , and
             returns none if not found it.
         """
         for student in self.students:
-            if student['name'] == name:
+            if student.name == name:
                 return student
+        raise StudentNotFoundError(f"{name} not found .")
+
         
-        print("No such student found")
-        return None
-    
-    
     def list_students(self):
         """
             It prints list of all students and 
@@ -66,13 +83,7 @@ class StudentManager:
         print("\nHere List of all students : ")
         for student in self.students:
             # print(student)
-            print(f"Roll no.: {student['roll_num']} | "
-                f"Name: {student['name']} | "
-                f"Marks['Phy', 'Che', 'Maths']: {student['marks']} | "
-                f"Percentage: {self.get_percentage(student['marks']):.2f} % | "
-                f"Grade: {self.get_grade(student['marks'])} | "
-                f"GPA: {self.get_gpa(student['marks']):.2f} | "
-                )
+            print(student)
     
     
     def delete_student(self, name: str):
@@ -80,22 +91,22 @@ class StudentManager:
             It deletes record of student by 
             name.
         """
-        del_student = self.search_student(name)
-
-        if(del_student != None):
+        try:
+            del_student = self.search_student(name)
             self.students.remove(del_student)
-        else:
-            print("No such student found")
+        except StudentNotFoundError as e:
+            print(e)
+            
         
     def highest_total_mark_student(self):
         """
             It returns students who got highest 
             total marks of 3 subjects.
         """
-        max_marks = 0
+        max_marks = -1
 
         for student in self.students:
-            total_mark = sum(student['marks'])
+            total_mark = sum(student.marks)
             if(total_mark > max_marks):
                 max_marks = total_mark
                 max_student = student
@@ -107,10 +118,10 @@ class StudentManager:
             returns student with highest mark in
             given subject
         """
-        max_marks = 0
+        max_marks = -1
 
         for student in self.students:
-            total_mark = student['marks'][idx]
+            total_mark = student.marks[idx]
             if(total_mark > max_marks):
                 max_marks = total_mark
                 max_student = student
@@ -128,62 +139,66 @@ class StudentManager:
                 roll_num : of student to get updated.
                 new_mark : updated marks
         """
+        
         for student in self.students:
-            if student['roll_num'] == roll_num:
-                student['marks'][idx] = new_mark
+            if student.roll_num == roll_num:
+                student.marks[idx] = new_mark
 
-    def get_grade(self, marks: int):
-        """
-            It assigns grade accroding to marks
-            of student.
-        """
-        total_marks = sum(marks) / 3
-        if total_marks <=100 and total_marks >= 90:
-            return 'A'
-        elif total_marks >=75 and total_marks < 90:
-            return 'B'
-        elif total_marks >=60 and total_marks < 75:
-            return 'B'
-        elif total_marks >=34 and total_marks < 60:
-            return 'B'
-        elif total_marks >=0 and total_marks < 34:
-            return 'F'
-        else:
-            return 'Invalid Marks'
-    
-    def get_gpa(self, marks) -> float:
-        """
-            returns GPA out of 10 .
 
-            Formula :
-                (obtained mark/ total marks )* 10 + 0.5
-        """
-        total_marks = sum(marks) / 30
-        return (total_marks+0.5)
-
-    def get_percentage(self, marks):
-        """
-            returns percentage out of 100
-
-            Formula :
-                (obtained marks/total marks) *100
-        """
-        total_marks = sum(marks) / 3
-        return total_marks
-
-    
     def save_to_json(self):
         """
             It overwrite or create file by adding 
             student's details as json .
         """
         try:
+            data = [student.to_dict() for student in self.students]
+
             with open("./Database/student_data.json", "w") as f:
-                json.dump(self.students, f, indent=4)
-        except:
-            print("Error occured")
+                json.dump(data, f, indent=4)
+        except IOError as e:
+            print("File error",e)
+        except Exception as e:
+            print("Unexpected error", e)
         else:
             print("Saved succesfully")
+    
+
+    def load_from_json(self , filename):
+
+        try:
+            with open(filename, "r") as f:
+                data = json.load(f)
+
+                for d in data:
+                    student = Student(d['roll_num'], d['name'], d['marks'])
+                    self.students.append(student)
+        except IOError as e:
+            print("File error",e)
+        except Exception as e:
+            print("Unexpected error", e)
+        else:
+            print("Saved succesfully")
+
+
+    def _validate_roll(self, roll_no):
+        if not isinstance(roll_no, int) or roll_no<=0:
+            raise InputValidationError("Roll no. Must be number and positive")
+        
+        if any(s.roll_num == roll_no for s in self.students):
+            raise InputValidationError("this roll no. already exits")
+    
+    def _validate_name(self, name):
+        if not isinstance(name, str):
+            raise InputValidationError("Name must be String")
+    
+    def _validate_marks(self, marks):
+        if not isinstance(marks, list) or len(marks) != 3:
+            raise InputValidationError("Marks must be list of 3 subjects")
+
+        for m in marks:
+            if not isinstance(m, (int, float)) or not (0 <= m <= 100):
+                raise InputValidationError("Each mark must be between 0 and 100")
+            
 
 
 
