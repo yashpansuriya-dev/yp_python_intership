@@ -2,6 +2,19 @@
     {
         "roll_num": 1,
         "name": "yash",
-        "marks": 45
+        "marks": [
+            99,
+            54,
+            85
+        ]
+    },
+    {
+        "roll_num": 2,
+        "name": "rahul",
+        "marks": [
+            89,
+            47,
+            69
+        ]
     }
 ]

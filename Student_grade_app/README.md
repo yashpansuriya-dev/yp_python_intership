@@ -65,12 +65,17 @@ Grades are calculated automatically based on marks.
 <!-- ![Screenshot1](class_diagram.png) -->
 
 ## 📁 Project Structure
-    student-grade-app/
+    Student_grade_app/
     │── main.py
-    │── student.py
-    │── test_app.py
+    │── Database
+        │── student_data.json
+    │── Model
+        │── student.py
+    │── Services
+        │── student_manager.py
+    │── Test
+        │── test_student_manager.py
     │── README.md
-    │── images/
 
 ## 📂 Example
 ```

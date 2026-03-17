@@ -6,8 +6,12 @@
     Search_student -> search student by given name
     Delete_student -> delete student record by name
     List_students -> list all student's details.
-    highest_mark_student -> returns student who got highest marks
-    update_mark -> it updates marks of student by given roll number
+    highest_mark_student -> returns student who got highest total marks
+    highest_mark_by_subject -> return student with highest marks in particular
+    subject
+    update_mark -> it updates marks of student by given roll number and subject
+    get_percentage -> returns percentage of student 
+    get_gpa -> calculate GPA of student
     get_grade -> calculate grade accroding to marks
     save_to_json -> create or overwrite file with updated student details
 '''
@@ -32,7 +36,7 @@ class StudentManager:
         """
         self.students = []
     
-    def add_student(self, roll_num: int, name: str, marks: int):
+    def add_student(self, roll_num: int, name: str, marks: list):
         """
             It takes input such as name, marks, roll number
             from student , and add it to list as dict.
@@ -64,8 +68,10 @@ class StudentManager:
             # print(student)
             print(f"Roll no.: {student['roll_num']} | "
                 f"Name: {student['name']} | "
-                f"Marks: {student['marks']} |"
-                f"Grade: {self.get_grade(student['marks'])}"
+                f"Marks['Phy', 'Che', 'Maths']: {student['marks']} | "
+                f"Percentage: {self.get_percentage(student['marks']):.2f} % | "
+                f"Grade: {self.get_grade(student['marks'])} | "
+                f"GPA: {self.get_gpa(student['marks']):.2f} | "
                 )
     
     
@@ -81,21 +87,38 @@ class StudentManager:
         else:
             print("No such student found")
         
-    def highest_mark_student(self):
+    def highest_total_mark_student(self):
         """
-            It returns students who got highest
-            marks.
+            It returns students who got highest 
+            total marks of 3 subjects.
         """
         max_marks = 0
 
         for student in self.students:
-            if(student['marks'] > max_marks):
-                max_marks = student['marks']
+            total_mark = sum(student['marks'])
+            if(total_mark > max_marks):
+                max_marks = total_mark
                 max_student = student
         
         return max_student
     
-    def update_student_marks(self, roll_num: int, new_mark: int):
+    def highest_mark_by_subject(self, idx):
+        """
+            returns student with highest mark in
+            given subject
+        """
+        max_marks = 0
+
+        for student in self.students:
+            total_mark = student['marks'][idx]
+            if(total_mark > max_marks):
+                max_marks = total_mark
+                max_student = student
+        
+        return max_student
+
+    
+    def update_student_marks(self, roll_num: int, new_mark: int, idx: int):
         """
             It updates student's marks by given their
             roll number and new marks .
@@ -107,25 +130,47 @@ class StudentManager:
         """
         for student in self.students:
             if student['roll_num'] == roll_num:
-                student['marks'] = new_mark
+                student['marks'][idx] = new_mark
 
     def get_grade(self, marks: int):
         """
             It assigns grade accroding to marks
             of student.
         """
-        if marks <=100 and marks >= 90:
+        total_marks = sum(marks) / 3
+        if total_marks <=100 and total_marks >= 90:
             return 'A'
-        elif marks >=75 and marks < 90:
+        elif total_marks >=75 and total_marks < 90:
             return 'B'
-        elif marks >=60 and marks < 75:
+        elif total_marks >=60 and total_marks < 75:
             return 'B'
-        elif marks >=34 and marks < 60:
+        elif total_marks >=34 and total_marks < 60:
             return 'B'
-        elif marks >=0 and marks < 34:
+        elif total_marks >=0 and total_marks < 34:
             return 'F'
         else:
             return 'Invalid Marks'
+    
+    def get_gpa(self, marks) -> float:
+        """
+            returns GPA out of 10 .
+
+            Formula :
+                (obtained mark/ total marks )* 10 + 0.5
+        """
+        total_marks = sum(marks) / 30
+        return (total_marks+0.5)
+
+    def get_percentage(self, marks):
+        """
+            returns percentage out of 100
+
+            Formula :
+                (obtained marks/total marks) *100
+        """
+        total_marks = sum(marks) / 3
+        return total_marks
+
     
     def save_to_json(self):
         """
