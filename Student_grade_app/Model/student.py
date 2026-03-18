@@ -32,7 +32,6 @@ class Student:
             D  : 34 - 59
             F  : 0  - 33
         """
-        print("dhurandhar")
         total_marks = sum(self.marks) / 3
         if total_marks <=100 and total_marks >= 90:
             return 'A'

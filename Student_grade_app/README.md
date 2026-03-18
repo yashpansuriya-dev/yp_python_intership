@@ -21,7 +21,7 @@ This app allows you to add, delete, search, and list students, as well as calcul
 1. Clone this repository :
 
 ```bash
-   git clone https://github.com/yourusername/student-grade-app.git
+   git clone https://github.com/yashpansuriya-dev/yp_python_intership/tree/main/Student_grade_app
 ```
 
 2. Navigate to the project folder:
