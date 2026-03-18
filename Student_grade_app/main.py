@@ -1,27 +1,53 @@
 # -------------------------------------------------------------------
 
 from Services.student_manager import StudentManager
-from Model.student import Student
 
 # -------------------------------------------------------------------
+# Input Validation Function
+# ------------------------------------------------------------------
 
-# def safe_int_input(prompt):
-#     while True:
-#         try:
-#             return int(input(prompt))
-#         except:
+def safe_int_input(prompt):
+    """
+        It try fetching int input 
+        unless gets valid input.
+    """
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Enter Valid name")
+    
+
+def safe_name_input(prompt):
+    """
+        It fetches name untill 
+        gets valid name
+    """
+    while True:
+        try:
+            return input(prompt)
+        except ValueError:
+            print("Enter valid name")
 
 
-# def safe_marks_input(prompt):
-#     while True:
-#         try:
-#             mark = int(input(prompt))
-#             if 0 <= mark <= 100:
-#                 return mark
-#             else:
-#                 print("Enter Value between 0 and 100")
-#         except ValueError:
-#             print("Enter valid number")
+def safe_marks_input(prompt):
+    """
+        It fetches marks untill 
+        gets valid marks
+    """
+    while True:
+        try:
+            mark = int(input(prompt))
+            if 0 <= mark <= 100:
+                return mark
+            else:
+                print("Enter Value between 0 and 100")
+        except ValueError:
+            print("Enter valid number")
+
+# ------------------------------------------------------------------
+# Main Menu 
+# ------------------------------------------------------------------
 
 def menu():
     manager = StudentManager()
@@ -39,6 +65,7 @@ def menu():
         print("8. Update Marks of subject")
         print("9. Save to JSON File")
         print("10. Load data from JSON File")
+        print("11. Top Performers Student")
         print("0. Exit")
 
         choice = None
@@ -51,24 +78,25 @@ def menu():
 
         # Add Student
         if choice == 1:
-            roll_num = int(input("Enter Your roll number : "))
-            name = input("Enter name: ").strip()
+            # roll_num = int(input("Enter Your roll number : "))
+            roll_num = safe_int_input("Enter Your roll number : ")
+            name = safe_name_input("Enter name: ").strip()
             marks = []
 
             for i in range(3):
-                marks.append(int(input(f"Enter marks for {subjects[i]}: ")))
+                marks.append(safe_marks_input(f"Enter marks for {subjects[i]}: "))
 
                 
             manager.add_student(roll_num, name, marks)
 
         # Delete Student
         elif choice == 2:
-            name = input("Enter name to delete: ")
+            name = safe_name_input("Enter name to delete: ")
             manager.delete_student(name)
 
         # Search Student
         elif choice == 3:
-            name = input("Enter name to search: ")
+            name = safe_name_input("Enter name to search: ")
             try:
                 student = manager.search_student(name)
             except StudentNotFoundError as e:
@@ -97,7 +125,7 @@ def menu():
 
         # Student results
         elif choice == 7:
-            name = input("Enter name to search: ")
+            name = safe_name_input("Enter name to search: ")
             student = manager.search_student(name)
             if(student != None):
                 print(
@@ -114,7 +142,7 @@ def menu():
             roll_num = int(input("Enter roll number of that student"))
             print("Enter number accroding to Subject , For")
             idx = int(input("0. Physics\n1. Chemistry\n2. Maths"))
-            marks = int(input("Enter the updated marks"))
+            marks = safe_marks_input("Enter the updated marks")
             manager.update_student_marks(roll_num, marks, idx)
 
         # Save to JSON
@@ -124,6 +152,10 @@ def menu():
         # Load to JSON
         elif choice ==10:
             manager.load_from_json("Database/student_data.json")
+        
+        # Fetching top performer student
+        elif choice ==11:
+            manager.top_performers()
 
         # Exit application
         elif choice == 0:

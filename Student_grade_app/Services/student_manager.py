@@ -1,6 +1,8 @@
 '''
-    Here , It has Class StudentManager, who demonstrates list of
-    student . and operations , on it like,
+    StudentManager
+    ==============
+
+    Manages student objects and performing operations on it.
 
     Add_student -> it adds student .
     Search_student -> search student by given name
@@ -14,19 +16,30 @@
     get_gpa -> calculate GPA of student
     get_grade -> calculate grade accroding to marks
     save_to_json -> create or overwrite file with updated student details
+    top_performer_student -> prints list of student with gpa > 3.5
 '''
 
-# -------------------------------------------------------------------
+# ------------------------------------------------------------------
+# Starting of program
+# ------------------------------------------------------------------
 
 import json
 from Model.student import Student
 
 # -------------------------------------------------------------------
+# Custom Exception
+# ------------------------------------------------------------------
+
+
 class InputValidationError(Exception):
     pass
 
 class StudentNotFoundError(Exception):
     pass
+
+# -------------------------------------------------------------------
+# Student Manager
+# -------------------------------------------------------------------
 
 
 class StudentManager:
@@ -36,23 +49,24 @@ class StudentManager:
         seach students .
     """
 
-
-
     def __init__(self):
         """
             Constructor that initializes , list of 
             students.
         """
         self.students = []
-    
+
+    # ------------------------------------------------------------------
+    # CRUD Functions
+    # ------------------------------------------------------------------
+        
+    # ADD
     def add_student(self, roll_num: int, name: str, marks: list):
         """
             It takes input such as name, marks, roll number
             from student , and add it to list as dict.
         """
-        # self.students.append({'roll_num': roll_num , 
-        #                       'name': name,
-        #                       'marks': marks})
+
         try:
             self._validate_name(name)
             self._validate_roll(roll_num)
@@ -63,7 +77,10 @@ class StudentManager:
             print("Validation Error:", e)
         except Exception as e:
             print("Unexpected Error:", e)
+        else:
+            print("Student Added Succesfully")
 
+    # SEARCH
     def search_student(self, name: str):
         """
             It searches student by name , and
@@ -74,7 +91,7 @@ class StudentManager:
                 return student
         raise StudentNotFoundError(f"{name} not found .")
 
-        
+    # DISPLAY
     def list_students(self):
         """
             It prints list of all students and 
@@ -85,7 +102,7 @@ class StudentManager:
             # print(student)
             print(student)
     
-    
+    # DELETE
     def delete_student(self, name: str):
         """
             It deletes record of student by 
@@ -96,8 +113,13 @@ class StudentManager:
             self.students.remove(del_student)
         except StudentNotFoundError as e:
             print(e)
+        else:
+            print("Student deleted succesfully")
             
-        
+    # ------------------------------------------------------------------
+    # Academic Functions
+    # ------------------------------------------------------------------
+    
     def highest_total_mark_student(self):
         """
             It returns students who got highest 
@@ -113,6 +135,7 @@ class StudentManager:
         
         return max_student
     
+
     def highest_mark_by_subject(self, idx):
         """
             returns student with highest mark in
@@ -127,8 +150,18 @@ class StudentManager:
                 max_student = student
         
         return max_student
-
     
+
+    def top_performers(self):
+        """
+            It list students with GPA >3.5 .
+        """
+        print("\n Top Performance Students : ")
+        for student in self.students:
+            if student.get_gpa() >= 3.5:
+                print(student)
+        
+
     def update_student_marks(self, roll_num: int, new_mark: int, idx: int):
         """
             It updates student's marks by given their
@@ -143,7 +176,11 @@ class StudentManager:
         for student in self.students:
             if student.roll_num == roll_num:
                 student.marks[idx] = new_mark
+            
 
+    # ------------------------------------------------------------------
+    # Save and Load from JSON File
+    # ------------------------------------------------------------------
 
     def save_to_json(self):
         """
@@ -164,7 +201,13 @@ class StudentManager:
     
 
     def load_from_json(self , filename):
+        """
+            It loads students data from JSON file , 
+            and store in students.
 
+            Args:
+                filename : name of file to fetched data
+        """
         try:
             with open(filename, "r") as f:
                 data = json.load(f)
@@ -177,21 +220,42 @@ class StudentManager:
         except Exception as e:
             print("Unexpected error", e)
         else:
-            print("Saved succesfully")
+            print("Data Loaded succesfully")
 
+
+    # ------------------------------------------------------------------
+    # Validate input and raises errors
+    # ------------------------------------------------------------------
 
     def _validate_roll(self, roll_no):
+        """
+            It validates roll number enterd by user and
+            raises error if rollno. is not number , negative
+            and if already added by other.
+
+            Raises:
+                InputValidationError
+        """
         if not isinstance(roll_no, int) or roll_no<=0:
             raise InputValidationError("Roll no. Must be number and positive")
         
         if any(s.roll_num == roll_no for s in self.students):
-            raise InputValidationError("this roll no. already exits")
+            raise InputValidationError("this roll no. already exists")
     
     def _validate_name(self, name):
+        """
+            It validates name given by user and raises error
+            if name is not string .
+        """
         if not isinstance(name, str):
             raise InputValidationError("Name must be String")
     
     def _validate_marks(self, marks):
+        """
+            It validates marks given by user and marks must be
+            list containing exactly 3 subjects marks where each marks 
+            must be number and between 0 to 100.
+        """
         if not isinstance(marks, list) or len(marks) != 3:
             raise InputValidationError("Marks must be list of 3 subjects")
 
@@ -201,4 +265,7 @@ class StudentManager:
             
 
 
+# ------------------------------------------------------------------
+# End
+# ------------------------------------------------------------------
 
