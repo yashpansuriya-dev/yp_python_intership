@@ -82,11 +82,11 @@ class Student:
     # ------------------------------------------------------------------
 
     def __str__(self):
-        return (      f"Roll no.     : {self.roll_num} \n"
-                      f"Name         : {self.name} \n" 
-                      f"Marks['Phy', 'Che.', 'Maths']: {self.marks} \n"
-                      f"Percentage   : {self.get_percentage():.2f} % \n"
-                      f"Grade        : {self.get_grade()} \n"
-                      f"GPA          : {self.get_gpa():.2f} / 4.0 \n"
+        return (      f"Roll no.     :                   {self.roll_num} \n"
+                      f"Name         :                   {self.name} \n" 
+                      f"Marks['Phy', 'Che.', 'Maths']:   {self.marks} \n"
+                      f"Percentage   :                   {self.get_percentage():.2f} % \n"
+                      f"Grade        :                   {self.get_grade()} \n"
+                      f"GPA          :                   {self.get_gpa():.2f} / 4.0 \n"
                 )
     

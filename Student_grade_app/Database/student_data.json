@@ -1,47 +1,38 @@
 [
     {
         "roll_num": 1,
-        "name": "yash",
+        "name": "yash pansuriya",
         "marks": [
             85,
-            45,
-            76
-        ]
-    },
-    {
-        "roll_num": 2,
-        "name": "rahul",
-        "marks": [
-            56,
-            74,
-            89
+            96,
+            74
         ]
     },
     {
         "roll_num": 3,
-        "name": "diya",
+        "name": "nigamchva",
         "marks": [
-            45,
-            89,
-            95
+            96,
+            96,
+            78
         ]
     },
     {
-        "roll_num": 4,
-        "name": "vg",
+        "roll_num": 101,
+        "name": "YAsh",
         "marks": [
-            99,
-            98,
-            95
-        ]
-    },
-    {
-        "roll_num": 5,
-        "name": "brijrja",
-        "marks": [
+            88,
             85,
-            74,
-            96
+            88
+        ]
+    },
+    {
+        "roll_num": 2,
+        "name": "rahul chavda",
+        "marks": [
+            98,
+            98,
+            79
         ]
     }
 ]

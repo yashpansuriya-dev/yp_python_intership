@@ -1,22 +1,26 @@
+#student_manager.py
 '''
     StudentManager
     ==============
 
     Manages student objects and performing operations on it.
 
-    Add_student -> it adds student .
-    Search_student -> search student by given name
-    Delete_student -> delete student record by name
-    List_students -> list all student's details.
-    highest_mark_student -> returns student who got highest total marks
-    highest_mark_by_subject -> return student with highest marks in particular
-    subject
-    update_mark -> it updates marks of student by given roll number and subject
-    get_percentage -> returns percentage of student 
-    get_gpa -> calculate GPA of student
-    get_grade -> calculate grade accroding to marks
-    save_to_json -> create or overwrite file with updated student details
-    top_performer_student -> prints list of student with gpa > 3.5
+    Add_student                 -> it adds student .
+    Search_student              -> search student by given name
+    search_stuent_by_roll_no    -> it searches student by its rol no.
+    Delete_student              -> delete student record by name
+    List_students               -> list all student's details.
+    highest_mark_student        -> returns student who got highest total marks
+    highest_mark_by_subject     -> return student with highest marks 
+                                    in particular subject
+    update_mark                 -> it updates marks of student by given
+                                    roll number and subject
+    get_percentage              -> returns percentage of student 
+    get_gpa                     -> calculate GPA of student
+    get_grade                   -> calculate grade accroding to marks
+    save_to_json                -> create or overwrite file with 
+                                    updated student details
+    top_performer_student       -> prints list of student with gpa > 3.5
 '''
 
 # ------------------------------------------------------------------
@@ -63,6 +67,10 @@ class StudentManager:
     def is_name_exists(self, name: str) -> bool:
         """Returns True if name is already taken (case-insensitive)."""
         return any(s.name.lower() == name.strip().lower() for s in self.students)
+    
+    def is_empty(self):
+        """ returns true if student is empty ."""
+        return not self.students
 
     # ------------------------------------------------------------------
     # CRUD Functions
@@ -87,6 +95,7 @@ class StudentManager:
         student = Student(roll_num, name, marks)
         self.students.append(student)
         print(f"Student {name} Added Succesfully")
+
 
     # SEARCH
     def search_student(self, name: str):
@@ -116,22 +125,32 @@ class StudentManager:
             It prints list of all students and 
             their details.
         """
-        if(not self.students):
-            print("No Student added yet")
-            return
         print("\nHere List of all students : ")
+        print("==========================================")
+
         for student in self.students:
             print(student)
+            print("-----------------------------------------------")
     
+
     # DELETE
-    def delete_student(self, name: str):
+    def delete_student(self, id: int):
         """
             It deletes record of student by 
             name.
         """
-        if(not self.students):
-            print("No Student added yet")
-            return
+        try:
+            del_student = self.search_student_by_roll_no(id)
+            self.students.remove(del_student)
+            # print("Student deleted succesfully")
+        except StudentNotFoundError as e:
+            print(e)
+    
+    def delete_student_by_name(self, name: int):
+        """
+            It deletes record of student by 
+            name.
+        """
         try:
             del_student = self.search_student(name)
             self.students.remove(del_student)
@@ -149,18 +168,7 @@ class StudentManager:
             It returns students who got highest 
             total marks of 3 subjects.
         """
-        if not self.students:
-            raise ValueError("No students available.")
         return max(self.students, key=lambda s: sum(s.marks))
-        # max_marks = -1
-
-        # for student in self.students:
-        #     total_mark = sum(student.marks)
-        #     if(total_mark > max_marks):
-        #         max_marks = total_mark
-        #         max_student = student
-        
-        # return max_student
     
 
     def highest_mark_by_subject(self, idx):
@@ -168,19 +176,8 @@ class StudentManager:
             returns student with highest mark in
             given subject
         """
-        if not self.students:
-            raise ValueError("No students available.")
-        # return max(self.students, key=lambda s: sum(s.marks[idx]))
-        max_marks = -1
+        return max(self.students, key= lambda s: s.marks[idx] )
 
-        for student in self.students:
-            total_mark = student.marks[idx]
-            if(total_mark > max_marks):
-                max_marks = total_mark
-                max_student = student
-        
-        return max_student
-    
 
     def top_performers(self):
         """
@@ -195,8 +192,12 @@ class StudentManager:
             print("No student found with GPA > 3.5")
             return
         print("\n Top Performance Students : ")
+        print("==========================================")
+
         for s in performers:
             print(s)
+            print("-----------------------------------------------")
+
 
 
     def update_student_marks(self, roll_num: int, new_mark: int, idx: int):
@@ -209,14 +210,33 @@ class StudentManager:
                 roll_num : of student to get updated.
                 new_mark : updated marks
         """
-        # check_roll_num_is_unique(roll_num)
-        # self._validate_roll
         try:
             student = self.search_student_by_roll_no(roll_num)
             student.marks[idx] = new_mark
             print("Marks Updated Succesfully")
         except StudentNotFoundError as e:
             print(e)
+
+    def update_student(self, roll_num, new_roll, name, marks):
+        student = self.search_student_by_roll_no(roll_num)
+        self.delete_student(roll_num)
+
+        if new_roll == "":
+            new_roll = student.roll_num
+
+        if name == "":
+            name = student.name
+
+        for i in range(3):
+            if marks[i] == "":
+                marks[i] = student.marks[i]
+
+        student.roll_num = new_roll
+        student.name = name
+        student.marks = marks
+
+        self.students.append(student)
+
 
 
     
@@ -248,14 +268,18 @@ class StudentManager:
             Args:
                 filename : name of file to fetched data
         """
-        self.students.clear()
+        # self.students.clear()
         try:
             with open(filename, "r") as f:
                 data = json.load(f)
 
-                for d in data:
-                    student = Student(d['roll_num'], d['name'], d['marks'])
-                    self.students.append(student)
+            if not data:
+                print("File is empty, no data loaded.")
+                return
+
+            for d in data:
+                student = Student(d['roll_num'], d['name'], d['marks'])
+                self.students.append(student)
         except IOError as e:
             print("File error",e)
         except FileNotFoundError as e:
@@ -293,8 +317,8 @@ class StudentManager:
             raise InputValidationError("Name cannot be empty.")
         if(not name.isalpha()):
             raise InputValidationError("name must be string")
-        if(len(name) > 10):
-            raise InputValidationError("Length must be less than 10")
+        if(len(name) > 20):
+            raise InputValidationError("Length must be less than 20")
         if self.is_name_exists(name):
             raise InputValidationError(f"Student '{name}' already exists.")
 
@@ -312,12 +336,9 @@ class StudentManager:
             if not isinstance(m, (int, float)) or not (0 <= m <= 100):
                 raise InputValidationError("Each mark must be between 0 and 100")
         
-    # def is_roll_exists(roll_num):
-
-            
-
 
 # ------------------------------------------------------------------
 # End
 # ------------------------------------------------------------------
+
 

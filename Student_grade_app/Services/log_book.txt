@@ -1,0 +1,11 @@
+Query    
+   -- Delete Student --> Must try to delete by student ID as it is uniques for all students.
+   --delete  ,overall result valid unless 
+    JSON data must be loaded first instead of loading seperately.
+    Search by Student Name --> add .strip() method too for avoiding trailing spaces from starting and ending.
+  --  Student Overall result --> Must try to fetch by Student ID for uniqueness.\
+
+----------------
+Logbook 2.0
+---------------
+
