@@ -98,7 +98,7 @@ class StudentManager:
 
 
     # SEARCH
-    def search_student(self, name: str):
+    def search_student_by_name(self, name: str):
         """
             It searches student by name , and
             returns none if not found it.
@@ -200,22 +200,22 @@ class StudentManager:
 
 
 
-    def update_student_marks(self, roll_num: int, new_mark: int, idx: int):
-        """
-            It updates student's marks by given their
-            roll number and new marks .
+    # def update_student_marks(self, roll_num: int, new_mark: int, idx: int):
+    #     """
+    #         It updates student's marks by given their
+    #         roll number and new marks .
 
-            Args:
-                self : currrent instance of class
-                roll_num : of student to get updated.
-                new_mark : updated marks
-        """
-        try:
-            student = self.search_student_by_roll_no(roll_num)
-            student.marks[idx] = new_mark
-            print("Marks Updated Succesfully")
-        except StudentNotFoundError as e:
-            print(e)
+    #         Args:
+    #             self : currrent instance of class
+    #             roll_num : of student to get updated.
+    #             new_mark : updated marks
+    #     """
+    #     try:
+    #         student = self.search_student_by_roll_no(roll_num)
+    #         student.marks[idx] = new_mark
+    #         print("Marks Updated Succesfully")
+    #     except StudentNotFoundError as e:
+    #         print(e)
 
     def update_student(self, roll_num, new_roll, name, marks):
         student = self.search_student_by_roll_no(roll_num)

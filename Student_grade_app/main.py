@@ -14,13 +14,15 @@
 
 from Services.student_manager import StudentManager, StudentNotFoundError
 
-from validation import (safe_int_input,safe_marks_input,safe_name_input,
-                        safe_rollno_input_noduplicate, safe_rollno_input_unless_duplicate,
-                        safe_name_input_noduplicate, safe_name_input_unless_duplicate , 
-                        safe_subject_input,
-                        update_safe_marks_input,
-                        update_safe_name_input_noduplicate,
-                        update_safe_rollno_input_noduplicate)
+# from validation import (safe_int_input, safe_marks_input, safe_name_input,
+#                         safe_rollno_input_noduplicate, safe_rollno_input_unless_duplicate,
+#                         safe_name_input_noduplicate, safe_name_input_unless_duplicate , 
+#                         safe_subject_input,
+#                         update_safe_marks_input,
+#                         update_safe_name_input_noduplicate,
+#                         update_safe_rollno_input_noduplicate)
+
+from validation import Validation
 
 # -------------------------------------------------------------------
 # Input Validation Functions
@@ -35,6 +37,7 @@ class LengthError(Exception):
 
 def menu():
     manager = StudentManager()
+    validate = Validation()
     manager.load_from_json("Database/student_data.json")
     print("\n---Welcome To Student Grade App ---")
 
@@ -64,13 +67,13 @@ def menu():
         # -------------------------------------------------------------------
         if choice == 1:
             # Fetches Valid roll no.
-            roll_num = safe_rollno_input_noduplicate("        Enter Your roll number : ", manager)
+            roll_num = validate.safe_rollno_input_noduplicate("        Enter Your roll number : ", manager)
             if manager.is_roll_exists(roll_num):
                 print("Roll number already exits")
                 continue
             
             # Fetches valid name
-            name = safe_name_input_noduplicate("        Enter name : ",manager).strip()
+            name = validate.safe_name_input_noduplicate("        Enter name : ",manager).strip()
             if manager.is_name_exists(name):
                 print("name already exists")
                 continue
@@ -78,12 +81,12 @@ def menu():
             # Fetches Valid SUbject marks
             marks = []
             for i in range(3):
-                marks.append(safe_marks_input(f"            Enter marks for {subjects[i]} (0-100) : "))
+                marks.append(validate.safe_marks_input(f"            Enter marks for {subjects[i]} (0-100) : "))
 
             manager.add_student(roll_num, name, marks)
             manager.save_to_json()
 
-        # List Student
+        # List Students
         # ------------------------------------------------------------------
         elif choice == 2:
             print("     Select Operation")
@@ -96,15 +99,15 @@ def menu():
                     break
                 print("Enter Valid Choice ")
 
-            # List Students
+            # List All Students
             if c == 1:
                 if manager.is_empty():
                     print("No Student added yet")
                     continue
-
+                
                 manager.list_students()
 
-            # Fetching top performer student
+            # Fetching top performer students
             else:
                 if manager.is_empty():
                     print("No Student added yet")
@@ -114,15 +117,15 @@ def menu():
         #Update Student
         # ------------------------------------------------------------------
         elif choice == 3:
-            id = safe_rollno_input_unless_duplicate("Enter Roll number to Update Student : ", manager)
+            id = validate.safe_rollno_input_unless_duplicate("Enter Roll number to Update Student : ", manager)
 
-            new_roll = update_safe_rollno_input_noduplicate("        Enter New roll number(Leave Blank if not want update) : ", manager)
+            new_roll = validate.update_safe_rollno_input_noduplicate("        Enter New roll number(Leave Blank if not want update) : ", manager)
             if manager.is_roll_exists(new_roll):
                 print("Roll number already exits")
                 continue
             
             # Fetches valid name
-            name = update_safe_name_input_noduplicate("        Enter name: ",manager).strip()
+            name = validate.update_safe_name_input_noduplicate("        Enter name: ",manager).strip()
             if manager.is_name_exists(name):
                 print("name already exists")
                 continue
@@ -130,7 +133,7 @@ def menu():
             # Fetches Valid SUbject marks
             marks = []
             for i in range(3):
-                marks.append(update_safe_marks_input(f"            Enter marks for {subjects[i]} (0-100): "))
+                marks.append(validate.update_safe_marks_input(f"            Enter marks for {subjects[i]} (0-100): "))
 
 
             manager.update_student(id, new_roll, name, marks)
@@ -154,11 +157,11 @@ def menu():
                 print("Enter Valid Choice ")
             
             if c == 1:
-                name = safe_name_input_unless_duplicate("       Enter name to search : ",manager)
-                student = manager.search_student(name)
+                name = validate.safe_name_input_unless_duplicate("       Enter name to search : ",manager)
+                student = manager.search_student_by_name(name)
                 print(student)
             else:
-                roll_no = safe_rollno_input_unless_duplicate("      Enter roll number to search : ", manager)
+                roll_no = validate.safe_rollno_input_unless_duplicate("      Enter roll number to search : ", manager)
                 student = manager.search_student_by_roll_no(roll_no)
                 print(student)
 
@@ -181,7 +184,7 @@ def menu():
 
             if c == 1:
                 #cc
-                name = safe_name_input_unless_duplicate("       Enter name to delete : ", manager)
+                name = validate.safe_name_input_unless_duplicate("       Enter name to delete : ", manager)
                 confirm = input(f"Are you sure you want to delete student with name:'{name}' (y/n) :").strip().lower()
                 if confirm == "y":
                     manager.delete_student_by_name(name)
@@ -191,7 +194,7 @@ def menu():
                     print("Deletion cancelled")  
                 
             else:
-                id = safe_rollno_input_unless_duplicate("       Enter roll no. to delete : ", manager)
+                id = validate.safe_rollno_input_unless_duplicate("       Enter roll no. to delete : ", manager)
                 confirm = input(f"Are you sure you want to delete student with id:'{id}' (y/n) :").strip().lower()
                 if confirm == "y":
                     manager.delete_student(id)
@@ -227,7 +230,7 @@ def menu():
                     print(e)
             # Highest marks by subject
             elif c == 2:
-                idx = safe_subject_input()
+                idx = validate.safe_subject_input()
                 try:
                     max_student = manager.highest_mark_by_subject(idx)
                     print(f"        Highest Marks student in '{subjects[idx]}' is '{max_student.name }' "
@@ -238,7 +241,7 @@ def menu():
             # Student results
             elif c == 3:
                 # Asks valid roll no.
-                id = safe_rollno_input_unless_duplicate("       Enter roll no. of student to get result : ", manager)
+                id = validate.safe_rollno_input_unless_duplicate("       Enter roll no. of student to get result : ", manager)
                 student = manager.search_student_by_roll_no(id)
                 print(
                             f"\nMarks['Phy', 'Che.', 'Maths']: {student.marks}                 "
