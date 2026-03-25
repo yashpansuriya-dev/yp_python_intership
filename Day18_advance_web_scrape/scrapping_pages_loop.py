@@ -1,9 +1,10 @@
 import requests
+import time
 from bs4 import BeautifulSoup
 
 # -------------------------------------------------------------------
 
-def collect_book_details(num_of_pages = 1) -> dict:
+def collect_book_details(num_of_pages) -> dict:
     """
         It returns list containing books details such as 
         book name,price, rating  scrapped from book.toscrape.com using
@@ -24,6 +25,7 @@ def collect_book_details(num_of_pages = 1) -> dict:
     
     for i in range(1, num_of_pages+1):
         try:
+            time.sleep(5)
             url = f"https://books.toscrape.com/catalogue/page-{i}.html"
             response = requests.get(url, headers=headers)
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -42,8 +44,9 @@ def collect_book_details(num_of_pages = 1) -> dict:
         except Exception as e:
             print(e)
         else:
-            print("scrapped succesfully")
-            return book_details
+            print(f"page {i} scrapped succesfully")
+            
+    return book_details
         
 
 # -------------------------------------------------------------------

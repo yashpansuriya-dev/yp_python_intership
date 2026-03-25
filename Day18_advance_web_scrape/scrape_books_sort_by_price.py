@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 
 # -------------------------------------------------------------------
 
-def collect_book_details(num_of_pages = 1) -> list:
+def collect_book_details(num_of_books = 50) -> list:
     """
         It returns list containing books details such as 
         book name,price, rating  scrapped from book.toscrape.com using
         BeautifulSoup scrapping .
 
         Args :
-            num_of_pages : no. of pages of website to scrape
+            num_of_books : no. of books to scrape
         
         Returns :
             list : list of dicts containing books details
@@ -23,7 +23,9 @@ def collect_book_details(num_of_pages = 1) -> list:
     book_details = []
     try:
         # Scarapping pages
-        for i in range(1, num_of_pages+1):
+        for i in range(1, 40):
+            if(len(book_details) >= num_of_books ):
+                break
             url = f"https://books.toscrape.com/catalogue/page-{i}.html"
             response = requests.get(url, headers=headers)
             soup = BeautifulSoup(response.text, 'html.parser')
@@ -32,6 +34,8 @@ def collect_book_details(num_of_pages = 1) -> list:
 
             # Storing books_details
             for book in books:
+                if(len(book_details) == num_of_books ):
+                    break
                 name = book.select_one("h3 a").get('title')
                 price = book.select_one(".price_color").text
                 rating = book.select_one(".star-rating")["class"][1]
@@ -56,8 +60,8 @@ def sort_by_price_high_to_low(books):
 # -------------------------------------------------------------------
 
 def main() -> None:
-    num_of_pages = int(input("How Many Pages Do you want to Scrap (Between 1 to 40) : "))
-    books = collect_book_details(num_of_pages)
+    num_of_books = int(input("How Many Books Do you want to Scrap (Between 1 to 1000) : "))
+    books = collect_book_details(num_of_books)
 
     print("\nTotal no. of books are : ", len(books))
 
