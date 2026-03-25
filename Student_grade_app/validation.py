@@ -1,10 +1,22 @@
+"""
+    Validation file : 
+    It validates user input with different mathods
 
+    safe_input_noduplicte -> It takes input where , input does not match
+                        with existing students.
 
-# -------------------------------------------------------------------
-# Roll no. Validation
-# -------------------------------------------------------------------
+    safe_input_unless_duplicate -> here, input should contain in students data.
+                                used to, search and delete.
+                
+    safe_update_input -> it uses in update function to it also accepts
+                        input such as blank(for not changing data).
+"""
+
 
 class Validation:
+    # -------------------------------------------------------------------
+    # Roll no. Validation
+    # -------------------------------------------------------------------
     def safe_int_input(self, prompt):
         """
             It try fetching int input 
@@ -15,9 +27,9 @@ class Validation:
                 value = int(input(prompt))
                 if(value > 0):
                     return value
-                print("please enter positive number")
+                print("             please enter positive number")
             except ValueError:
-                print("Roll no. can only be number")
+                print("             Roll no. can only be number")
 
     def safe_rollno_input_noduplicate(self, prompt, manager):
         """ It fetches roll no. unless user enters 
@@ -27,14 +39,14 @@ class Validation:
             try:
                 value = int(input(prompt))
                 if(manager.is_roll_exists(value)):
-                    print(f"Roll no: {value} Already exists")
+                    print(f"            Roll no: {value} Already exists")
                     continue
                 if(value > 0):
                     return value
-                print("please enter positive number")
+                print("             please enter positive number")
 
             except ValueError:
-                print("Roll no. can only be number")
+                print("             Roll no. can only be number")
 
     def safe_rollno_input_unless_duplicate(self, prompt, manager):
         """ It fetches roll no. unless user enters 
@@ -44,14 +56,14 @@ class Validation:
             try:
                 value = int(input(prompt))
                 if(not manager.is_roll_exists(value)):
-                    print(f"No such student exists with roll no. {value} .")
+                    print(f"            No such student exists with roll no. {value} .")
                     continue
                 if(value > 0):
                     return value
-                print("please enter positive number")
+                print("             please enter positive number")
 
             except ValueError:
-                print("Roll no. can only be number")
+                print("             Roll no. can only be number")
         
 
     # -------------------------------------------------------------------
@@ -66,11 +78,11 @@ class Validation:
         while True:
             name = input(prompt).strip()
             if(len(name) > 20):
-                print("name must be less than 20 characters")
+                print("             name must be less than 20 characters")
             elif(not name.isalpha()):
-                print("name can only be in letters .")
+                print("             name can only be in letters .")
             elif not name:
-                print("name can not be empty")
+                print("             name can not be empty")
             else:
                 return name
             
@@ -82,13 +94,13 @@ class Validation:
         while True:
             name = input(prompt).strip()
             if name == "" or name == " ":
-                print("name can not be empty .")
+                print("             name can not be empty .")
             elif(len(name) > 20):
-                print("name must be less than 20 characters")
+                print("             name must be less than 20 characters")
             elif manager.is_name_exists(name):
-                print(f"name : {name} already exists")
+                print(f"            name : {name} already exists")
             elif not self.is_valid_name(name):
-                print("Name can only be letters , _ or spaces .")
+                print("             Name can only be letters , _ or spaces .")
             else:
                 return name
             
@@ -100,13 +112,13 @@ class Validation:
         while True:
             name = input(prompt).strip()
             if(len(name) > 20):
-                print("name must be less than 20 characters")
+                print("             name must be less than 20 characters")
             elif(not name.isalpha()):
-                print("name can only be in letters .")
+                print("             name can only be in letters .")
             elif not name:
-                print("name can not be empty")
+                print("             name can not be empty")
             elif not manager.is_name_exists(name):
-                print(f"No such student exists with name :  {name} .")
+                print(f"            No such student exists with name :  {name} .")
             else:
                 return name
 
@@ -126,9 +138,9 @@ class Validation:
                 if 0 <= mark <= 100:
                     return mark
                 else:
-                    print("Enter Value between 0 and 100")
+                    print("             Enter Value between 0 and 100")
             except ValueError:
-                print("Enter valid number")
+                print("             Enter valid number")
 
 
     def safe_subject_input(self) -> int:
