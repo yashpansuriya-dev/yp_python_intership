@@ -1,0 +1,24 @@
+"""
+    logging :- to track the error,exception, or information .
+
+    Log levels :-
+        INFO, WARN , ERROR , FATAL
+
+        DEBUG : developer level logs (10)
+
+        INFO :- significant and noteworthy business events (20)
+    [2023-06-15 08:55:41] [INFO] User completed checkout order #45231
+
+        WARN :abnormal situations that may indicate future problems (30)
+    [2023-06-15 08:55:41] [WARN] Payment processing exceed normal
+
+        ERROR : unrecoverable errors that affect operations (40)
+    [2023-06-15 08:45:12] [ERROR] database connection failed
+
+        FATAL : unrecoverable errors that may affects entire system. (50)
+    [2023-06-15 08:45:12] [FATAL] System out of memory - shutting down
+
+    loggi
+    
+
+"""

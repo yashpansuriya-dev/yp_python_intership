@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Rendering Example</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 10rem;
+        }
+
+        #output {
+            padding: 20px;
+            background-color: #22cc22;
+            border: 1px solid #ccc;
+            width: 500px;
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 30px;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Click the button to show the JavaScript rendering</h2>
+        <button class="btn">Click it</button>
+    </div>
+    <div id="output">
+        <!-- Content will be rendered here dynamically -->
+    </div>
+
+
+    <script>
+        let outputDiv = document.getElementById('output');
+        let btn = document.querySelector(".btn");
+
+        // Generate some dynamic content
+        let dynamicContent = "<h2>Welcome to JavaScript Rendering!</h2>";
+        dynamicContent += "<p>This content was rendered dynamically using JavaScript.</p>";
+
+        // Set the content of the output div to the dynamic content
+        btn.addEventListener("click", function () {
+            outputDiv.innerHTML = dynamicContent;
+            outputDiv.style.display = "block";
+        });
+
+    </script>
+
+</body>
+
+</html>

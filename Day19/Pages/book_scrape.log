@@ -1,0 +1,10 @@
+[2026-03-26 12:37:06,526] [DEBUG] [Starting new HTTPS connection (1): books.toscrape.com:443]
+[2026-03-26 12:37:07,889] [DEBUG] [https://books.toscrape.com:443 "GET /catalogue/page-1.html HTTP/1.1" 200 50469]
+[2026-03-26 12:37:08,564] [INFO] [Fetched URL successfully: https://books.toscrape.com/catalogue/page-1.html]
+[2026-03-26 12:37:08,590] [INFO] [Parsed 20 books]
+[2026-03-26 12:37:08,591] [INFO] [Books Data Saved in book_details.json Succesfully]
+
+[2026-03-26 12:41:29,839] [DEBUG] [Starting new HTTPS connection (1): books.toscrape.com:443]
+[2026-03-26 12:41:29,843] [ERROR] [Failed to fetch https://books.toscrape.com/catalogue/page-1.html - HTTPSConnectionPool(host='books.toscrape.com', port=443): Max retries exceeded with url: /catalogue/page-1.html (Caused by NameResolutionError("HTTPSConnection(host='books.toscrape.com', port=443): Failed to resolve 'books.toscrape.com' ([Errno 11001] getaddrinfo failed)"))]
+[2026-03-26 12:41:29,843] [WARNING] [Skipping parsing due to fetch failure]
+
