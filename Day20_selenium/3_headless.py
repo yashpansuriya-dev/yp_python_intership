@@ -1,3 +1,12 @@
+"""
+    headless mode -> It scrapes website without opening chrome browser . 
+
+    options.add_argument("--headless=new")
+    
+"""
+
+# -------------------------------------------------------------------
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 

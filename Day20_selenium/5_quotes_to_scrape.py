@@ -1,3 +1,9 @@
+"""
+    It Scrappes Quotes website and extract data into CSV file .
+"""
+
+# -------------------------------------------------------------------
+
 import pandas as pd
 import time
 

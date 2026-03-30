@@ -1,3 +1,10 @@
+"""
+    It Scrapes bookstoscrape.com with selenium and
+    extracts it to csv .
+"""
+
+# -------------------------------------------------------------------
+
 import pandas as pd
 
 from selenium import webdriver

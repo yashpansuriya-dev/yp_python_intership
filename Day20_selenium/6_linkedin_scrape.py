@@ -1,3 +1,11 @@
+"""
+    It Scrapes Linkedin Webisite and extract Job role,
+    company and location as role searched in query and
+    extract it into CSV file.
+"""
+
+# -------------------------------------------------------------------
+
 import pandas as pd
 import time
 
@@ -6,7 +14,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-def save_jobs_to_csv(num_of_jobs, query):
+# -------------------------------------------------------------------
+
+def save_jobs_to_csv(num_of_jobs=10, query="Java Developer"):
     try:
         driver = webdriver.Chrome()
         driver.get(f"https://www.linkedin.com/jobs/search/?keywords={query}")
@@ -21,10 +31,13 @@ def save_jobs_to_csv(num_of_jobs, query):
         }
 
         last_count = 0
+        time.sleep(2)
 
         # cls_btn = wait.until(
         #         EC.element_to_be_clickable((By.CSS_SELECTOR, "button[aria-label='Dismiss']"))
         #     )
+        cls_btn = driver.find_element(By.CSS_SELECTOR, "button[aria-label='Dismiss']")
+        driver.execute_script("arguments[0].click()", cls_btn)
         # print(cls_btn)
 
         # cls_btn.click()
@@ -73,10 +86,14 @@ def save_jobs_to_csv(num_of_jobs, query):
     except Exception as e:
         print("Error Occurred:", e)
 
+# -------------------------------------------------------------------
 
 def main():
-    save_jobs_to_csv(10, "Java Developer")
+    role = input("Which Role do you want to search for : ")
+    num_of_jobs = int(input("How Many no. of jobs do you want : "))
+    save_jobs_to_csv(num_of_jobs, role)
 
+# -------------------------------------------------------------------
 
 if __name__ == "__main__":
     main()
