@@ -30,7 +30,6 @@ def save_jobs_to_csv(num_of_jobs, query):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             time.sleep(1)
 
-
             jobs = wait.until(
                     EC.presence_of_all_elements_located((By.CSS_SELECTOR, "li div div.base-search-card__info"))
                 )
