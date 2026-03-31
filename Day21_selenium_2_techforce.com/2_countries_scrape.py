@@ -44,7 +44,6 @@ def save_to_csv(filename):
         capital = country.find_element(By.CLASS_NAME, "country-capital").text
         population = country.find_element(By.CLASS_NAME, "country-population").text
         area = country.find_element(By.CLASS_NAME, "country-area").text
-        # print(name)
 
         data['Country'].append(name)
         data['Capital'].append(capital)
@@ -61,18 +60,31 @@ def save_to_csv(filename):
 # -------------------------------------------------------------------
 
 def main() -> None:
-    save_to_csv("countries_data.csv")
+    # save_to_csv("countries_data.csv")
 
     df = pd.read_csv("countries_data.csv")
 
     # Find Highest Populated Country .
+    print("-"*50)
     highest_populated_country = df.sort_values(by="Population", ascending=False).iloc[0]
     print(f"Country WIth Highest Population is : {highest_populated_country['Country']} with {highest_populated_country['Population']} Population .")
 
     # Country with population under 1 milion
+    print("-"*50)
     low_populate_countries = df[df['Population'] < 1000000]
     print(f"\n\nThere are {len(low_populate_countries)} Countries with population under 1 milion")
     print(low_populate_countries.head())
+
+    print("-"*50)
+    print(f"\n\nTotal countries in world : {len(df)}")
+
+    less_than_up_bihar = df[df["Population"] < 370000000].copy()
+    print(f"There are {len(less_than_up_bihar)} countries with less population then combined of up and bihar")
+
+    # Less Area
+    print("\n","-"*50)
+    less_area_countries =  df.sort_values(by="Area")
+    print(less_area_countries.head(20))
 
 # -------------------------------------------------------------------
 

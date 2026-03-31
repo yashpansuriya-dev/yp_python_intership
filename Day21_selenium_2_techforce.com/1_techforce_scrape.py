@@ -57,73 +57,73 @@ for topic in all_tech_topics:
 
 
 
-# -------------------------------------------------------------------
-# Our portfolio - List All Projects
-# -------------------------------------------------------------------
-company_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Company']")
-company_btn.click()
+# # -------------------------------------------------------------------
+# # Our portfolio - List All Projects
+# # -------------------------------------------------------------------
+# company_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Company']")
+# company_btn.click()
 
 
-portfolio_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Our Portfolio']")
-portfolio_btn.click()
+# portfolio_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Our Portfolio']")
+# portfolio_btn.click()
 
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(5)
+# driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+# time.sleep(5)
 
 
-heading= driver.find_element(By.CSS_SELECTOR, ".section-title")
-print("\n\n",heading.text)
+# heading= driver.find_element(By.CSS_SELECTOR, ".section-title")
+# print("\n\n",heading.text)
 
-# click load more 5times
-for _ in range(5):
-    load_more_btn = wait.until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, "#pf-load-more"))
-    )
+# # click load more 5times
+# for _ in range(5):
+#     load_more_btn = wait.until(
+#         EC.element_to_be_clickable((By.CSS_SELECTOR, "#pf-load-more"))
+#     )
     
-    driver.execute_script("arguments[0].click();", load_more_btn)
-    # load_more_btn.click()
-    time.sleep(2)
+#     driver.execute_script("arguments[0].click();", load_more_btn)
+#     # load_more_btn.click()
+#     time.sleep(2)
 
-projects = driver.find_elements(By.CSS_SELECTOR, "div.pf-cards-grid  div.pf-card-wrapper")
+# projects = driver.find_elements(By.CSS_SELECTOR, "div.pf-cards-grid  div.pf-card-wrapper")
 
-print("Total projects:", len(projects))
-print("\n\n")
+# print("Total projects:", len(projects))
+# print("\n\n")
 
-for project in projects:
-    try:
-        title = project.find_element(By.CSS_SELECTOR, ".pf-card-overlay-title").get_attribute("textContent").strip()
-        desc = project.find_element(By.CSS_SELECTOR, ".pf-card-overlay-desc").get_attribute("textContent").strip()
+# for project in projects:
+#     try:
+#         title = project.find_element(By.CSS_SELECTOR, ".pf-card-overlay-title").get_attribute("textContent").strip()
+#         desc = project.find_element(By.CSS_SELECTOR, ".pf-card-overlay-desc").get_attribute("textContent").strip()
         
-        print("Title:", title)
-        print("Desc:", desc)
-        print("-" * 50)
+#         print("Title:", title)
+#         print("Desc:", desc)
+#         print("-" * 50)
         
-    except Exception as e:
-        print("Error:", e)
-# -------------------------------------------------------------------
+#     except Exception as e:
+#         print("Error:", e)
+# # -------------------------------------------------------------------
 
 
 
 
-# -------------------------------------------------------------------
-# List Our Apify Actors
-# -------------------------------------------------------------------
+# # -------------------------------------------------------------------
+# # List Our Apify Actors
+# # -------------------------------------------------------------------
 
-apify_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Apify Actors']")
-apify_btn.click()
+# apify_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Apify Actors']")
+# apify_btn.click()
 
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-time.sleep(5)
+# driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+# time.sleep(5)
 
-actors = driver.find_elements(By.CSS_SELECTOR, ".portfolio-grid .portfolio-gridbox")
+# actors = driver.find_elements(By.CSS_SELECTOR, ".portfolio-grid .portfolio-gridbox")
 
-print("\nApify Actors : ")
-print(f"We have total {len(actors)} apify actors . ")
-for actor in actors:
-    name = actor.find_element(By.CSS_SELECTOR, "div a h3").get_attribute("textContent").strip()
-    print(name)
-    print("-"*50)
-# -------------------------------------------------------------------
+# print("\nApify Actors : ")
+# print(f"We have total {len(actors)} apify actors . ")
+# for actor in actors:
+#     name = actor.find_element(By.CSS_SELECTOR, "div a h3").get_attribute("textContent").strip()
+#     print(name)
+#     print("-"*50)
+# # -------------------------------------------------------------------
 
 
 
@@ -134,7 +134,6 @@ for actor in actors:
 
 company_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Company']")
 company_btn.click()
-
 
 portfolio_btn = driver.find_element(By.CSS_SELECTOR, "a[title='Contact Us']")
 portfolio_btn.click()
@@ -148,8 +147,10 @@ category = Select(driver.find_element(By.CSS_SELECTOR, "#LEADCF9")).select_by_va
 description = driver.find_element(By.CSS_SELECTOR, "#Description").send_keys("random text")
 
 submit_btn = driver.find_element(By.CSS_SELECTOR, "input[type='submit']")
-# driver.execute_script("arguments[0].click()", submit_btn)
-# submit_btn.click()
+
+driver.execute_script("arguments[0].click()", submit_btn)
+
 # -------------------------------------------------------------------
 
+time.sleep(5)
 driver.quit()
