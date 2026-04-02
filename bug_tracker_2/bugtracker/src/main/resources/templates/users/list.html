@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Users')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow">Admin Module</div>
+            <h1 class="mb-2">User management</h1>
+            <p class="text-secondary mb-0">Create employees, map them to projects, update roles, and deactivate accounts safely.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/users/new}">Add Employee</a>
+    </section>
+
+    <section class="content-card">
+        <div class="table-responsive">
+            <table class="table app-table align-middle">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Projects</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td>
+                        <strong th:text="${user.fullName}">Name</strong>
+                        <div class="small text-secondary" th:text="${#temporals.format(user.createdAt, 'dd MMM yyyy')}">Created</div>
+                    </td>
+                    <td th:text="${user.email}">email@example.com</td>
+                    <td><span class="badge-soft" th:text="${user.role.label}">Role</span></td>
+                    <td>
+                        <span th:if="${user.active}" class="text-success fw-semibold">Active</span>
+                        <span th:unless="${user.active}" class="text-danger fw-semibold">Inactive</span>
+                    </td>
+                    <td th:text="${user.projectMemberships.size()}">0</td>
+                    <td class="text-end">
+                        <a class="btn btn-sm btn-outline-primary" th:href="@{|/users/${user.id}/edit|}">Edit</a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="6" class="text-center text-secondary py-4">No users found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Projects')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow">Module 2</div>
+            <h1 class="mb-2">Project and team management</h1>
+            <p class="text-secondary mb-0">Create projects, assign managers, maintain team membership, and track project-wise bug counts.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/projects/new}" th:if="${isAdmin or isProjectManager}">Add Project</a>
+    </section>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-xl-4" th:each="project : ${projects}">
+            <article class="content-card h-100">
+                <div class="d-flex justify-content-between align-items-start gap-3">
+                    <div>
+                        <div class="eyebrow" th:text="${project.code}">CODE</div>
+                        <h3 class="mb-1" th:text="${project.name}">Project</h3>
+                        <p class="text-secondary mb-2" th:text="${project.description}">Description</p>
+                    </div>
+                    <span class="badge-soft" th:text="${project.status.label}">Status</span>
+                </div>
+                <div class="small text-secondary mb-3">
+                    <div th:text="'Manager: ' + ${project.manager.fullName}">Manager</div>
+                    <div th:text="'Start: ' + ${#temporals.format(project.startDate, 'dd MMM yyyy')}">Start date</div>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <a class="btn btn-sm btn-primary" th:href="@{|/projects/${project.id}|}">Open</a>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{|/projects/${project.id}/edit|}" th:if="${isAdmin or (isProjectManager and currentUser.id == project.manager.id)}">Edit</a>
+                </div>
+            </article>
+        </div>
+        <div th:if="${#lists.isEmpty(projects)}" class="col-12">
+            <section class="content-card text-center">
+                <h3>No projects available</h3>
+                <p class="text-secondary mb-0">Create your first project to start assigning teams and tracking bugs.</p>
+            </section>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

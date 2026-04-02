@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Project Details')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow" th:text="${project.code}">CODE</div>
+            <h1 class="mb-2" th:text="${project.name}">Project</h1>
+            <p class="text-secondary mb-0" th:text="${project.description}">Description</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <span class="badge-soft align-self-start" th:text="${project.status.label}">Status</span>
+            <a class="btn btn-outline-primary" th:href="@{|/projects/${project.id}/edit|}" th:if="${canManageProject}">Edit Project</a>
+        </div>
+    </section>
+
+    <div class="row g-4">
+        <div class="col-lg-4">
+            <section class="content-card h-100">
+                <h3 class="mb-3">Project Info</h3>
+                <div class="stack-list">
+                    <div class="stack-item">
+                        <div>
+                            <strong>Manager</strong>
+                            <div class="text-secondary small" th:text="${project.manager.fullName}">Manager</div>
+                        </div>
+                    </div>
+                    <div class="stack-item">
+                        <div>
+                            <strong>Start Date</strong>
+                            <div class="text-secondary small" th:text="${#temporals.format(project.startDate, 'dd MMM yyyy')}">Date</div>
+                        </div>
+                    </div>
+                    <div class="stack-item" th:if="${project.targetEndDate != null}">
+                        <div>
+                            <strong>Target End Date</strong>
+                            <div class="text-secondary small" th:text="${#temporals.format(project.targetEndDate, 'dd MMM yyyy')}">Date</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-8">
+            <section class="content-card h-100">
+                <div class="section-header">
+                    <div>
+                        <h3 class="mb-1">Team Members</h3>
+                        <p class="text-secondary mb-0">Users currently mapped to this project.</p>
+                    </div>
+                </div>
+                <div class="stack-list">
+                    <div class="stack-item" th:each="member : ${projectMembers}">
+                        <div>
+                            <strong th:text="${member.fullName}">Member</strong>
+                            <div class="small text-secondary" th:text="${member.email}">email</div>
+                        </div>
+                        <span class="badge-soft" th:text="${member.role.label}">Role</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <section class="content-card mt-4">
+        <div class="section-header">
+            <div>
+                <h3 class="mb-1">Project Bugs</h3>
+                <p class="text-secondary mb-0">Ticket list scoped to this project.</p>
+            </div>
+            <a class="btn btn-sm btn-primary" th:href="@{/bugs/new}">Report Bug</a>
+        </div>
+        <div class="table-responsive">
+            <table class="table app-table align-middle">
+                <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Assignee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bug : ${projectBugs}">
+                    <td><a th:href="@{|/bugs/${bug.id}|}" th:text="${bug.ticketId}">BTP-00001</a></td>
+                    <td th:text="${bug.title}">Title</td>
+                    <td><span class="badge-soft" th:text="${bug.status.label}">Status</span></td>
+                    <td th:text="${bug.priority.label}">Priority</td>
+                    <td th:text="${bug.assignee != null ? bug.assignee.fullName : 'Unassigned'}">Assignee</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(projectBugs)}">
+                    <td colspan="5" class="text-center text-secondary py-4">No bugs reported for this project yet.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

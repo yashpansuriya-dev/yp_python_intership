@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Login')}"></head>
+<body class="auth-shell">
+<section class="auth-wrapper">
+    <div class="auth-panel auth-copy">
+        <div class="eyebrow">Degree Project Ready</div>
+        <h1>Track bugs, assign fixes, measure progress.</h1>
+        <p class="lead">BugTrackPro turns your SRS into a working Spring Boot system with roles, projects, ticket flow, collaboration, time logs, and reports.</p>
+        <div class="demo-accounts">
+            <div class="demo-account">
+                <strong>Admin</strong>
+                <span>`admin@bugtrackpro.local` / `Admin@123`</span>
+            </div>
+            <div class="demo-account">
+                <strong>Project Manager</strong>
+                <span>`manager@bugtrackpro.local` / `Manager@123`</span>
+            </div>
+            <div class="demo-account">
+                <strong>Developer</strong>
+                <span>`developer@bugtrackpro.local` / `Developer@123`</span>
+            </div>
+            <div class="demo-account">
+                <strong>Tester</strong>
+                <span>`tester@bugtrackpro.local` / `Tester@123`</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-panel auth-card">
+        <div class="mb-4">
+            <div class="eyebrow">Welcome Back</div>
+            <h2 class="mb-1">Sign in</h2>
+            <p class="text-secondary mb-0">Use your system credentials to continue.</p>
+        </div>
+
+        <div th:if="${param.error}" class="alert alert-danger">Invalid email or password.</div>
+        <div th:if="${param.logout}" class="alert alert-success">You have been logged out successfully.</div>
+        <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+
+        <form th:action="@{/login}" method="post" class="d-grid gap-3">
+            <div>
+                <label class="form-label">Email</label>
+                <input class="form-control form-control-lg" type="email" name="username" placeholder="you@example.com" required>
+            </div>
+            <div>
+                <label class="form-label">Password</label>
+                <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button class="btn btn-primary btn-lg" type="submit">Login</button>
+        </form>
+
+        <div class="auth-footer mt-4">
+            <span>Need a new developer or tester account?</span>
+            <a th:href="@{/register}">Register here</a>
+        </div>
+    </div>
+</section>
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

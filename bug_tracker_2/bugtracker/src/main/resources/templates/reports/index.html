@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Reports')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow">Analytics & Reports</div>
+            <h1 class="mb-2">Project summary and developer performance</h1>
+            <p class="text-secondary mb-0">Generate downloadable CSV reports for project-wise bug counts and developer effort metrics.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary" th:href="@{/reports/projects.csv}">Download Project CSV</a>
+            <a class="btn btn-outline-primary" th:href="@{/reports/developers.csv}">Download Developer CSV</a>
+        </div>
+    </section>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <section class="content-card h-100">
+                <h3 class="mb-3">Project Summary</h3>
+                <div class="table-responsive">
+                    <table class="table app-table align-middle">
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Team</th>
+                            <th>Total Bugs</th>
+                            <th>Open</th>
+                            <th>Resolved</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="projectStat : ${dashboardData.projectOverviews()}">
+                            <td>
+                                <strong th:text="${projectStat.name()}">Project</strong>
+                                <div class="small text-secondary" th:text="${projectStat.code()}">CODE</div>
+                            </td>
+                            <td><span class="badge-soft" th:text="${projectStat.status().label}">Status</span></td>
+                            <td th:text="${projectStat.teamSize()}">0</td>
+                            <td th:text="${projectStat.totalBugs()}">0</td>
+                            <td th:text="${projectStat.openBugs()}">0</td>
+                            <td th:text="${projectStat.resolvedBugs()}">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <div class="col-lg-5">
+            <section class="content-card h-100">
+                <h3 class="mb-3">Developer Performance</h3>
+                <div class="stack-list">
+                    <div class="stack-item" th:each="developer : ${dashboardData.developerMetrics()}">
+                        <div>
+                            <strong th:text="${developer.fullName()}">Developer</strong>
+                            <div class="small text-secondary">
+                                <span th:text="${developer.resolvedCount()} + ' resolved'">0 resolved</span>
+                                <span> • </span>
+                                <span th:text="${developer.assignedCount()} + ' active assignments'">0 active assignments</span>
+                            </div>
+                        </div>
+                        <span class="badge-soft" th:text="${developer.totalMinutes()} + ' min'">0 min</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

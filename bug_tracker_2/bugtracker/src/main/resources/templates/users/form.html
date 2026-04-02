@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head(${formMode == 'create' ? 'Add User' : 'Edit User'})}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="content-card mx-auto" style="max-width: 980px;">
+        <div class="section-header">
+            <div>
+                <div class="eyebrow" th:text="${formMode == 'create' ? 'New Employee' : 'Update Employee'}">Form</div>
+                <h1 class="mb-1" th:text="${formMode == 'create' ? 'Add user account' : 'Edit user account'}">User</h1>
+                <p class="text-secondary mb-0">Manage core employee details, roles, credentials, and project associations.</p>
+            </div>
+        </div>
+
+        <form th:action="@{${formAction}}" th:object="${userForm}" method="post" class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input class="form-control" th:field="*{fullName}" type="text" placeholder="Enter full name">
+                <div class="text-danger small mt-1" th:errors="*{fullName}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input class="form-control" th:field="*{email}" type="email" placeholder="Enter email">
+                <div class="text-danger small mt-1" th:errors="*{email}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Role</label>
+                <select class="form-select" th:field="*{role}">
+                    <option value="">Select role</option>
+                    <option th:each="role : ${roleOptions}" th:value="${role}" th:text="${role.label}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{role}"></div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" th:field="*{active}" type="checkbox">
+                    <label class="form-check-label">User is active</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label" th:text="${formMode == 'create' ? 'Password' : 'New Password (optional)'}">Password</label>
+                <input class="form-control" th:field="*{password}" type="password" placeholder="Minimum 8 characters">
+                <div class="text-danger small mt-1" th:errors="*{password}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Confirm Password</label>
+                <input class="form-control" th:field="*{confirmPassword}" type="password" placeholder="Repeat password">
+                <div class="text-danger small mt-1" th:errors="*{confirmPassword}"></div>
+                <div class="text-danger small mt-1" th:errors="*{passwordConfirmed}"></div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Project Memberships</label>
+                <select class="form-select" th:field="*{projectIds}" multiple size="8">
+                    <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.code + ' - ' + project.name}"></option>
+                </select>
+                <div class="form-text">Hold Ctrl/Cmd to select multiple projects.</div>
+            </div>
+            <div class="col-12 d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary" type="submit" th:text="${formMode == 'create' ? 'Create User' : 'Save Changes'}">Save</button>
+                <a class="btn btn-outline-secondary" th:href="@{/users}">Back to Users</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

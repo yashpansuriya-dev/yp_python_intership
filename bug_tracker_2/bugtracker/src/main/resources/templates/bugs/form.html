@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Report Bug')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="content-card mx-auto" style="max-width: 1080px;">
+        <div class="section-header">
+            <div>
+                <div class="eyebrow">Bug Reporting</div>
+                <h1 class="mb-1">Create a new bug ticket</h1>
+                <p class="text-secondary mb-0">Capture the issue clearly with lifecycle-ready metadata, reproduction notes, and optional file attachments.</p>
+            </div>
+        </div>
+
+        <form th:action="@{/bugs}" th:object="${bugForm}" method="post" enctype="multipart/form-data" class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">Project</label>
+                <select class="form-select" th:field="*{projectId}">
+                    <option value="">Select project</option>
+                    <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.code + ' • ' + project.name}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{projectId}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Priority</label>
+                <select class="form-select" th:field="*{priority}">
+                    <option value="">Select priority</option>
+                    <option th:each="priority : ${priorityOptions}" th:value="${priority}" th:text="${priority.label}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{priority}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Severity</label>
+                <select class="form-select" th:field="*{severity}">
+                    <option value="">Select severity</option>
+                    <option th:each="severity : ${severityOptions}" th:value="${severity}" th:text="${severity.label}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{severity}"></div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Title</label>
+                <input class="form-control" th:field="*{title}" type="text" placeholder="Short summary of the bug">
+                <div class="text-danger small mt-1" th:errors="*{title}"></div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}" rows="4" placeholder="Explain the issue and impact"></textarea>
+                <div class="text-danger small mt-1" th:errors="*{description}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Steps to Reproduce</label>
+                <textarea class="form-control" th:field="*{stepsToReproduce}" rows="5" placeholder="List reproducible steps"></textarea>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Expected Result</label>
+                <textarea class="form-control" th:field="*{expectedResult}" rows="5" placeholder="What should happen?"></textarea>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Actual Result</label>
+                <textarea class="form-control" th:field="*{actualResult}" rows="5" placeholder="What happened instead?"></textarea>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Attachments</label>
+                <input class="form-control" type="file" name="files" multiple>
+                <div class="form-text">Allowed formats: screenshots, logs, PDFs, ZIP, JSON, CSV.</div>
+            </div>
+            <div class="col-12 d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary" type="submit">Create Ticket</button>
+                <a class="btn btn-outline-secondary" th:href="@{/bugs}">Back to Bug List</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

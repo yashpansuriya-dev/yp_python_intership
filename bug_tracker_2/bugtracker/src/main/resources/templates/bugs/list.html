@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Bugs')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow">Module 3, 4, 5</div>
+            <h1 class="mb-2">Bug search and lifecycle tracking</h1>
+            <p class="text-secondary mb-0">Filter by ticket, project, status, priority, severity, assignee, and special views like unassigned or my bugs.</p>
+        </div>
+        <a class="btn btn-primary" th:href="@{/bugs/new}">Add Bug</a>
+    </section>
+
+    <section class="content-card mb-4">
+        <form th:action="@{/bugs}" th:object="${criteria}" method="get" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Keyword</label>
+                <input class="form-control" th:field="*{keyword}" type="text" placeholder="Ticket, title, description">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Project</label>
+                <select class="form-select" th:field="*{projectId}">
+                    <option value="">All</option>
+                    <option th:each="project : ${projects}" th:value="${project.id}" th:text="${project.code + ' • ' + project.name}"></option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Status</label>
+                <select class="form-select" th:field="*{status}">
+                    <option value="">All</option>
+                    <option th:each="status : ${statusOptions}" th:value="${status}" th:text="${status.label}"></option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">Priority</label>
+                <select class="form-select" th:field="*{priority}">
+                    <option value="">All</option>
+                    <option th:each="priority : ${priorityOptions}" th:value="${priority}" th:text="${priority.label}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Severity</label>
+                <select class="form-select" th:field="*{severity}">
+                    <option value="">All</option>
+                    <option th:each="severity : ${severityOptions}" th:value="${severity}" th:text="${severity.label}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Assigned Developer</label>
+                <select class="form-select" th:field="*{assigneeId}">
+                    <option value="">All</option>
+                    <option th:each="developer : ${developers}" th:value="${developer.id}" th:text="${developer.fullName}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">View</label>
+                <select class="form-select" th:field="*{viewMode}">
+                    <option value="all">All Bugs</option>
+                    <option value="new">New / Unassigned</option>
+                    <option value="mine">Assigned to Me</option>
+                    <option value="reported">Reported by Me</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Sort By</label>
+                <select class="form-select" th:field="*{sortBy}">
+                    <option value="updatedDesc">Latest Updated</option>
+                    <option value="createdDesc">Latest Created</option>
+                    <option value="priority">Priority</option>
+                    <option value="status">Status</option>
+                    <option value="title">Title</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end gap-2">
+                <button class="btn btn-primary flex-grow-1" type="submit">Apply Filters</button>
+                <a class="btn btn-outline-secondary" th:href="@{/bugs}">Reset</a>
+            </div>
+        </form>
+    </section>
+
+    <section class="content-card">
+        <div class="table-responsive">
+            <table class="table app-table align-middle">
+                <thead>
+                <tr>
+                    <th>Ticket</th>
+                    <th>Title</th>
+                    <th>Project</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Severity</th>
+                    <th>Reporter</th>
+                    <th>Assignee</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="bug : ${bugs}">
+                    <td><a th:href="@{|/bugs/${bug.id}|}" th:text="${bug.ticketId}">BTP-00001</a></td>
+                    <td th:text="${bug.title}">Bug title</td>
+                    <td th:text="${bug.project.name}">Project</td>
+                    <td><span class="badge-soft" th:text="${bug.status.label}">Status</span></td>
+                    <td th:text="${bug.priority.label}">Priority</td>
+                    <td th:text="${bug.severity.label}">Severity</td>
+                    <td th:text="${bug.reporter.fullName}">Reporter</td>
+                    <td th:text="${bug.assignee != null ? bug.assignee.fullName : 'Unassigned'}">Assignee</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(bugs)}">
+                    <td colspan="8" class="text-center text-secondary py-4">No bugs found for the selected filters.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

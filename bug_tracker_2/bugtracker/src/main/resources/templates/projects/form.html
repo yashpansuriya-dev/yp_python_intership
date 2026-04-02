@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head(${formMode == 'create' ? 'Add Project' : 'Edit Project'})}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="content-card mx-auto" style="max-width: 1080px;">
+        <div class="section-header">
+            <div>
+                <div class="eyebrow" th:text="${formMode == 'create' ? 'New Project' : 'Update Project'}">Mode</div>
+                <h1 class="mb-1" th:text="${formMode == 'create' ? 'Create project workspace' : 'Edit project workspace'}">Project</h1>
+                <p class="text-secondary mb-0">Define team structure, delivery dates, and current project state.</p>
+            </div>
+        </div>
+
+        <form th:action="@{${formAction}}" th:object="${projectForm}" method="post" class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label">Project Name</label>
+                <input class="form-control" th:field="*{name}" type="text" placeholder="Enter project name">
+                <div class="text-danger small mt-1" th:errors="*{name}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Project Code</label>
+                <input class="form-control" th:field="*{code}" type="text" placeholder="Auto-generated if blank">
+                <div class="text-danger small mt-1" th:errors="*{code}"></div>
+            </div>
+            <div class="col-12">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" th:field="*{description}" rows="4" placeholder="Describe the project scope"></textarea>
+                <div class="text-danger small mt-1" th:errors="*{description}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Start Date</label>
+                <input class="form-control" th:field="*{startDate}" type="date">
+                <div class="text-danger small mt-1" th:errors="*{startDate}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Target End Date</label>
+                <input class="form-control" th:field="*{targetEndDate}" type="date">
+                <div class="text-danger small mt-1" th:errors="*{targetEndDate}"></div>
+                <div class="text-danger small mt-1" th:errors="*{dateRangeValid}"></div>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Status</label>
+                <select class="form-select" th:field="*{status}">
+                    <option th:each="status : ${statusOptions}" th:value="${status}" th:text="${status.label}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{status}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Project Manager</label>
+                <select class="form-select" th:field="*{managerId}">
+                    <option value="">Select manager</option>
+                    <option th:each="manager : ${managerOptions}" th:value="${manager.id}" th:text="${manager.fullName}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{managerId}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Team Members</label>
+                <select class="form-select" th:field="*{memberIds}" multiple size="8">
+                    <option th:each="member : ${memberOptions}" th:value="${member.id}" th:text="${member.fullName + ' - ' + member.role.label}"></option>
+                </select>
+                <div class="form-text">Project manager is automatically included in the team.</div>
+            </div>
+            <div class="col-12 d-flex gap-3 flex-wrap">
+                <button class="btn btn-primary" type="submit" th:text="${formMode == 'create' ? 'Create Project' : 'Save Project'}">Save</button>
+                <a class="btn btn-outline-secondary" th:href="@{/projects}">Back to Projects</a>
+            </div>
+        </form>
+    </section>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Error')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<main class="container py-5">
+    <section class="content-card text-center mx-auto" style="max-width: 760px;">
+        <div class="eyebrow">Something Needs Attention</div>
+        <h1 class="mb-3" th:text="${errorTitle} ?: 'Unexpected application error'">Unexpected application error</h1>
+        <p class="lead text-secondary" th:text="${errorMessage} ?: 'Please go back and try again.'">Please go back and try again.</p>
+        <div class="d-flex justify-content-center gap-3 mt-4 flex-wrap">
+            <a class="btn btn-primary" th:href="@{/dashboard}">Back to Dashboard</a>
+            <a class="btn btn-outline-secondary" th:href="@{/bugs}">Open Bug List</a>
+        </div>
+    </section>
+</main>
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

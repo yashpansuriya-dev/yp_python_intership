@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Register')}"></head>
+<body class="auth-shell">
+<section class="auth-wrapper auth-wrapper-wide">
+    <div class="auth-panel auth-card">
+        <div class="mb-4">
+            <div class="eyebrow">Quick Onboarding</div>
+            <h2>Create an account</h2>
+            <p class="text-secondary mb-0">Self-registration is available for Developers and Testers. Admin and Project Manager accounts are created by the administrator.</p>
+        </div>
+
+        <form th:action="@{/register}" th:object="${registrationForm}" method="post" class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label">Full Name</label>
+                <input class="form-control" th:field="*{fullName}" type="text" placeholder="Your full name">
+                <div class="text-danger small mt-1" th:errors="*{fullName}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input class="form-control" th:field="*{email}" type="email" placeholder="you@example.com">
+                <div class="text-danger small mt-1" th:errors="*{email}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Role</label>
+                <select class="form-select" th:field="*{role}">
+                    <option value="">Select role</option>
+                    <option th:each="role : ${selfRegistrationRoles}" th:value="${role}" th:text="${role.label}"></option>
+                </select>
+                <div class="text-danger small mt-1" th:errors="*{role}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Password</label>
+                <input class="form-control" th:field="*{password}" type="password" placeholder="Minimum 8 characters">
+                <div class="text-danger small mt-1" th:errors="*{password}"></div>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Confirm Password</label>
+                <input class="form-control" th:field="*{confirmPassword}" type="password" placeholder="Repeat your password">
+                <div class="text-danger small mt-1" th:errors="*{confirmPassword}"></div>
+            </div>
+            <div class="col-12">
+                <div class="text-danger small mt-1" th:errors="*{passwordConfirmed}"></div>
+            </div>
+            <div class="col-12 d-flex flex-wrap gap-3 align-items-center">
+                <button class="btn btn-primary" type="submit">Create Account</button>
+                <a class="btn btn-outline-secondary" th:href="@{/login}">Back to Login</a>
+            </div>
+        </form>
+    </div>
+    <div class="auth-panel auth-copy">
+        <div class="eyebrow">What You Get</div>
+        <h1>Start contributing from day one.</h1>
+        <ul class="feature-list">
+            <li>Join projects and collaborate through structured bug comments.</li>
+            <li>Track lifecycle stages from Open to Closed with full activity history.</li>
+            <li>Log time spent on tickets to power analytics and performance reports.</li>
+        </ul>
+    </div>
+</section>
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/common :: head('Dashboard')}"></head>
+<body>
+<div th:replace="~{fragments/common :: nav}"></div>
+<div th:replace="~{fragments/common :: alerts}"></div>
+
+<main class="container pb-5">
+    <section class="hero-card mb-4">
+        <div>
+            <div class="eyebrow">System Overview</div>
+            <h1 class="mb-2">Bug tracking with developer analytics built for your final-year project.</h1>
+            <p class="text-secondary mb-0">Use the dashboard to monitor ticket flow, project health, collaboration activity, and developer effort in one place.</p>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-primary" th:href="@{/bugs/new}">Report a Bug</a>
+            <a class="btn btn-outline-primary" th:href="@{/projects}">Manage Projects</a>
+        </div>
+    </section>
+
+    <section class="stats-grid mb-4">
+        <article class="metric-card">
+            <span>Total Bugs</span>
+            <strong th:text="${dashboardData.summary().totalBugs()}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Open Bugs</span>
+            <strong th:text="${dashboardData.summary().openBugs()}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>In Progress</span>
+            <strong th:text="${dashboardData.summary().inProgressBugs()}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Resolved</span>
+            <strong th:text="${dashboardData.summary().resolvedBugs()}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Closed</span>
+            <strong th:text="${dashboardData.summary().closedBugs()}">0</strong>
+        </article>
+        <article class="metric-card">
+            <span>Unassigned</span>
+            <strong th:text="${dashboardData.summary().unassignedBugs()}">0</strong>
+        </article>
+    </section>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <section class="content-card h-100">
+                <div class="section-header">
+                    <div>
+                        <h3 class="mb-1">Project Snapshot</h3>
+                        <p class="text-secondary mb-0">Live project counts derived from bug and team data.</p>
+                    </div>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/projects}">Open Projects</a>
+                </div>
+                <div class="table-responsive">
+                    <table class="table app-table align-middle">
+                        <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Status</th>
+                            <th>Team</th>
+                            <th>Total</th>
+                            <th>Open</th>
+                            <th>Resolved</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="projectStat : ${dashboardData.projectOverviews()}">
+                            <td>
+                                <a th:href="@{|/projects/${projectStat.id()}|}" th:text="${projectStat.name()}">Project</a>
+                                <div class="small text-secondary" th:text="${projectStat.code()}">CODE</div>
+                            </td>
+                            <td><span class="badge-soft" th:text="${projectStat.status().label}">Active</span></td>
+                            <td th:text="${projectStat.teamSize()}">0</td>
+                            <td th:text="${projectStat.totalBugs()}">0</td>
+                            <td th:text="${projectStat.openBugs()}">0</td>
+                            <td th:text="${projectStat.resolvedBugs()}">0</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(dashboardData.projectOverviews())}">
+                            <td colspan="6" class="text-center text-secondary py-4">No accessible projects yet.</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-5">
+            <section class="content-card h-100">
+                <div class="section-header">
+                    <div>
+                        <h3 class="mb-1">Developer Metrics</h3>
+                        <p class="text-secondary mb-0">Resolution counts and time logging totals.</p>
+                    </div>
+                </div>
+                <div class="stack-list">
+                    <div class="stack-item" th:each="developer : ${dashboardData.developerMetrics()}">
+                        <div>
+                            <strong th:text="${developer.fullName()}">Developer</strong>
+                            <div class="small text-secondary">
+                                <span th:text="${developer.resolvedCount()} + ' resolved'">0 resolved</span>
+                                <span> • </span>
+                                <span th:text="${developer.assignedCount()} + ' active'">0 active</span>
+                            </div>
+                        </div>
+                        <div class="badge-soft" th:text="${developer.totalMinutes()} + ' min'">0 min</div>
+                    </div>
+                    <div th:if="${#lists.isEmpty(dashboardData.developerMetrics())}" class="text-secondary">No developers mapped to your visible projects.</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-1">
+        <div class="col-lg-6">
+            <section class="content-card h-100">
+                <div class="section-header">
+                    <div>
+                        <h3 class="mb-1">Recent Bugs</h3>
+                        <p class="text-secondary mb-0">Latest reported issues across your projects.</p>
+                    </div>
+                    <a class="btn btn-sm btn-outline-primary" th:href="@{/bugs}">View All</a>
+                </div>
+                <div class="stack-list">
+                    <a class="stack-item stack-link" th:each="bug : ${dashboardData.recentBugs()}" th:href="@{|/bugs/${bug.id}|}">
+                        <div>
+                            <strong th:text="${bug.ticketId + ' • ' + bug.title}">Bug</strong>
+                            <div class="small text-secondary" th:text="${bug.project.name + ' • ' + bug.status.label}">Project • Status</div>
+                        </div>
+                        <span class="badge-soft" th:text="${bug.priority.label}">Priority</span>
+                    </a>
+                    <div th:if="${#lists.isEmpty(dashboardData.recentBugs())}" class="text-secondary">No recent bugs yet.</div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-lg-6">
+            <section class="content-card h-100">
+                <div class="section-header">
+                    <div>
+                        <h3 class="mb-1">Activity Feed</h3>
+                        <p class="text-secondary mb-0">Status changes, comments, time logs, and assignments.</p>
+                    </div>
+                </div>
+                <div class="stack-list">
+                    <div class="stack-item" th:each="activity : ${dashboardData.recentActivities()}">
+                        <div>
+                            <strong th:text="${activity.actor.fullName}">User</strong>
+                            <div class="small text-secondary" th:text="${activity.description}">Description</div>
+                        </div>
+                        <span class="small text-secondary" th:text="${#temporals.format(activity.createdAt, 'dd MMM yyyy HH:mm')}">Date</span>
+                    </div>
+                    <div th:if="${#lists.isEmpty(dashboardData.recentActivities())}" class="text-secondary">No recent activity available.</div>
+                </div>
+            </section>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/common :: scripts}"></div>
+</body>
+</html>
