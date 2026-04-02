@@ -1,0 +1,114 @@
+{
+    "Title": "Transforming Ideas into Digital RealityDigital Reality",
+    "Info": "We follow a proven, agile methodology to ensure project success. From ideation to deployment, we are your partners in innovation.",
+    "Flexible Models": [
+        {
+            "Title": "Fixed Scope",
+            "Description": "Best for clearly defined projects with fixed requirements and timelines.",
+            "What's Included": [
+                "Clear requirements",
+                "Fixed budget",
+                "Defined timeline"
+            ],
+            "Link": "https://techforceglobal.com/contact-us/"
+        },
+        {
+            "Title": "Time and Material",
+            "Description": "Ideal for evolving projects where flexibility is key. Pay for the time and resources used.",
+            "What's Included": [
+                "Dynamic requirements",
+                "Flexible budget",
+                "Evolving timeline"
+            ],
+            "Link": "https://techforceglobal.com/contact-us/"
+        },
+        {
+            "Title": "Extended Team",
+            "Description": "Scale your team with our expert developers. We work as an extension of your in-house team.",
+            "What's Included": [
+                "Scalable Resources",
+                "Complete control",
+                "Direct Communication"
+            ],
+            "Link": "https://techforceglobal.com/contact-us/"
+        }
+    ],
+    "Our Approches": [
+        {
+            "Step ": "01",
+            "Title": "Discovery",
+            "Description": "We start by deeply understanding your vision, market landscape, and business goals. Through collaborative workshops and research, we chart the perfect course for your project.",
+            "It includes": [
+                "Requirements Analysis",
+                "Market Research",
+                "Market Research"
+            ]
+        },
+        {
+            "Step ": "02",
+            "Title": "Design",
+            "Description": "Our designers craft intuitive and visually stunning UI/UX designs. We prototype, iterate, and refine until every detail brings your vision to life with pixel-perfect precision.",
+            "It includes": [
+                "UI / UX Design",
+                "Prototyping",
+                "Brand Alignment"
+            ]
+        },
+        {
+            "Step ": "03",
+            "Title": "Development",
+            "Description": "Our expert engineers write clean, scalable, and high-performance code using modern tech stacks. We follow agile sprints with continuous integration and delivery.",
+            "It includes": [
+                "Agile Sprints",
+                "Clean Code",
+                "CI / CD Pipeline"
+            ]
+        },
+        {
+            "Step ": "04",
+            "Title": "Deployment",
+            "Description": "Rigorous QA testing followed by a smooth, zero-downtime launch. We ensure your product lands in the market ready to perform, scale, and impress from day one.",
+            "It includes": [
+                "QA Testing",
+                "Zero Downtime",
+                "Performance Audit"
+            ]
+        },
+        {
+            "Step ": "05",
+            "Title": "Maintenance",
+            "Description": "We provide ongoing monitoring, updates, and 24/7 support to keep your application secure, up-to-date, and running smoothly as your business grows.",
+            "It includes": [
+                "24/7 Monitoring",
+                "Security Updates",
+                "Continuous Improvement"
+            ]
+        }
+    ],
+    "Our Benifits": [
+        {
+            "Title": "Expert Consultation",
+            "Description": "Strategic guidance to align technology with your business goals."
+        },
+        {
+            "Title": "Dedicated Team",
+            "Description": "A committed team of experts working exclusively on your project."
+        },
+        {
+            "Title": "Transparent Reporting",
+            "Description": "Regular updates and detailed reports on project progress."
+        },
+        {
+            "Title": "IP Protection",
+            "Description": "Rigorous security measures to keep your intellectual property safe."
+        },
+        {
+            "Title": "24/7 Support",
+            "Description": "Round-the-clock assistance to ensure smooth operations."
+        },
+        {
+            "Title": "100% Transparency",
+            "Description": "Clear communication with no hidden costs or surprises."
+        }
+    ]
+}

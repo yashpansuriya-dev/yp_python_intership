@@ -1,0 +1,216 @@
+{
+    "title": "Techforce Global | Web, Software Development Company",
+    "about_us": "We deliver end-to-end technology solutions including AI automation, Apify & n8n integrations, custom software development, and cloud infrastructure. Our expertise in intelligent systems, data pipelines, and scalable solutions drives efficiency and growth for your business.",
+    "what_we_do": {
+        "title": "Making Things Easy For You!",
+        "info": "We turn innovative ideas into exceptional products customized to meet your specific needs. Our rapid development method produces innovations that shape the business environment.",
+        "points": [
+            "Empowering businesses with innovative solutions.",
+            "Building tech for a smarter tomorrow.",
+            "Delivering IT services for your success.",
+            "Crafting seamless experiences with intelligent tech."
+        ]
+    },
+    "trusted_partners": {
+        "name": "Our Trusted Partners",
+        "partners": [
+            "AWS-1",
+            "Apify-1",
+            "N8N",
+            "Emergent",
+            "AWS-1",
+            "Apify-1",
+            "N8N",
+            "Emergent"
+        ]
+    },
+    "technologies": {
+        "Front-End": [
+            "React",
+            "Angular",
+            "Vue",
+            "HTML5",
+            "Laravel",
+            "Codeignitor"
+        ],
+        "Back-End": [
+            "Spring",
+            "Node",
+            "Django",
+            "Nest",
+            "ASP",
+            "ROR"
+        ],
+        "Mobile-development": [
+            "Android",
+            "IOS",
+            "React",
+            "Flutter",
+            "IONIC",
+            "Xamrin"
+        ],
+        "Database": [
+            "MySQL",
+            "Oracle",
+            "MongoDB",
+            "Postgresql",
+            "Cassandra",
+            "MsSQL"
+        ],
+        "CMS": [
+            "WordPress",
+            "Magento",
+            "Shopify",
+            "Drupal",
+            "Joomla",
+            "OpenCart"
+        ],
+        "DevOps": [
+            "AWS",
+            "Docker",
+            "Jenkins",
+            "Terrafor",
+            "Kubernetes",
+            "Microsoft"
+        ],
+        "ai-ml": [
+            "Python",
+            "Langchain",
+            "PyTorch",
+            "Tensorflow",
+            "Keras",
+            "Scikit"
+        ],
+        "ai-automation": [
+            "1",
+            "n8n",
+            "Make",
+            "Workato",
+            "Scribe",
+            "Tray"
+        ]
+    },
+    "services": [
+        {
+            "name": "WEB DESIGN",
+            "desc": "Crafting visually stunning and user-friendly websites that elevate your online presence."
+        },
+        {
+            "name": "TESTING SERVICES",
+            "desc": "We focus on areas of QA and test management and we assure the quality of a product/service"
+        },
+        {
+            "name": "AI Integration",
+            "desc": "Our AI development services are designed to unlock modern business opportunities in a data-driven world."
+        },
+        {
+            "name": "FINTECH SOLUTIONS",
+            "desc": "Empowering businesses with cutting-edge fintech solutions for seamless financial innovation."
+        },
+        {
+            "name": "SOFTWARE DEVELOPMENT",
+            "desc": "Transforming ideas into powerful, scalable software solutions that drive your business forward."
+        },
+        {
+            "name": "WEB DEVELOPMENT",
+            "desc": "Building innovative, responsive, and scalable web solutions that elevate your digital presence."
+        },
+        {
+            "name": "WEB DESIGN",
+            "desc": "Crafting visually stunning and user-friendly websites that elevate your online presence."
+        }
+    ],
+    "client_reviews": [
+        {
+            "client_name": "NFT Marketplace",
+            "client_message": "The team has worked absolutely wonderful with the new ideas and approach they follow is on point. They have always welcomed new innovations new ideas. I would recommend them for developing any kind of NFT marketplaces."
+        },
+        {
+            "client_name": "SW Design Metaversity",
+            "client_message": "TechForce Global played a pivotal role in transforming my SmartContract for Metaversity. Initially lacking experience, their support has been transformative. Over the year, I evolved into an expert, gaining a clear vision of my preferences and the desired workflow. The team adeptly configured the engine to process payments seamlessly, converting them into digital currency. Their meticulous adherence to auditor regulations, coupled with swift adjustments, reflected their commitment to compliance and excellence. In summary, I highly recommend TechForce Global for their expertise, collaborative approach, and dedication to ensuring a seamless and compliant integration of my SmartContract for Metaversity."
+        },
+        {
+            "client_name": "Horse Mania",
+            "client_message": "We recently partnered with Tech Global on a project focusing on JavaScript and WordPress plugins. Our experience has been extremely positive. The team at Tech Global is highly accessible and always willing to help. Their responsiveness and willingness to collaborate significantly contributed to the success of our project. Every query was answered promptly and professionally, which greatly accelerated our progress. The solutions they provided were not only technically sound but also innovative and tailored to our specific needs. It's evident that they have in-depth knowledge and experience with JavaScript and WordPress. I would not hesitate to work with Tech Global again on future projects. Their professionalism and expertise make them a valuable partner."
+        },
+        {
+            "client_name": "On Pointe Orthopaedics",
+            "client_message": "Working with Techforce on a recent website project for one of our clients was an absolute pleasure. Their team's efficiency and dedication were evident from the start, ensuring that the project was completed swiftly without compromising on quality. Techforce's ability to quickly understand our client's vision and requirements resulted in a seamless development process and a final product that exceeded our expectations. The speed at which they operated was particularly impressive, allowing us to meet tight deadlines and deliver for our client ahead of schedule. The professionalism and skill Techforce brought to this collaboration made them an invaluable partner for OH Marketing Group."
+        },
+        {
+            "client_name": "The Jazz Kitchen",
+            "client_message": "I reached out to Techforce for revamping my website. After months of conversations and many new ideas, they came up with the best layout for my new website. Thanks to everyone who worked on this project, you guys did the best job"
+        },
+        {
+            "client_name": "IMS",
+            "client_message": "Our Development experience with Techforce has been fantastic. They were flexible and easy to work with. Whenever we required to change the course of our project, they were there to help us and guide us from the technology perspective."
+        },
+        {
+            "client_name": "Grande experience ",
+            "client_message": "These guys are absolutely the best in designing and development. I hired Team Techforce to develop the website and they understood everything very easily and also recommended me some better alternatives wherever possible."
+        },
+        {
+            "client_name": "Cricket Merchant LLC",
+            "client_message": "Team Techforce is a highly skilled team with an eye for details. The project management and communication work really well through the online project tools and the dedicated project manager made a great job keeping things together."
+        },
+        {
+            "client_name": "Mobile Dealer Master",
+            "client_message": "Their team, particularly project manager Sagar Shah and developer Jeet Vaja, exceeded our expectations in creating a new website for our client, MDM.  Sagar's leadership and Jeet's technical skills were outstanding, ensuring a seamless process and excellent final product.  Their professionalism, prompt communication, and ability to bring our vision to life were commendable.  The project was delivered on time with exceptional quality. A big thank you to Techforce Global, Sagar, and Jeet for their dedication.  Looking forward to more collaborations."
+        },
+        {
+            "client_name": "NFT Marketplace",
+            "client_message": "The team has worked absolutely wonderful with the new ideas and approach they follow is on point. They have always welcomed new innovations new ideas. I would recommend them for developing any kind of NFT marketplaces."
+        },
+        {
+            "client_name": "SW Design Metaversity",
+            "client_message": "TechForce Global played a pivotal role in transforming my SmartContract for Metaversity. Initially lacking experience, their support has been transformative. Over the year, I evolved into an expert, gaining a clear vision of my preferences and the desired workflow. The team adeptly configured the engine to process payments seamlessly, converting them into digital currency. Their meticulous adherence to auditor regulations, coupled with swift adjustments, reflected their commitment to compliance and excellence. In summary, I highly recommend TechForce Global for their expertise, collaborative approach, and dedication to ensuring a seamless and compliant integration of my SmartContract for Metaversity."
+        },
+        {
+            "client_name": "Horse Mania",
+            "client_message": "We recently partnered with Tech Global on a project focusing on JavaScript and WordPress plugins. Our experience has been extremely positive. The team at Tech Global is highly accessible and always willing to help. Their responsiveness and willingness to collaborate significantly contributed to the success of our project. Every query was answered promptly and professionally, which greatly accelerated our progress. The solutions they provided were not only technically sound but also innovative and tailored to our specific needs. It's evident that they have in-depth knowledge and experience with JavaScript and WordPress. I would not hesitate to work with Tech Global again on future projects. Their professionalism and expertise make them a valuable partner."
+        },
+        {
+            "client_name": "On Pointe Orthopaedics",
+            "client_message": "Working with Techforce on a recent website project for one of our clients was an absolute pleasure. Their team's efficiency and dedication were evident from the start, ensuring that the project was completed swiftly without compromising on quality. Techforce's ability to quickly understand our client's vision and requirements resulted in a seamless development process and a final product that exceeded our expectations. The speed at which they operated was particularly impressive, allowing us to meet tight deadlines and deliver for our client ahead of schedule. The professionalism and skill Techforce brought to this collaboration made them an invaluable partner for OH Marketing Group."
+        },
+        {
+            "client_name": "The Jazz Kitchen",
+            "client_message": "I reached out to Techforce for revamping my website. After months of conversations and many new ideas, they came up with the best layout for my new website. Thanks to everyone who worked on this project, you guys did the best job"
+        },
+        {
+            "client_name": "IMS",
+            "client_message": "Our Development experience with Techforce has been fantastic. They were flexible and easy to work with. Whenever we required to change the course of our project, they were there to help us and guide us from the technology perspective."
+        },
+        {
+            "client_name": "Grande experience ",
+            "client_message": "These guys are absolutely the best in designing and development. I hired Team Techforce to develop the website and they understood everything very easily and also recommended me some better alternatives wherever possible."
+        },
+        {
+            "client_name": "Cricket Merchant LLC",
+            "client_message": "Team Techforce is a highly skilled team with an eye for details. The project management and communication work really well through the online project tools and the dedicated project manager made a great job keeping things together."
+        },
+        {
+            "client_name": "Mobile Dealer Master",
+            "client_message": "Their team, particularly project manager Sagar Shah and developer Jeet Vaja, exceeded our expectations in creating a new website for our client, MDM.  Sagar's leadership and Jeet's technical skills were outstanding, ensuring a seamless process and excellent final product.  Their professionalism, prompt communication, and ability to bring our vision to life were commendable.  The project was delivered on time with exceptional quality. A big thank you to Techforce Global, Sagar, and Jeet for their dedication.  Looking forward to more collaborations."
+        },
+        {
+            "client_name": "NFT Marketplace",
+            "client_message": "The team has worked absolutely wonderful with the new ideas and approach they follow is on point. They have always welcomed new innovations new ideas. I would recommend them for developing any kind of NFT marketplaces."
+        }
+    ],
+    "final_message": "Since its inception, Techforce has been a trusted partner for the world\u2019s leading enterprises and Tech companies with good experience in industries: Banking and Insurance, Manufacturing, Automotive, Public Sector, Education, Healthcare, E-commerce, Government, Pharmaceuticals, Hospitality, and many more.",
+    "offices": [
+        {
+            "country": "us",
+            "address": "1755 Park Street, Suite 200, Naperville, IL 60563"
+        },
+        {
+            "country": "india",
+            "address": "403, Venus Benecia, Nr.Pakwan Cross Road Bodakdev, Ahmedabad- 380054"
+        },
+        {
+            "country": "poland",
+            "address": "ul. Ceglowska 19, 01-803 Warszawa, Poland"
+        }
+    ]
+}

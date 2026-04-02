@@ -1,0 +1,101 @@
+[
+    {
+        "name": "All-Events Scraper",
+        "short_info": "A fast and reliable scraper for All-Events that extracts key event details such as titles, dates, locations, interested attendee counts, and more.",
+        "about": [
+            "The All-Events Scraper is an Apify Actor built to collect public event data from allevents.in including conferences, concerts, expos, meetups, festivals, workshops, and similar events.",
+            "It efficiently handles dynamic content and delivers clean, well-structured data that can be easily exported or integrated into other systems."
+        ],
+        "features": [
+            " Scrape All Events Website : Extract events from ALL Events website",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Automate event collection and eliminate manual work.",
+            " Real-Time Updates : Always stay updated with the latest event data."
+        ]
+    },
+    {
+        "name": "EventsEye Trade Show Scraper",
+        "short_info": "A fast and reliable scraper for eventseye.com that extracts Exhibition Name, Description, Venue details, Organizer details and much more.",
+        "about": [
+            "The EventsEye Trade Show Scraper is an Apify Actor built to extract trade shows and exhibitions from EventsEye.com.",
+            "It supportshierarchical scraping and allows filtering by Industry, Region, Country, and City, producing clean and structured event data.",
+            "Provides clean, structured data with support for Markdown, pagination, and easy API integration for your applications."
+        ],
+        "features": [
+            " Scrape EventsEye Trade Shows : Extract trade shows and exhibitions from EventsEye",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Automate trade show data collection and eliminate manual research.",
+            " Real-Time Updates : Always stay updated with the latest trade data."
+        ]
+    },
+    {
+        "name": "Linkedin Candidate Search (No Cookies)",
+        "short_info": "A fast and reliable scraper for LinkedIn that extracts candidate names, job titles, and profile URLs.",
+        "about": [
+            "The Linkedin Candidate Search (No cookies) is an Apify Actor designed to extract professional profiles from LinkedIn based on job roles and locations. It uses advanced search simulation with anti-detection measures to provide clean, structured data without requiring a LinkedIn account.",
+            "It automatically handles pagination and deduplication, producing structured data that can be easily exported or integrated into recruitment pipelines, CRM systems, or market research tools."
+        ],
+        "features": [
+            " LinkedIn Candidate Search : Extract professional profiles based on job roles and locations, no cookies required.",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Automate candidate sourcing and eliminate manual profile searching and copy-paste work.",
+            " Stealth & Reliable Scraping : Advanced anti-detection and human-like behavior ensure consistent and reliable results."
+        ]
+    },
+    {
+        "name": "Advanced Website Crawling & Content Extraction",
+        "short_info": "A fast and reliable scraper for any website that extracts clean HTML, Markdown, and text content.",
+        "about": [
+            "The Advanced Website Crawling & Content Extraction is a powerful Apify Actor designed to crawl complex, dynamic, and bot-protected websites. It uses a hybrid architecture (Static + Playwright) to extract clean HTML.",
+            "It automatically handles sitemaps (recursive & gzipped), SSL certificate errors, and deduplication, making it perfect for RAG (Retrieval-Augmented Generation) pipelines and data archiving.",
+            "Provides clean, structured data with support for dynamic rendering, recursive sitemap discovery, SSL bypass, and easy API integration for your applications."
+        ],
+        "features": [
+            " Crawl Any Website : Crawl static, dynamic, and bot-protected websites with ease.",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Automate large-scale website crawling without manual work.",
+            " Smart & Reliable Crawling : Handles sitemaps, deduplication, and dynamic content automatically."
+        ]
+    },
+    {
+        "name": "Visual Verification Agent",
+        "short_info": "This agent acts as a Virtual QA Engineer. It visits your website from different countries, captures high-resolution screenshots across multiple devices and uses AI to analyze the visual quality.",
+        "about": [
+            "An AI-powered Virtual QA Engineer that verifies your website\u2019s visual integrity across Desktop, Mobile, and Tablet. Using advanced vision models, it mimics human interaction to detect layout flaws, grading system based quality scores and detailed defect analysis from 15+ global locations."
+        ],
+        "features": [
+            " AI Visual Analysis : Automated UI quality checks",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Reduce Manual QA Effort",
+            " Worldwide Verification : Global geo-location based testing"
+        ]
+    },
+    {
+        "name": "Y Combinator Founder Scraper",
+        "short_info": "The Y Combinator Founder LinkedIn Scraper is an Apify Actor designed to scrape Y Combinator Startup School cofounder profiles and intelligently find their LinkedIn profiles.",
+        "about": [
+            "A scraper that extracts detailed Y Combinator founder profiles including bio, location, education, and employment history. It automatically enriches data by finding accurate LinkedIn profiles using intelligent matching algorithms, enabling powerful lead generation and market research.",
+            "This actor securely logs into Startup School, extracts founder details, and enriches them with the most accurate LinkedIn profiles available while maintaining privacy and session safety."
+        ],
+        "features": [
+            " Scrape YC Founder Profiles : Securely extracts Y Combinator Startup School cofounder profiles with accurate founder details.",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON and API outputs.",
+            " Save Time & Cost : Automates founder data collection and enrichment without manual research.",
+            " Smart & Reliable Crawling : Uses multiple search strategies, parallel processing, and session safety for consistent results."
+        ]
+    },
+    {
+        "name": "District Event",
+        "short_info": "The District Event Scraper is an Apify Actor designed to extract event listings from district.in based on specific cities.",
+        "about": [
+            "It uses intelligent automation to handle city selection, infinite scrolling, and dynamic content loading to provide clean, structured data for entertainment, workshops, and social gatherings.",
+            "It automatically handles pagination and extraction, producing structured data that can be easily exported for event aggregators, market research, or personal planning."
+        ],
+        "features": [
+            " Comprehensive Event Extraction : Securely extracts event listings from District.in with accurate details including titles, dates, venues, prices, and direct URLs.",
+            " Clean Structured Data : Get perfectly formatted CSV, Excel, JSON, and API outputs ready for integration, analysis, or publishing.",
+            " Save Time & Cost : Automates event discovery across cities, eliminating manual browsing and data collection.",
+            " Smart & Reliable Crawling : Built with Playwright to handle dynamic content, infinite scrolling, smart city selection, and parallel processing for fast and consistent results."
+        ]
+    }
+]

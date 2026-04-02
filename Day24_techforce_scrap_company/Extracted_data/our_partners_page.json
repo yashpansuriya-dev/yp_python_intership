@@ -1,0 +1,51 @@
+{
+    "Title": "Certified Partners.",
+    "Info": "We collaborate with industry-leading platforms to deliver scalable automation, intelligent data solutions, and world-class cloud infrastructure making your business stronger, faster, and future-ready.",
+    "Technology partners": [
+        {
+            "title": "AWS",
+            "role": "Cloud Infrastructure & DevOps",
+            "description": "As an AWS partner, we design cloud-native architectures that scale from serverless to full DevOps pipelines, keeping your apps secure and always-on.",
+            "use_cases": [
+                "Cloud Migration",
+                "Serverless",
+                "DevOps"
+            ],
+            "link": "https://aws.amazon.com/marketplace/seller-profile?id=seller-q3isk2gckfey4"
+        },
+        {
+            "title": "Apify",
+            "role": "Web Scraping & Automation Platform",
+            "description": "We are a certified Apify partner, helping businesses extract, process, and act on web data at scale through intelligent automation.",
+            "use_cases": [
+                "Web Scraping",
+                "Data Extraction",
+                "AI Automation"
+            ],
+            "link": "https://apify.com/partners/find/techforce-global"
+        }
+    ],
+    "Afflilate partners": [
+        {
+            "title": "n8n",
+            "description": "Streamline your operations with open-source workflow automation that seamlessly integrates any app, API, or data source empowering your team to build scalable, limitless automations with ease.",
+            "use_cases": [
+                "Workflow Automation",
+                "No-Code",
+                "400+ Integrations",
+                "Self-hosted"
+            ],
+            "link": "https://n8n.partnerlinks.io/nsqhpapf0dxc"
+        },
+        {
+            "title": "Emergent",
+            "description": "AI-first platform for building intelligent workflows and autonomous agents redefining how businesses operate",
+            "use_cases": [
+                "Agentic AI",
+                "Automation",
+                "LLM Integration"
+            ],
+            "link": "https://get.emergent.sh/1bkzhzpvvm59"
+        }
+    ]
+}

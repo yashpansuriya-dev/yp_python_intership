@@ -1,0 +1,91 @@
+[
+    null,
+    {
+        "service_name": "PHP Development  ",
+        "service_info": "Techforce is a top PHP Development company that provides services, develops websites, designs websites, and you can benefit from our PHP development.",
+        "what_we_do": [
+            "Custom PHP Development",
+            "CMS Development",
+            "PHP Website Development",
+            "PHP Ecommerce Solutions",
+            "Different Feature Integrations",
+            "PHP MYSQL Development"
+        ],
+        "projects_on_it": [
+            {
+                "project_name": "The Jazz Kitchen",
+                "project_info": "Revamped the whole restaurant website with a new theme and additional features.",
+                "project_url": "https://techforceglobal.com/portfolio/the-jazz-kitchen/"
+            },
+            {
+                "project_name": "NFT Minting Platform development.",
+                "project_info": "A community-focused NFT project gathering enthusiasts and like-minded individuals to thrive and grow.",
+                "project_url": "https://techforceglobal.com/portfolio/nft-minting-platform-development/"
+            }
+        ],
+        "faqs": [
+            {
+                "Que": "How much does PHP Development cost?",
+                "Ans": "The cost of PHP\u00a0development project depends upon various factors which includes scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
+            },
+            {
+                "Que": "In which areas does Techforce have experience creating PHP projects?",
+                "Ans": "Our PHP developers have extensive experience developing a wide range of websites. As a result, we can build Interactive website, Custom Website, WooCommerce website and many more."
+            },
+            {
+                "Que": "Can I hire a PHP Developer or a PHP development team separately?",
+                "Ans": "Yes, You can. Techforce\u2019s PHP development services cover the entire development spectrum. That means you can hire an independently managed PHP development team to handle the full project, and you can also hire a PHP developer that will cooperate with your requirements on a specific project."
+            },
+            {
+                "Que": "Is PHP used for software development?",
+                "Ans": "Yes. But we suggest going with other languages to develop software for good results."
+            },
+            {
+                "Que": "What big companies use PHP?",
+                "Ans": "Facebook, Wikipedia, Tumblr, Slack, MailChimp, Etsy"
+            }
+        ]
+    },
+    {
+        "service_name": "Laravel Website Development ",
+        "service_info": "Techforce is a leading custom Laravel development company having a good experience and offering the finest Laravel development services to customers across the world.",
+        "what_we_do": [
+            "Custom Laravel Web Development",
+            "Laravel API Development",
+            "Laravel E-commerce Solutions",
+            "Laravel Migration & Upgrades",
+            "Laravel Maintenance & Support",
+            "Laravel Performance Optimization"
+        ],
+        "projects_on_it": [
+            {
+                "project_name": "Course Management",
+                "project_info": "Course Management System in Laravel for efficient course creation, enrollment, and user management.",
+                "project_url": ""
+            },
+            {
+                "project_name": "Project Management",
+                "project_info": "Project Management System enabling task tracking, author assignments, and project workflow management.",
+                "project_url": ""
+            }
+        ],
+        "faqs": [
+            {
+                "Que": "How much does Laravel Development cost?",
+                "Ans": "The cost of Laravel development project depends upon various factors which include scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
+            },
+            {
+                "Que": "Can I hire a Laravel Developer or a Laravel development team separately?",
+                "Ans": "Yes, You can. Techforce\u2019s Laravel development services cover the entire development spectrum."
+            },
+            {
+                "Que": "Is Laravel used for software development?",
+                "Ans": "Yes, Laravel is used for software development , specifically for building web-based applications . It is a web application framework built on PHP, and while its primary focus is on web development, Laravel can be used to create a variety of software solutions, especially when they involve a web-based interface or require APIs."
+            },
+            {
+                "Que": "What big companies use Laravel ?",
+                "Ans": "9GAG, BBC, Alison, TourRadar, Razorpay and many more"
+            }
+        ]
+    }
+]

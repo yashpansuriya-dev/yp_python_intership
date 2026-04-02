@@ -1,0 +1,49 @@
+{
+    "Title": "Join Techforce and, unleash your potential!",
+    "Info": "Be part of a diverse group of individuals who share a passion, for leveraging technology to drive sector progress and create, a more efficient, sustainable future.",
+    "Available Jobs": [
+        {
+            "Title": "Business Development Executive",
+            "Role": " Business Development Executive",
+            "Experience": " 1 - 2 Years",
+            "Required Skills": [
+                "Lead Generation",
+                "Market Research",
+                "Relationship Building",
+                "Cold Calling",
+                "CRM Tool Usage"
+            ],
+            "Link to Apply": "javascript:void(0)"
+        }
+    ],
+    "Why Joins Us": [
+        "Practical training and learning sessions",
+        "Flexible work hours",
+        "Separate cafeteria",
+        "Performance awards and rewards",
+        "Paid Parental Leave"
+    ],
+    "Hiring Steps": [
+        {
+            "Title": "Application Screening",
+            "Description": "Our Recruitment team will Review your application and get a screening call from the recruiter"
+        },
+        {
+            "Title": "Technical Interview",
+            "Description": "You\u2019ll discuss your experience and technical skills with our expert panel."
+        },
+        {
+            "Title": "HR Interview",
+            "Description": "An HR interview to understand your background, skills, and expectations."
+        },
+        {
+            "Title": "Job Offer",
+            "Description": "Once selected, our HR team will guide you through the offer and onboarding process."
+        },
+        {
+            "Title": "On-Boarding",
+            "Description": "Receive your offer letter and complete formalities to begin your journey with TechForce Global."
+        }
+    ],
+    "We Believe in": " Work Hard, Party Harder : Our culture thrives on collaboration, celebration, and creating memories together."
+}

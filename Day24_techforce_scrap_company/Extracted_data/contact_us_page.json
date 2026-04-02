@@ -1,0 +1,26 @@
+{
+    "Title": "Let's Talk about Project",
+    "Company Highlights": [
+        "24*7 Fast Reply",
+        "10+ Of Experience",
+        "400+ Solutions Delivered",
+        "100+ Experts in Team"
+    ],
+    "Contact info": [
+        {
+            "Role": "Business Consultant USA",
+            "Mobile number": "+1 (630) 296-6606",
+            "Email": "reach@techforceglobal.com"
+        },
+        {
+            "Role": "HR Manager",
+            "Mobile number": "+91 7405030954",
+            "Email": "jobs@techforceglobal.com"
+        },
+        {
+            "Role": "Business Consultant India",
+            "Mobile number": "+91 9427450352",
+            "Email": "bhavin.shah@techforceglobal.com"
+        }
+    ]
+}

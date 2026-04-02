@@ -1,5 +1,12 @@
 """
     It opens broweser and replacalte user's activity , used when broweser blocks request .
+
+    webdriver - control the browser
+    EC - wait for specified conditions
+    locators - By.CSS_SELECTOR, By.CLASS_NAME
+
+    driver.find_element(By.CSS_SELECTOR, ".my-class) -> returns WebElement object
+    driver.find_elements(By.CSS_SELECTOR, ".my-class) -> returns list of WebElement object
 """
 
 from selenium import webdriver

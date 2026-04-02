@@ -1,0 +1,100 @@
+{
+    "Our Motive": "Building Scalable Digital Solutions with Agility and Excellence",
+    "Company Info.": [
+        "Techforce Global is a software development and IT consulting\ncompany delivering tailored digital solutions across industries.\nOur expert team offers end-to-end services to meet your business\ngoals.",
+        "We help startups, SMBs, and enterprises build scalable, secure\nsoftware, providing dedicated teams and custom IT solutions that\nboost speed to market and ROI."
+    ],
+    "Our Solutions": [
+        {
+            "Title": "Custom Software Development",
+            "Description": "Tailored solutions designed specifically for your business needs and workflows."
+        },
+        {
+            "Title": "Mobile & Web App Development",
+            "Description": "Cross-platform applications that deliver seamless user experiences."
+        },
+        {
+            "Title": "UI/UX Design and Prototyping",
+            "Description": "User-centered designs that enhance engagement and satisfaction."
+        },
+        {
+            "Title": "Cloud & DevOps Services",
+            "Description": "Scalable cloud infrastructure and continuous integration/deployment pipelines."
+        },
+        {
+            "Title": "Enterprise Solutions & Digital Transformation",
+            "Description": "Modernizing legacy systems and driving digital innovation at scale."
+        },
+        {
+            "Title": "E-commerce & CMS Development",
+            "Description": "Powerful online stores and content management systems that drive sales."
+        },
+        {
+            "Title": "QA & Testing Automation",
+            "Description": "Comprehensive testing strategies to ensure quality and reliability."
+        },
+        {
+            "Title": "AI/ML & Data Engineering",
+            "Description": "Intelligent systems and data pipelines that unlock business insights."
+        }
+    ],
+    "Certification": {
+        "Name": "ISO 9001:2015 & ISO 27001:2022 Certified",
+        "Description": "We're proud to be ISO 9001:2015 and ISO 27001:2022 certified \u2014 a testament to our commitment to quality, security, and continuous improvement. These globally recognized standards reinforce our dedication to delivering reliable, high-quality solutions while ensuring the highest level of data protection and information security. At Techforce, excellence and trust are at the core of everything we do."
+    },
+    "Approaches": [
+        "Agile methodology",
+        "Industry-standard coding practices",
+        "Quality assurance integrated into every phase",
+        "Scalable architecture for future growth",
+        "Ongoing support and maintenance",
+        "ISO Certified Processes"
+    ],
+    "Why Choose Us": [
+        "ISO 9001:2015 Certified: Quality-first processes with structured documentation and continuous improvement frameworks.",
+        "Agile Delivery: Sprint-based execution with transparency and flexibility.",
+        "Skilled Talent Pool: A diverse team of certified developers, designers, and engineers.",
+        "Client-Centric Approach: Dedicated account management and project governance.",
+        "IP Protection & NDA: Enterprise-grade confidentiality and compliance practices"
+    ],
+    "Our Leaders": [
+        {
+            "Name": "Snehal Shah",
+            "Their Role": "CEO"
+        },
+        {
+            "Name": "Bhavin Shah",
+            "Their Role": "IT Consultant"
+        },
+        {
+            "Name": "Kushal Shah",
+            "Their Role": "Team Lead"
+        },
+        {
+            "Name": "Ashish Christian",
+            "Their Role": "IT Manager"
+        }
+    ],
+    "Life at Techforce": [
+        {
+            "Title": "Innovation Culture",
+            "Description": "We encourage experimentation, knowledge-sharing, and a growth mindset across all departments."
+        },
+        {
+            "Title": "Continuous Learning",
+            "Description": "Our teams have access to regular training, certifications, tech talks, and workshops to stay ahead of industry trends."
+        },
+        {
+            "Title": "Work-Life Balance",
+            "Description": "With flexible working hours, hybrid options, and wellness programs, we prioritize a healthy balance between work and life."
+        },
+        {
+            "Title": "Celebration & Recognition",
+            "Description": "From milestone achievements to cultural festivals and team outings or a birthday celebration we believe in celebrating success and fostering camaraderie."
+        },
+        {
+            "Title": "Inclusive Environment",
+            "Description": "We champion diversity and equality, creating a workplace where every voice is heard and respected."
+        }
+    ]
+}

@@ -1,0 +1,50 @@
+[
+    {
+        "title": "StartPress",
+        "info": "5 Pages WordPress Basic Website",
+        "price": "$599",
+        "whats_included": [
+            "Setup of free or premium WordPress theme*",
+            "Fully responsive on mobile, tablet, and desktop",
+            "Basic contact form",
+            "Basic blog section setup",
+            "Social media icons and links integration",
+            "Wordfence for basic website security",
+            "Optimized site speed with caching integration",
+            "Basic on-page SEO configuration",
+            "WooCommerce integration add-on cost"
+        ],
+        "link": "https://techforceglobal.com/payment-via-stripe-for-startpress/"
+    },
+    {
+        "title": "GrowPress",
+        "info": "8 Pages WordPress Website",
+        "price": "$899",
+        "whats_included": [
+            "Setup of free or premium WordPress theme*",
+            "Fully responsive on mobile, tablet, and desktop",
+            "Advanced contact form with file upload",
+            "Blog with categories, tags, and enhanced UI",
+            "Social media icons and links integration",
+            "Wordfence for basic website security",
+            "Optimized site speed with caching integration",
+            "On-page SEO with integrated SEO plugin",
+            "Google Analytics & Search Console setup",
+            "WooCommerce integration add-on cost"
+        ],
+        "link": "https://techforceglobal.com/pay-via-stripe-for-growpress/"
+    },
+    {
+        "title": "PowerPress",
+        "info": "Tailored for advanced custom needs",
+        "price": "Contact",
+        "whats_included": [
+            "Custom features & integrations",
+            "Enterprise-level solutions",
+            "Tailored proposal from our sales team",
+            "Support for CRMs, APIs, and 3rd-party tools",
+            "Hosting, domain & email setup available*"
+        ],
+        "link": "https://techforceglobal.com/payment-via-stripe-powerpress/"
+    }
+]
