@@ -30,7 +30,7 @@ public class ReportController {
         String csv = reportService.buildProjectSummaryCsv(currentUserService.getCurrentUser());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"project-summary.csv\"")
-                .contentType(MediaType.TEXT_PLAIN)
+                .contentType(MediaType.parseMediaType("text/csv"))
                 .body(csv);
     }
 
@@ -39,7 +39,7 @@ public class ReportController {
         String csv = reportService.buildDeveloperSummaryCsv(currentUserService.getCurrentUser());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"developer-summary.csv\"")
-                .contentType(MediaType.TEXT_PLAIN)
+                .contentType(MediaType.parseMediaType("text/csv"))
                 .body(csv);
     }
 }

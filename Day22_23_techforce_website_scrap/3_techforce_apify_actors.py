@@ -168,7 +168,6 @@ def main() -> None:
     print("Title : ", fetch_title(driver))
     print("Apify Actors : ", fetch_apify_actors_name(driver))
 
-
     apify_actors_all_detail = fetch_apify_actors_data(driver)
     save_to_json(apify_actors_all_detail)
 

@@ -1,6 +1,6 @@
 # BugTrackPro
 
-BugTrackPro is a Spring Boot + MySQL bug tracking and developer task analytics system built from the provided SRS and extended into a working semester-project application.
+BugTrackPro is a Spring Boot bug tracking and developer task analytics system built from the provided SRS and extended into a working semester-project application.
 
 ## Features
 
@@ -20,7 +20,8 @@ BugTrackPro is a Spring Boot + MySQL bug tracking and developer task analytics s
 - Spring Security
 - Spring Data JPA / Hibernate
 - Thymeleaf
-- MySQL
+- H2 (default local runtime)
+- MySQL (optional via profile)
 - H2 for tests
 
 ## Default Demo Accounts
@@ -32,21 +33,35 @@ BugTrackPro is a Spring Boot + MySQL bug tracking and developer task analytics s
 
 ## Run Locally
 
-1. Make sure MySQL is running.
-2. Update credentials if needed through environment variables:
-   - `BUGTRACKER_DB_URL`
-   - `BUGTRACKER_DB_USERNAME`
-   - `BUGTRACKER_DB_PASSWORD`
-3. Start the app:
+1. Start the app with the default embedded H2 database:
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
-4. Open `http://localhost:8080`
+2. Open `http://localhost:8080`
+
+3. Optional: run against MySQL instead:
+   - Set `SPRING_PROFILES_ACTIVE=mysql`
+   - Optionally override:
+     - `BUGTRACKER_DB_URL`
+     - `BUGTRACKER_DB_USERNAME`
+     - `BUGTRACKER_DB_PASSWORD`
+   - Then start the app with the same command
+
+PowerShell example for a remote MySQL server from this secondary system:
+
+```powershell
+$env:SPRING_PROFILES_ACTIVE="mysql"
+$env:BUGTRACKER_DB_URL="jdbc:mysql://<MYSQL_HOST>:3306/bugtracker?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Kolkata"
+$env:BUGTRACKER_DB_USERNAME="root"
+$env:BUGTRACKER_DB_PASSWORD="<your-password>"
+mvn spring-boot:run
+```
 
 ## Notes
 
 - Demo seed data is enabled by default through `app.seed-demo-data=true`.
 - File attachments are stored in the local `uploads/` folder.
+- Default local runtime uses in-memory H2, and the H2 console is available at `/h2-console`.
 - Tests use H2 and disable demo seed data automatically.

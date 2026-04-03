@@ -67,7 +67,7 @@ def fetch_about_us(wait) -> str:
             EC.presence_of_element_located((By.CSS_SELECTOR, ".Hero-text + *"))
         )
         return about_us_text.text
-    except TimeoutException as e:
+    except Exception as e:
         print("About us section not found",e)
         return ""
 
@@ -105,7 +105,7 @@ def fetch_technologies(wait) -> dict:
                 src = tech.get_attribute("data-src")
                 tech_data[topic_name].append(fetch_tech_name(src))
 
-    except (TimeoutException, NoSuchElementException) as e:
+    except Exception as e:
         print("fetching technogies section failed",e)
     
     return tech_data
@@ -134,7 +134,7 @@ def fetch_what_we_do(wait) -> dict:
 
         for point in section_points:
             what_we_do_data["points"].append(point.text)
-    except (TimeoutException, NoSuchElementException) as e:
+    except Exception as e:
         print("What we do section failed", e)
     
     return what_we_do_data

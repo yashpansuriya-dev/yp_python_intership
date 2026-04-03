@@ -1,15 +1,54 @@
 [
-    null,
     {
-        "service_name": "PHP Development  ",
-        "service_info": "Techforce is a top PHP Development company that provides services, develops websites, designs websites, and you can benefit from our PHP development.",
+        "service_name": "Codeigniter Website Development ",
+        "service_info": "Techforce is a leading custom Codeigniter development company having a good experience and offering the finest Codeigniter development services to customers across the world.",
         "what_we_do": [
-            "Custom PHP Development",
-            "CMS Development",
-            "PHP Website Development",
-            "PHP Ecommerce Solutions",
-            "Different Feature Integrations",
-            "PHP MYSQL Development"
+            "Custom CodeIgniter Web Development",
+            "CodeIgniter API Development",
+            "CodeIgniter Migration Services",
+            "Custom CMS Development",
+            "CodeIgniter eCommerce Store Development",
+            "CodeIgniter Website Maintenance & Upgradation"
+        ],
+        "projects_on_it": [
+            {
+                "project_name": "SumIP",
+                "project_info": "Adapting and Thriving in a Changing World.",
+                "project_url": ""
+            },
+            {
+                "project_name": "IPSUM Controversy",
+                "project_info": "IPSUM for changing the world.",
+                "project_url": ""
+            }
+        ],
+        "faqs": [
+            {
+                "Que": "How much does Codeigniter Development cost?",
+                "Ans": "The cost of Codeigniter development project depends upon various factors which include scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
+            },
+            {
+                "Que": "Can I hire a Codeigniter Developer or a Codeigniter development team separately?",
+                "Ans": "Yes, You can. Techforce\u2019s Codeigniter development services cover the entire development spectrum."
+            },
+            {
+                "Que": "Is Codeigniter used for software development?",
+                "Ans": "Yes, CodeIgniter is used for software development , particularly for building web applications . It is a lightweight PHP framework known for its simplicity and speed, making it a popular choice among developers for creating various types of web-based software solutions. Here are some key points about using CodeIgniter for software development:"
+            },
+            {
+                "Que": "What big companies use Codeigniter?",
+                "Ans": "Buffer, Nissan, Wikimedia, Cineworld, Bitbucket and many more"
+            }
+        ]
+    },
+    {
+        "service_name": "HTML5 Web Development",
+        "service_info": "India can help you create stylish and engaging websites. The leading HTML5 web development services in India and the United States are provided by NIC.",
+        "what_we_do": [
+            "HTML progressive Web Apps",
+            "Responsive Design",
+            "HTML Plugin Development",
+            "PSD to HTML5"
         ],
         "projects_on_it": [
             {
@@ -18,73 +57,158 @@
                 "project_url": "https://techforceglobal.com/portfolio/the-jazz-kitchen/"
             },
             {
-                "project_name": "NFT Minting Platform development.",
-                "project_info": "A community-focused NFT project gathering enthusiasts and like-minded individuals to thrive and grow.",
-                "project_url": "https://techforceglobal.com/portfolio/nft-minting-platform-development/"
+                "project_name": "Grande Experience",
+                "project_info": "Grande Experiences is a website created for travellers.",
+                "project_url": "https://techforceglobal.com/portfolio/website-development-grande/"
             }
         ],
         "faqs": [
             {
-                "Que": "How much does PHP Development cost?",
-                "Ans": "The cost of PHP\u00a0development project depends upon various factors which includes scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
+                "Que": "Is HTML standard?",
+                "Ans": "No, it is not."
             },
             {
-                "Que": "In which areas does Techforce have experience creating PHP projects?",
-                "Ans": "Our PHP developers have extensive experience developing a wide range of websites. As a result, we can build Interactive website, Custom Website, WooCommerce website and many more."
+                "Que": "What do you understand by HTML tags?",
+                "Ans": "A set of characters enclosed within angular braces (<> or ) that develop a formatted command for a web page is called an HTML tag."
             },
             {
-                "Que": "Can I hire a PHP Developer or a PHP development team separately?",
-                "Ans": "Yes, You can. Techforce\u2019s PHP development services cover the entire development spectrum. That means you can hire an independently managed PHP development team to handle the full project, and you can also hire a PHP developer that will cooperate with your requirements on a specific project."
+                "Que": "Can a web page contain multiple header elements? What about footer elements?",
+                "Ans": "Yes, to both. In fact, both the header and footer tags are designed to serve their respective purposes in relation to whatever their parent \u201csection\u201d may be. So not only can the page body contain a header and a footer, but so can every article and section element. In fact, a header should be present for all of these, although a footer is not always necessary."
+            }
+        ]
+    },
+    null,
+    {
+        "service_name": "AngularJS Development Company  ",
+        "service_info": "Company",
+        "what_we_do": [
+            "AngularJS Custom Application",
+            "AngularJS Plugin Development",
+            "Hybrid AngularJS Development",
+            "AngularJS Portal Development",
+            "API Development in Backend",
+            "AngularJS Migration"
+        ],
+        "projects_on_it": [
+            {
+                "project_name": "Property Management System",
+                "project_info": "Manage all the property documents and details in one system.",
+                "project_url": "https://techforceglobal.com/portfolio/property-management-system/"
             },
             {
-                "Que": "Is PHP used for software development?",
-                "Ans": "Yes. But we suggest going with other languages to develop software for good results."
+                "project_name": "Soladefy play 2 earn Gamefi platform",
+                "project_info": "Gamefi launchpad for gamers.",
+                "project_url": "https://techforceglobal.com/portfolio/soladefy-play-2-earn-gamefi-platform/"
+            }
+        ],
+        "faqs": [
+            {
+                "Que": "Is AngularJS a library, framework, plugin or a browser extension?",
+                "Ans": "AngularJS is the best defined as framework. Even though it's much more lightweight than a typical framework and that's why many confuse it with a library."
             },
             {
-                "Que": "What big companies use PHP?",
-                "Ans": "Facebook, Wikipedia, Tumblr, Slack, MailChimp, Etsy"
+                "Que": "What is the difference between AngularJS and angular?",
+                "Ans": "AngularJS is a JavaScript open-source front-end framework that is mainly used to develop single-page web applications (SPAs).  It is a popular open-source Typescript framework created by Google for developing web applications."
+            },
+            {
+                "Que": "Define Scope in AngularJS.",
+                "Ans": "Scopes are special objects in AngularJS that act as a glue between the view and the controller. They refer to the model component of the MVC architecture."
+            },
+            {
+                "Que": "Which big companies use AngularJS?",
+                "Ans": "Microsoft Office, Deutsche Bank, Gmail, Forbes, Upwork, PayPal, Grasshopper, Samsung and many more."
+            }
+        ]
+    },
+    null,
+    {
+        "service_name": "Vue Js Development ",
+        "service_info": "Techforce is a leading custom Vuejs development company having a good experience and offering the finest vuejs development services to customers across the world.",
+        "what_we_do": [
+            "Custom Web App Development",
+            "Vue.js UI/UX Design",
+            "Vue.js Interactive App Development",
+            "Vue.js Consultation",
+            "Vue.js App Migration",
+            "Vue.js App Support & Maintenance"
+        ],
+        "projects_on_it": [
+            {
+                "project_name": "Rexroth",
+                "project_info": "Transformming off-highway vehicles for the future.",
+                "project_url": ""
+            },
+            {
+                "project_name": "Toyota Equipment & Services",
+                "project_info": "Toyota offers a wide range of advanced equipment and services, including automotive solutions, industrial machinery.",
+                "project_url": ""
+            }
+        ],
+        "faqs": [
+            {
+                "Que": "How much does Vue.js Development cost?",
+                "Ans": "The cost of Vue.js development depends on the complexity of your application, the features you need, the number of developers required, and the duration of the project. A detailed project brief will help estimate the cost."
+            },
+            {
+                "Que": "Can I hire a Vue.js Developer or a Vue.js development team separately?",
+                "Ans": "Yes, you can hire either a single Vue.js developer or a full development team, depending on your project requirements. We offer flexible hiring models to fit your development needs."
+            },
+            {
+                "Que": "Is Vue.js suitable for large-scale applications?",
+                "Ans": "Yes, Vue.js is highly scalable and can be used to build large-scale applications. Many organizations prefer Vue.js for its flexibility, performance, and ease of integration with other technologies."
+            },
+            {
+                "Que": "What are the key benefits of using Vue.js?",
+                "Ans": "Vue.js is a progressive framework that is easy to learn, lightweight, and highly performant. It provides features like two-way data binding, reusable components, and an intuitive API, making it ideal for both small and large applications."
+            },
+            {
+                "Que": "What big companies use Vue.js ?",
+                "Ans": "Alibaba, Xiaomi, GitLab, Behance and many more"
             }
         ]
     },
     {
-        "service_name": "Laravel Website Development ",
-        "service_info": "Techforce is a leading custom Laravel development company having a good experience and offering the finest Laravel development services to customers across the world.",
+        "service_name": "WordPress Website Development ",
+        "service_info": "Techforce is a leading custom WordPress development company having a good experience and offering the finest WordPress development services to customers across the world.",
         "what_we_do": [
-            "Custom Laravel Web Development",
-            "Laravel API Development",
-            "Laravel E-commerce Solutions",
-            "Laravel Migration & Upgrades",
-            "Laravel Maintenance & Support",
-            "Laravel Performance Optimization"
+            "WordPress Theme Customization",
+            "WordPress Plugin Development",
+            "WordPress Support and Maintenance Services",
+            "WordPress WooCommerce",
+            "WordPress Migration"
         ],
         "projects_on_it": [
             {
-                "project_name": "Course Management",
-                "project_info": "Course Management System in Laravel for efficient course creation, enrollment, and user management.",
-                "project_url": ""
+                "project_name": "NFT Website Development",
+                "project_info": "NFT Website with all the features of buying, selling, and minting.",
+                "project_url": "https://techforceglobal.com/portfolio/nft-website-development/"
             },
             {
-                "project_name": "Project Management",
-                "project_info": "Project Management System enabling task tracking, author assignments, and project workflow management.",
-                "project_url": ""
+                "project_name": "Soladefy play 2 earn Gamefi platform",
+                "project_info": "Gamefi launchpad for gamers.",
+                "project_url": "https://techforceglobal.com/portfolio/soladefy-play-2-earn-gamefi-platform/"
             }
         ],
         "faqs": [
             {
-                "Que": "How much does Laravel Development cost?",
-                "Ans": "The cost of Laravel development project depends upon various factors which include scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
+                "Que": "How much does WordPress Development cost?",
+                "Ans": "The cost of WordPress development project depends upon various factors which include scope and complexity of the project, the required technology stack, number of developers necessary, engagement model itself and many different aspects. It is not possible to determine an estimate without knowing the project specifics."
             },
             {
-                "Que": "Can I hire a Laravel Developer or a Laravel development team separately?",
-                "Ans": "Yes, You can. Techforce\u2019s Laravel development services cover the entire development spectrum."
+                "Que": "Can I hire a WordPress Developer or a WordPress development team separately?",
+                "Ans": "Yes, You can. Techforce\u2019s WordPress development services cover the entire development spectrum."
             },
             {
-                "Que": "Is Laravel used for software development?",
-                "Ans": "Yes, Laravel is used for software development , specifically for building web-based applications . It is a web application framework built on PHP, and while its primary focus is on web development, Laravel can be used to create a variety of software solutions, especially when they involve a web-based interface or require APIs."
+                "Que": "Is WordPress used for software development?",
+                "Ans": "Yes. WordPress is a Content Management System, which means it's a software application that lets you create digital content and publish it online."
             },
             {
-                "Que": "What big companies use Laravel ?",
-                "Ans": "9GAG, BBC, Alison, TourRadar, Razorpay and many more"
+                "Que": "Which WordPress plugins should I install on my website?",
+                "Ans": "There are over 49,000 plugins accessible in the free WordPress plugins, maybe it has increased by the time you read this. Not all of them are excellent, which raises the question of which WordPress plugins you should use on your site."
+            },
+            {
+                "Que": "What big companies use WordPress?",
+                "Ans": "SonyMusic, Techcrunch, Mercedes-Benz, Ted Blog, University of Washington and many more"
             }
         ]
     }

@@ -48,6 +48,8 @@ public class DataInitializer implements CommandLineRunner {
         UserAccount admin = createUser("Admin User", "admin@bugtrackpro.local", "Admin@123", Role.ADMIN);
         UserAccount manager = createUser("Priya Manager", "manager@bugtrackpro.local", "Manager@123", Role.PROJECT_MANAGER);
         UserAccount developer = createUser("Rahul Developer", "developer@bugtrackpro.local", "Developer@123", Role.DEVELOPER);
+        UserAccount developer_2 = createUser("Yash Developer", "developer_2@bugtrackpro.local", "Developer@123", Role.DEVELOPER);
+        UserAccount developer_3 = createUser("Raj Developer", "developer_3@bugtrackpro.local", "Developer@123", Role.DEVELOPER);
         UserAccount tester = createUser("Ananya Tester", "tester@bugtrackpro.local", "Tester@123", Role.TESTER);
 
         Project project = new Project();

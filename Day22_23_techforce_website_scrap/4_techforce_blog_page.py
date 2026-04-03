@@ -129,7 +129,7 @@ def save_to_json(data: list):
 def main() -> None:
     print("hello")
 
-    blogs_data = fetch_blogs(2)
+    blogs_data = fetch_blogs()
     save_to_json(blogs_data)
 
 # -------------------------------------------------------------------

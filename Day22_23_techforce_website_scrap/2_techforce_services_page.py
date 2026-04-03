@@ -74,7 +74,6 @@ def fetch_each_service_page(link):
 
     try:
         print("-"*50)
-        # print(f"Scrapping {link}...")
         driver = setup_driver(link)
         wait = get_wait(driver)
         time.sleep(5)
@@ -116,7 +115,7 @@ def fetch_each_service_page(link):
                 "Que":question,
                 "Ans":answer.replace("\n","").strip()
             })
-
+        
         print(f"{title} Scrapped Succesfully")
         print("-"*50)
         driver.quit()
@@ -154,7 +153,7 @@ def main() -> None:
 
     links = fetch_services_links(driver, wait)
 
-    for link in links[:3]:
+    for link in links[3:10]:
         services_data.append(fetch_each_service_page(link))
     
     save_to_json(services_data)
