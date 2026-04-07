@@ -57,7 +57,7 @@ public class BugService {
     @Transactional
     public BugTicket createBug(BugForm form, MultipartFile[] attachments, UserAccount reporter) {
         Project project = projectService.getProjectForUser(form.getProjectId(), reporter);
-
+        
         BugTicket bug = new BugTicket();
         bug.setTicketId("PENDING");
         bug.setProject(project);

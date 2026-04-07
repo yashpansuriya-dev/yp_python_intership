@@ -1,0 +1,10 @@
+import os
+
+# Loop from Day27 to Day40
+for i in range(27, 30):
+    folder_name = f"Day{i}"
+    
+    # Create folder (ignore if already exists)
+    os.makedirs(folder_name, exist_ok=True)
+
+print("Folders created successfully!")
