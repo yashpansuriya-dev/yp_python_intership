@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+// DTO is used to avoid exposing internal entity structure and 
+// to send only required data
 @Getter
 @Setter
 public class BugForm {

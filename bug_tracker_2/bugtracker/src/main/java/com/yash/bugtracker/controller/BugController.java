@@ -47,6 +47,7 @@ public class BugController {
     private final CurrentUserService currentUserService;
     private final ActivityLogRepository activityLogRepository;
 
+    // it lists all bugs 
     @GetMapping
     public String listBugs(@ModelAttribute("criteria") BugSearchCriteria criteria, Model model) {
         UserAccount currentUser = currentUserService.getCurrentUser();
@@ -59,6 +60,7 @@ public class BugController {
         return "bugs/list";
     }
 
+    // creating new bug -> sends empty form object to form.html and it fills it 
     @GetMapping("/new")
     public String newBug(Model model) {
         if (!model.containsAttribute("bugForm")) {
@@ -68,6 +70,7 @@ public class BugController {
         return "bugs/form";
     }
 
+    // validates form data and sent it to service
     @PostMapping
     public String createBug(
             @Valid @ModelAttribute("bugForm") BugForm bugForm,
@@ -86,6 +89,7 @@ public class BugController {
         return "redirect:/bugs/" + createdBug.getId();
     }
 
+    // detailed info of bug
     @GetMapping("/{id}")
     public String bugDetail(@PathVariable Long id, Model model) {
         UserAccount currentUser = currentUserService.getCurrentUser();

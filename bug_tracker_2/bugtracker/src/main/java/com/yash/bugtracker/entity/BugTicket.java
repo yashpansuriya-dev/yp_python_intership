@@ -18,6 +18,8 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
+// entity represents database tables
+
 @Getter
 @Setter
 @Entity

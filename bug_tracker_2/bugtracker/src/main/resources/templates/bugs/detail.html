@@ -205,10 +205,10 @@
             </section>
 
             <section class="content-card" th:if="${canArchive}">
-                <h3 class="mb-3">Archive Bug</h3>
-                <p class="text-secondary">The SRS requires archive instead of permanent deletion for safety.</p>
+                <h3 class="mb-3">Close Bug</h3>
+                <p class="text-secondary"> Mark this ticket as closed if it's resolved or no longer relevant .</p>
                 <form th:action="@{|/bugs/${bug.id}/archive|}" method="post">
-                    <button class="btn btn-outline-danger" type="submit">Archive Ticket</button>
+                    <button class="btn btn-outline-danger" type="submit">Closing Ticket</button>
                 </form>
             </section>
         </div>

@@ -57,13 +57,33 @@
                 </select>
                 <div class="text-danger small mt-1" th:errors="*{managerId}"></div>
             </div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <label class="form-label">Team Members</label>
                 <select class="form-select" th:field="*{memberIds}" multiple size="8">
                     <option th:each="member : ${memberOptions}" th:value="${member.id}" th:text="${member.fullName + ' - ' + member.role.label}"></option>
                 </select>
                 <div class="form-text">Project manager is automatically included in the team.</div>
-            </div>
+            </div> -->
+            <div class="col-md-6">
+    <label class="form-label">Team Members</label>
+
+    <div class="border rounded p-2" style="max-height: 200px; overflow-y: auto;">
+        <div th:each="member : ${memberOptions}" class="form-check">
+            <input class="form-check-input"
+                   type="checkbox"
+                   th:field="*{memberIds}"
+                   th:value="${member.id}"
+                   id="member-${member.id}">
+
+            <label class="form-check-label"
+                   th:for="'member-' + ${member.id}"
+                   th:text="${member.fullName + ' - ' + member.role.label}">
+            </label>
+        </div>
+    </div>
+
+    <div class="form-text">Project manager is automatically included in the team.</div>
+</div>
             <div class="col-12 d-flex gap-3 flex-wrap">
                 <button class="btn btn-primary" type="submit" th:text="${formMode == 'create' ? 'Create Project' : 'Save Project'}">Save</button>
                 <a class="btn btn-outline-secondary" th:href="@{/projects}">Back to Projects</a>

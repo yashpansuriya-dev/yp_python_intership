@@ -7,6 +7,8 @@ async def main():
         input_data = await Actor.get_input() or {}
         start_urls = input_data.get("start_urls", ["https://books.toscrape.com/"])
 
+
+
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
             page = await browser.new_page()

@@ -5,6 +5,8 @@ import com.yash.bugtracker.entity.BugTicket;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+// used to manage activity logs related to bug tickets and fetch history data from database.”
+
 public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> {
 
     List<ActivityLog> findByBugOrderByCreatedAtDesc(BugTicket bug);
