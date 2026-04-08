@@ -44,6 +44,7 @@ public class BugService {
     private final ActivityService activityService;
     private final FileStorageService fileStorageService;
 
+    // search bugs based on filters
     @Transactional(readOnly = true)
     public List<BugTicket> searchBugs(BugSearchCriteria criteria, UserAccount user) {
         Specification<BugTicket> specification = Specification
@@ -54,6 +55,7 @@ public class BugService {
         return bugTicketRepository.findAll(specification, resolveSort(criteria.getSortBy()));
     }
 
+    // create bugs
     @Transactional
     public BugTicket createBug(BugForm form, MultipartFile[] attachments, UserAccount reporter) {
         Project project = projectService.getProjectForUser(form.getProjectId(), reporter);
@@ -80,7 +82,6 @@ public class BugService {
 
         activityService.log(savedBug, reporter, ActivityAction.BUG_CREATED,
                 "Created bug " + savedBug.getTicketId() + " for project " + project.getName() + ".");
-
         return savedBug;
     }
 

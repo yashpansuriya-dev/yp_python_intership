@@ -13,6 +13,7 @@ public class ReportService {
 
     private final DashboardService dashboardService;
 
+    // build csv file for all project summary
     public String buildProjectSummaryCsv(UserAccount user) {
         DashboardData dashboardData = dashboardService.getDashboardData(user);
         StringBuilder builder = new StringBuilder();
@@ -29,6 +30,7 @@ public class ReportService {
         return builder.toString();
     }
 
+    // builds developer summary
     public String buildDeveloperSummaryCsv(UserAccount user) {
         DashboardData dashboardData = dashboardService.getDashboardData(user);
         StringBuilder builder = new StringBuilder();

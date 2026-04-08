@@ -15,6 +15,7 @@ public class ActivityService {
 
     private final ActivityLogRepository activityLogRepository;
 
+    // function for logs activity
     @Transactional
     public void log(BugTicket bug, UserAccount actor, ActivityAction action, String description) {
         ActivityLog activityLog = new ActivityLog();
