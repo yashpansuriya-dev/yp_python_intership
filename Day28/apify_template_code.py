@@ -1,37 +1,41 @@
-async with Actor:
-        # Retrieve the Actor input, and use default values if not provided.
-        actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
-        max_depth = actor_input.get('max_depth', 1)
+from __future__ import annotations
+from urllib.parse import urljoin
+from apify import Actor, Request
+from playwright.async_api import async_playwright
 
-        # Exit if no start URLs are provided.
-        if not start_urls:
-            Actor.log.info('No start URLs specified in Actor input, exiting...')
+async def main() -> None:
+
+    async with Actor:
+        # retruve actor's input
+        actor_input = await Actor.get_input() or {}
+        job_role = actor_input.get('job_role', "Java Developer")
+        max_depth = actor_input.get('max_depth', 1)
+        role_query = job_role.replace(" ", "%20")
+        start_url = f"https://in.linkedin.com/jobs/search?keywords={role_query}"
+
+        # if job role is empty
+        if not job_role:
+            Actor.log.info('No Job role specified in Actor input, exiting...')
             await Actor.exit()
 
-        # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
 
         # Enqueue the start URLs with an initial crawl depth of 0.
-        for start_url in start_urls:
-            url = start_url.get('url')
-            Actor.log.info(f'Enqueuing {url} ...')
-            new_request = Request.from_url(url, user_data={'depth': 0})
-            await request_queue.add_request(new_request)
-
         Actor.log.info('Launching Playwright...')
 
-        # Launch Playwright and open a new browser context.
+        start_url = f"https://in.linkedin.com/jobs/search?keywords={role_query}"
+        new_request = Request.from_url(start_url, user_data={'depth': 0})
+        await request_queue.add_request(new_request)
+   
+        total_jobs = actor_input.get('total_jobs_to_scrape',20)
+        count = 0
+        stop_scrapping = False
+
         async with async_playwright() as playwright:
-            # Configure the browser to launch in headless mode as per Actor configuration.
-            browser = await playwright.chromium.launch(
-                headless=Actor.configuration.headless,
-                args=['--disable-gpu'],
-            )
+            browser = await playwright.chromium.launch(headless = False)
             context = await browser.new_context()
 
-            # Process the URLs from the request queue.
-            while request := await request_queue.fetch_next_request():
+            while not stop_scrapping and (request := await request_queue.fetch_next_request()):
                 url = request.url
 
                 if not isinstance(request.user_data['depth'], (str, int)):
@@ -45,23 +49,17 @@ async with Actor:
                     page = await context.new_page()
                     await page.goto(url)
 
-                    # If the current depth is less than max_depth, find nested links
-                    # and enqueue them.
-                    if depth < max_depth:
-                        for link in await page.locator('a').all():
-                            link_href = await link.get_attribute('href')
-                            link_url = urljoin(url, link_href)
+                    if depth == 0:
+                        jobs_links = await page.locator(".base-card__full-link").all()
 
-                            if link_url.startswith(('http://', 'https://')):
-                                Actor.log.info(f'Enqueuing {link_url} ...')
-                                new_request = Request.from_url(
-                                    link_url,
-                                    user_data={'depth': depth + 1},
-                                )
-                                await request_queue.add_request(new_request)
 
-                    # Extract the desired data.
-                    data = {
-                        'url': url,
-                        'title': await page.title(),
-                    }
+                    elif depth == 1:
+                        job_role = await page.locator("h1.topcard__title").inner_text()
+
+                  
+                except Exception:
+                    Actor.log.exception(f'Cannot extract data from {url}.')
+
+                finally:
+                    await page.close()
+                    await request_queue.mark_request_as_handled(request)

@@ -7,18 +7,30 @@ https://docs.apify.com/sdk/python
 """
 
 from __future__ import annotations
+
 from urllib.parse import urljoin
+
 from apify import Actor, Request
 from playwright.async_api import async_playwright
 
+# Note: To run this Actor locally, ensure that Playwright browsers are installed.
+# Run `playwright install --with-deps` in the Actor's virtual environment to install them.
+# When running on the Apify platform, these dependencies are already included
+# in the Actor's Docker image.
+
 
 async def main() -> None:
+    """Define a main entry point for the Apify Actor.
 
+    This coroutine is executed using `asyncio.run()`, so it must remain an asynchronous function for proper execution.
+    Asynchronous execution is required for communication with Apify platform, and it also enhances performance in
+    the field of web scraping significantly.
+    """
     # Enter the context of the Actor.
     async with Actor:
         # Retrieve the Actor input, and use default values if not provided.
         actor_input = await Actor.get_input() or {}
-        start_urls = actor_input.get('start_urls', [{'url': 'https://books.toscrape.com/'}])
+        start_urls = actor_input.get('start_urls', [{'url': 'https://apify.com'}])
         max_depth = actor_input.get('max_depth', 1)
 
         # Exit if no start URLs are provided.
@@ -29,23 +41,10 @@ async def main() -> None:
         # Open the default request queue for handling URLs to be processed.
         request_queue = await Actor.open_request_queue()
 
-        for item in start_urls:
-            url = item["url"]
-            new_request = Request.from_url(url,user_data={"depth": 0})
-            await request_queue.add_request(new_request)
-
         # Enqueue the start URLs with an initial crawl depth of 0.
-        max_page = actor_input.get('max_pages_to_scrape',5)
-        total_books = actor_input.get('total_books_to_scrape',20)
-        count = 0
-        stop_scrapping = False
-
-        Actor.log.info(f"scraping up to {max_page} Pages...")
-        Actor.log.info(f"scraping total {total_books} Books...")
-
-
-        for i in range(2,max_page+1):
-            url = f"https://books.toscrape.com/catalogue/page-{i}.html"
+        for start_url in start_urls:
+            url = start_url.get('url')
+            Actor.log.info(f'Enqueuing {url} ...')
             new_request = Request.from_url(url, user_data={'depth': 0})
             await request_queue.add_request(new_request)
 
@@ -61,7 +60,7 @@ async def main() -> None:
             context = await browser.new_context()
 
             # Process the URLs from the request queue.
-            while not stop_scrapping and (request := await request_queue.fetch_next_request()):
+            while request := await request_queue.fetch_next_request():
                 url = request.url
 
                 if not isinstance(request.user_data['depth'], (str, int)):
@@ -75,35 +74,30 @@ async def main() -> None:
                     page = await context.new_page()
                     await page.goto(url)
 
-                    if depth == 0:
-                    # 🔹 Listing page → extract product links
-                        books_links = await page.locator(".product_pod h3 a").all()
-
-                        for link in books_links:
+                    # If the current depth is less than max_depth, find nested links
+                    # and enqueue them.
+                    if depth < max_depth:
+                        for link in await page.locator('a').all():
                             link_href = await link.get_attribute('href')
                             link_url = urljoin(url, link_href)
 
-                            new_request = Request.from_url(
-                                link_url,
-                                user_data={'depth': 1}
-                            )
-                            await request_queue.add_request(new_request)
+                            if link_url.startswith(('http://', 'https://')):
+                                Actor.log.info(f'Enqueuing {link_url} ...')
+                                new_request = Request.from_url(
+                                    link_url,
+                                    user_data={'depth': depth + 1},
+                                )
+                                await request_queue.add_request(new_request)
 
-                    elif depth == 1:
-                        # 🔹 Product page → extract data
-                        data = {
-                            'url': url,
-                            'title': await page.locator("h1").inner_text(),
-                            'price': await int(page.locator(".price_color").nth(0).inner_text().replace('£','')),
-                            'product_desc': await page.locator("#product_description + p").inner_text()
-                        }
-                        count += 1
-                        await Actor.push_data(data)
+                    # Extract the desired data.
+                    data = {
+                        'url': url,
+                        'title': await page.title(),
+                    }
 
-                        if (count >= total_books):
-                            stop_scrapping = True
-                            
-                  
+                    # Store the extracted data to the default dataset.
+                    await Actor.push_data(data)
+
                 except Exception:
                     Actor.log.exception(f'Cannot extract data from {url}.')
 

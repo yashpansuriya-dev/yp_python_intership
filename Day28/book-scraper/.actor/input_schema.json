@@ -13,13 +13,26 @@
                     "url": "https://apify.com"
                 }
             ],
-            "editor": "requestListSources"
+            "editor": "requestListSources",
+            "default": [
+                { "url": "https://books.toscrape.com/" }
+            ]
         },
-        "max_depth": {
-            "title": "Maximum depth",
+        "max_pages_to_scrape":{
+            "title":"Max Pages to Scrap",
             "type": "integer",
-            "description": "Depth to which to scrape to",
-            "default": 1
+            "description":"defines Maximum pages to scrape",
+            "minimum":1,
+            "maximum":50,
+            "default":40
+        },
+        "total_books_to_scrape":{
+            "title": "Total No. Books To scrape",
+            "type":"integer",
+            "description": "Defines Total no. of Books to want",
+            "default":50,
+            "minimum":1,
+            "maximum":1000
         }
     },
     "required": ["start_urls"]
