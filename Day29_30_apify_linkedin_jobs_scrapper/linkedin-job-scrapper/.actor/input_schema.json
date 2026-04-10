@@ -17,7 +17,7 @@
             "description": "Defines Total no. of Books to want",
             "default":5,
             "minimum":1,
-            "maximum":10
+            "maximum":50
         },
         "max_depth": {
             "title": "Maximum depth",
