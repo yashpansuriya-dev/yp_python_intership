@@ -1,3 +1,7 @@
+"""
+Remove-Item -Recurse -Force .git
+"""
+
 import os
 
 # Loop from Day27 to Day40

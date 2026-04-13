@@ -10,6 +10,7 @@ from __future__ import annotations
 from urllib.parse import urljoin
 from apify import Actor, Request
 from playwright.async_api import async_playwright
+import asyncio
 
 
 async def main() -> None:
@@ -90,19 +91,29 @@ async def main() -> None:
 
                     elif depth == 1:
                         # 🔹 Product page → extract data
+                        # price_text = await page.locator(".price_color").nth(0).inner_text(),
+
+                        # data = {
+                        #     'url': url,
+                        #     'title': await page.locator("h1").inner_text(),
+                        #     'price' : int(price_text.replace('£', '')),
+                        #     'product_desc': await page.locator("#product_description + p").inner_text()
+                        # }
+                        price_text = await page.locator(".price_color").nth(0).inner_text()
+
                         data = {
                             'url': url,
                             'title': await page.locator("h1").inner_text(),
-                            'price': await int(page.locator(".price_color").nth(0).inner_text().replace('£','')),
+                            'price': float(price_text.replace('£', '')),  # ✅ use float
                             'product_desc': await page.locator("#product_description + p").inner_text()
                         }
                         count += 1
+                        print(data)
                         await Actor.push_data(data)
 
                         if (count >= total_books):
                             stop_scrapping = True
                             
-                  
                 except Exception:
                     Actor.log.exception(f'Cannot extract data from {url}.')
 

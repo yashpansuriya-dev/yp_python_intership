@@ -1,0 +1,15 @@
+{
+  "unique_key": "https://books.toscrape.com/catalogue/the-art-forger_930/index.html",
+  "url": "https://books.toscrape.com/catalogue/the-art-forger_930/index.html",
+  "method": "GET",
+  "payload": null,
+  "headers": {},
+  "user_data": {
+    "__crawlee": {},
+    "depth": 1
+  },
+  "retry_count": 0,
+  "no_retry": false,
+  "loaded_url": null,
+  "handled_at": null
+}

@@ -1,0 +1,11 @@
+{
+  "id": "ctOsVNKuH68UxiV1g",
+  "name": null,
+  "accessed_at": "2026-04-13 08:51:43.380829+00:00",
+  "created_at": "2026-04-13 08:51:17.815323+00:00",
+  "modified_at": "2026-04-13 08:51:43.380829+00:00",
+  "had_multiple_clients": false,
+  "handled_request_count": 25,
+  "pending_request_count": 80,
+  "total_request_count": 105
+}
