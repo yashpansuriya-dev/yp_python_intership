@@ -1,0 +1,92 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "BookMyShow Events Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+
+    "city_name": {
+      "title": "City Name",
+      "type": "string",
+      "editor": "textfield",
+      "description": "City (e.g., ahmedabad, mumbai)",
+      "default": "ahmedabad"
+    },
+
+    "total_events_to_scrape": {
+      "title": "Total Events",
+      "type": "integer",
+      "editor": "number",
+      "description": "Maximum number of events",
+      "default": 20,
+      "minimum": 1
+    },
+
+    "categories": {
+      "title": "Categories",
+      "type": "string",
+      "editor": "select",
+      "description": "Enter values like: workshops , comedy-shows ,music-shows ,performances , kids ,meetups, exhibitions, award-shows",
+      "enum": ["workshops" , "comedy-shows" ,"music-shows" ,"performances" , "kids" ,"meetups", "exhibitions", "award-shows"]
+    },
+
+    "from_date": {
+        "title": "Start Date",
+        "type": "string",
+        "editor": "textfield",
+        "default":"YYYY-MM-DD",
+        "description": "Enter start date (YYYY-MM-DD). Example: 2026-04-20"
+    },
+
+    "to_date": {
+        "title": "End Date",
+        "type": "string",
+        "editor": "textfield",
+        "default":"YYYY-MM-DD",
+        "description": "Enter end date (YYYY-MM-DD). Example: 2026-04-25"
+    },
+
+    "languages": {
+      "title": "Languages",
+      "type": "array",
+      "editor": "stringList",
+      "description": "Enter values like: hindi, english, gujarati, ..",
+      "items": {
+        "type": "string"
+      }
+    },
+
+    "from_price": {
+        "title": "Minimum Price",
+        "type": "integer",
+        "editor": "number",
+        "description": "Starting Price"
+    },
+
+    "to_price": {
+        "title": "Maximum Price",
+        "type": "integer",
+        "editor": "number",
+        "description": "Maximum Price"
+    },
+
+    "use_apify_proxy": {
+      "title": "Use Apify Proxy",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Recommended for BookMyShow because the site often blocks direct scraper traffic.",
+      "default": true
+    },
+
+    "max_request_retries": {
+      "title": "Max Request Retries",
+      "type": "integer",
+      "editor": "number",
+      "description": "How many times to retry a blocked or failed page before giving up.",
+      "default": 3,
+      "minimum": 1
+    }
+  },
+
+  "required": ["city_name"]
+}

@@ -1,8 +1,11 @@
 package com.yash.bugtracker.entity;
 
+// enums
 import com.yash.bugtracker.enums.BugPriority;
 import com.yash.bugtracker.enums.BugSeverity;
 import com.yash.bugtracker.enums.BugStatus;
+
+// mapping java -> JPA
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,6 +18,8 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+// automatically creates getter and setter
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +27,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
+@Entity // marks class as database table
 @Table(
         name = "bug_tickets",
         indexes = {

@@ -4,4 +4,4 @@ vinaydeveloper@bugtrackpro.local -> vinayvinay
 hardiktester@bugtrackpro.local -> hardikhardik
 ravitester@bugtrackpro.local -> raviravi
 
-manager@bugtrackpro.local 
+manager@bugtrackpro.local
