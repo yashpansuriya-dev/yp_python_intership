@@ -1,20 +1,3 @@
-'''
-proxy_configuration = await Actor.create_proxy_configuration(
-    //DATACENTER OR RESIDENTIAL
-    groups=['DATACENTER'] 
-)
-
-proxy_info = await proxy_configuration.new_proxy_info()
-
-context = await browser.new_context(
-    proxy={
-        "server": proxy_info.url,
-        "username": proxy_info.username,
-        "password": proxy_info.password,
-    }
-)
-'''
-
 from __future__ import annotations
 from urllib.parse import urljoin
 from apify import Actor, Request
@@ -22,26 +5,37 @@ from playwright.async_api import async_playwright
 import asyncio
 import random
 
+async def get_field(page, icon_name):
+    try:
+        locator = page.locator(f"img[src*='{icon_name}']").first
+        card = locator.locator("xpath=ancestor::a")
+
+        text = await card.locator(".sc-7o7nez-0").inner_text()
+        return text
+
+    except:
+        return None
+
 async def main() -> None:
 
     async with Actor:
         actor_input = await Actor.get_input() or {}
-        job_role = actor_input.get('job_role', "Java Developer")
-        role_query = job_role.replace(" ", "%20")
+        city_name = actor_input.get('city_name', "Ahmedabad")
+        city_query = city_name.lower()
 
-        if not job_role:
-            Actor.log.info('No Job role specified, exiting...')
+        if not city_name:
+            Actor.log.info('No City name specified, exiting...')
             return
 
-        start_url = f"https://in.linkedin.com/jobs/search?keywords={role_query}"
+        start_url = f"https://in.bookmyshow.com/explore/events-{city_query}?cat=CT"
         request_queue = await Actor.open_request_queue()
 
         await request_queue.add_request(
             Request.from_url(start_url, user_data={'depth': 0})
         )
 
-        total_jobs = actor_input.get('total_jobs_to_scrape', 20)
-        count = 0
+        total_events = actor_input.get('total_events_to_scrape', 20)
+        count_events = 0
         stop_scrapping = False
 
         async with async_playwright() as playwright:
@@ -77,25 +71,14 @@ async def main() -> None:
                 page = await context.new_page()
 
                 try:
-                    # 🧪 DEBUG IP
-                    await page.goto("https://httpbin.org/ip", timeout=60000)
-                    ip = await page.text_content("body")
-                    print("Current IP:", ip)
-
-                    # 🌐 OPEN TARGET
                     await page.goto(url, timeout=60000)
                     await asyncio.sleep(random.uniform(2, 4))
 
-                    try:
-                        await page.locator("button[aria-label='Dismiss']").first.click(timeout=2000)
-                    except:
-                        pass
-
                     if depth == 0:
-                        jobs_links = await page.locator(".base-card__full-link").all()
+                        events_links = await page.locator(".sc-133848s-11.sc-1ljcxl3-1").all()
 
-                        for job in jobs_links:
-                            link_href = await job.get_attribute('href')
+                        for event in events_links:
+                            link_href = await event.get_attribute('href')
 
                             if link_href:
                                 await request_queue.add_request(
@@ -103,25 +86,59 @@ async def main() -> None:
                                 )
 
                     elif depth == 1:
-                        job_role = await page.locator("h1.topcard__title").inner_text()
-                        company = await page.locator(".topcard__org-name-link").inner_text()
-                        location = await page.locator(".topcard__flavor--bullet").first.inner_text()
-                        apply_link = page.url
+                        title = await page.locator("h1.sc-7o7nez-0").inner_text()
 
-                        app_starting_date = await page.locator(".posted-time-ago__text").inner_text()
+                        date = await get_field(page, "calendar")
+                        time = await get_field(page, "time")
+                        duration = await get_field(page, "duration")
+                        age = await get_field(page, "age_limit")
+                        language = await get_field(page, "language")
+                        venue = await get_field(page, "location")
+                        genre = await get_field(page, "genre")
+
+                        # price
+                        price_locator = page.locator("span:has-text('₹')")
+
+                        if await price_locator.count() > 0:
+                            price = await price_locator.first.inner_text()
+                            price.replace("\u20b9", "₹")
+                        
+                        # how many interested
+                        interested_card = page.locator("div.sc-7o7nez-0", has_text="are interested")
+                        how_many_interested = await interested_card.inner_text()
+
+                        # About event
+                        about_section = page.locator("a.sc-133848s-11.sc-1ljcxl3-1")
+                        paragraphs = about_section.locator("p")
+                        texts = []
+                        for i in range(await paragraphs.count()):
+                            txt = await paragraphs.nth(i).inner_text()
+                            if txt.strip(): 
+                                texts.append(txt)
+
+                        about_text = "\n".join(texts)
+                        print(about_text)
 
                         data = {
-                            "job_role": job_role,
-                            "company": company,
-                            "location": location,
-                            "apply_link": apply_link,
-                            "application_started_date": app_starting_date,
+                            "title": title,
+                            "date": date,
+                            "time": time,
+                            "age": age,
+                            "duration": duration,
+                            "language": language,
+                            "venue": venue,
+                            "genre":genre,
+                            "price": price,
+                            "url":url,
+                            "How many interested":how_many_interested,
+                            "About the Event" : about_text
                         }
+                        # Actor.log.info(f"data----------------{data}")
 
-                        count += 1
+                        count_events += 1
                         await Actor.push_data(data)
 
-                        if count >= total_jobs:
+                        if count_events >= total_events:
                             stop_scrapping = True
 
                 except Exception as e:
