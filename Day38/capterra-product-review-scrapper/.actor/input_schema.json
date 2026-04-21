@@ -1,0 +1,71 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "BookMyShow Events Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "total_products_to_scrape": {
+      "title": "Total Products",
+      "type": "integer",
+      "editor": "number",
+      "description": "Maximum number of Products",
+      "default": 5,
+      "minimum": 1
+    },
+
+    "software_category": {
+      "title": "Software Category",
+      "type": "string",
+      "editor": "select",
+      "description": "Select from Our Software Categories",
+      "enum": [
+    "Artificial Intelligence",
+    "AI Code Generator",
+    "AI Detection",
+    "AI Image Generator",
+    "AI Marketing Tools",
+    "AI Sales Assistant",
+    "AI Video Generator",
+    "AI Writing Assistant",
+    "AIOps Platforms",
+    "Application Development",
+    "Attendance Tracking",
+    "Augmented Reality",
+    "Automated Testing",
+    "Banking Systems",
+    "Bug Tracking",
+    "Chatbot",
+    "Cloud Storage",
+    "Computer Security",
+    "Cybersecurity",
+    "Data Analysis",
+    "Data Management",
+    "Data Entry",
+    "Data Mining",
+    "Database",
+    "Deep Learning",
+    "DevOps",
+    "Game Development",
+    "Generative AI",
+    "IT Ticketing Systems",
+    "IT Management",
+    "Project Management",
+    "SEO",
+    "Web Scraping",
+    "Website Security",
+    "Website Builder",
+    "Machine Learning"
+    ]},
+
+
+    "use_apify_proxy": {
+      "title": "Use Apify Proxy",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Recommended for BookMyShow because the site often blocks direct scraper traffic.",
+      "default": true
+    }
+  },
+
+  "required": ["software_category"]
+}
