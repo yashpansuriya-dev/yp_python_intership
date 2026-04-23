@@ -12,7 +12,7 @@
       "default": 5,
       "minimum": 1
     },
-
+    
     "software_category": {
       "title": "Software Category",
       "type": "string",
@@ -61,9 +61,20 @@
       "title":"Maximum Cloudfare Retries",
       "description":"How much time you want to retires request if blocked",
       "type":"integer",
-      "editor":"number"
+      "editor":"number",
+      "default":4
+    },
+    "review_pages_per_product": {
+      "title": "Review Pages Per Product",
+      "description": "Number of review pages to scrape per product (25 reviews/page). Set to 100 for all reviews (max 2,500). Stops early if a product has fewer pages than this limit.",
+      "type": "integer",
+      "editor": "number",
+      "default": 10,
+      "minimum": 1,
+      "maximum": 100
     }
   },
+
 
   "required": ["software_category"]
 }

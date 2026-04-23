@@ -1,0 +1,43 @@
+{
+    "$schema": "https://apify.com/schemas/v1/input.ide.json",
+    "title": "Python Playwright Scraper",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "query":{
+            "title":"Enter Your Query",
+            "type":"string",
+            "editor":"textfield",
+            "default":"us",
+            "description": "Search Topics for news"
+        },
+        "fromDate": {
+            "title": "From Date",
+            "type": "string",
+            "description": "Fetch news from this date (YYYY-MM-DD)",
+            "editor": "date",
+            "default": "2026-04-20"
+        },
+        "toDate": {
+        "title": "To Date",
+        "type": "string",
+        "description": "Fetch news until this date (YYYY-MM-DD)",
+        "editor": "date"
+        },
+        "sortBy": {
+        "title": "Sort By",
+        "type": "string",
+        "description": "Sorting order",
+        "enum": ["relevancy", "popularity", "publishedAt"],
+        "default": "publishedAt"
+        },
+        "apiKey": {
+        "title": "NewsAPI Key",
+        "type": "string",
+        "description": "Your NewsAPI API key",
+        "editor": "textfield"
+        }
+    
+    },
+    "required": ["query","apiKey"]
+}

@@ -11,14 +11,12 @@ from playwright.async_api import async_playwright
 sys.stdout.reconfigure(encoding='utf-8')
 
 # ──────────────────────────────────────────────────────────────────────────────
-# STEALTH SCRIPT  — injected via add_init_script BEFORE every page navigation
+# STEALTH SCRIPT
 # ──────────────────────────────────────────────────────────────────────────────
 STEALTH_SCRIPT = """
 (() => {
-    // 1. Remove webdriver
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
 
-    // 2. Realistic plugins
     const pluginData = [
         { name: 'Chrome PDF Plugin',  filename: 'internal-pdf-viewer',             description: 'Portable Document Format' },
         { name: 'Chrome PDF Viewer',  filename: 'mhjfbmdgcfjbbpaeojofohoefgiehjai', description: '' },
@@ -37,22 +35,15 @@ STEALTH_SCRIPT = """
     Object.defineProperty(pluginArray, '__proto__', { value: PluginArray.prototype });
     Object.defineProperty(navigator, 'plugins', { get: () => pluginArray });
 
-    // 3. Languages
     Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
 
-    // 4. Chrome runtime object
     window.chrome = {
         app: { isInstalled: false },
-        runtime: {
-            connect:     () => {},
-            sendMessage: () => {},
-            id: 'nkbihfbeogaeaoehlefnkodbefgpgknn',
-        },
+        runtime: { connect: () => {}, sendMessage: () => {}, id: 'nkbihfbeogaeaoehlefnkodbefgpgknn' },
         loadTimes: () => ({}),
         csi: () => ({}),
     };
 
-    // 5. Permissions API
     const origQuery = window.navigator.permissions && window.navigator.permissions.query;
     if (origQuery) {
         window.navigator.permissions.__proto__.query = function(parameters) {
@@ -62,12 +53,10 @@ STEALTH_SCRIPT = """
         };
     }
 
-    // 6. Hardware / memory
     Object.defineProperty(navigator, 'hardwareConcurrency', { get: () => 8 });
     Object.defineProperty(navigator, 'deviceMemory',        { get: () => 8 });
     Object.defineProperty(navigator, 'platform',            { get: () => 'Win32' });
 
-    // 7. WebGL — spoof real GPU strings
     const getParam = WebGLRenderingContext.prototype.getParameter;
     WebGLRenderingContext.prototype.getParameter = function(param) {
         if (param === 37445) return 'Google Inc. (Intel)';
@@ -83,25 +72,21 @@ STEALTH_SCRIPT = """
         };
     }
 
-    // 8. window/screen dimensions — headless sets outerWidth to 0
     Object.defineProperty(window, 'outerWidth',  { get: () => window.innerWidth        });
     Object.defineProperty(window, 'outerHeight', { get: () => window.innerHeight + 80  });
     Object.defineProperty(screen, 'availWidth',  { get: () => window.screen.width      });
     Object.defineProperty(screen, 'availHeight', { get: () => window.screen.height - 40});
 
-    // 9. Connection
     Object.defineProperty(navigator, 'connection', {
         get: () => ({ rtt: 50, downlink: 10, effectiveType: '4g', saveData: false })
     });
 
-    // 10. MediaDevices
     if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
         navigator.mediaDevices.enumerateDevices = async () => [{
             deviceId: 'default', kind: 'audioinput', label: '', groupId: 'default'
         }];
     }
 
-    // 11. Remove automation props
     [
         '__webdriver_script_fn','__driver_evaluate','__webdriver_evaluate',
         '__selenium_evaluate','__fxdriver_evaluate','__driver_unwrapped',
@@ -113,7 +98,6 @@ STEALTH_SCRIPT = """
         try { Object.defineProperty(window, p, { get: () => undefined, set: () => {} }); } catch(e) {}
     });
 
-    // 12. iframe contentWindow — CF checks inside iframes
     const origIframe = HTMLIFrameElement.prototype.__lookupGetter__('contentWindow');
     if (origIframe) {
         Object.defineProperty(HTMLIFrameElement.prototype, 'contentWindow', {
@@ -187,7 +171,7 @@ async def wait_for_cloudflare(page, timeout_s=45) -> bool:
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Build hardened browser context
-# ────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────────
 UA_POOL = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
@@ -201,15 +185,15 @@ VIEWPORTS = [
     {"width": 1920, "height": 1080},
 ]
 
-async def make_context(browser):
+async def make_context(browser, proxy_info):
     vp = random.choice(VIEWPORTS)
     ua = random.choice(UA_POOL)
     context = await browser.new_context(
-        # proxy={
-        #     "server":   proxy_info.url,
-        #     "username": proxy_info.username,
-        #     "password": proxy_info.password,
-        # },
+        proxy={
+            "server":   proxy_info.url,
+            "username": proxy_info.username,
+            "password": proxy_info.password,
+        },
         user_agent=ua,
         viewport=vp,
         screen=vp,
@@ -237,35 +221,114 @@ async def make_context(browser):
     return context
 
 # ──────────────────────────────────────────────────────────────────────────────
+# Scrape reviews on a single page
+# Returns: (reviews_list, has_more)
+#   has_more = False → page had 0 reviews, stop paginating for this product
+# ──────────────────────────────────────────────────────────────────────────────
+async def scrape_review_page(page) -> tuple[list[dict], bool]:
+    reviews = []
+
+    await random_scroll(page)
+    await human_delay(1.5, 3)
+
+
+    container = page.locator('div[data-test-id="review-cards-container"]')
+    review_cards = container.locator("div.e1xzmg0z.c1ofrhif.typo-10")
+    reviews_count = await review_cards.count()
+
+    Actor.log.info(f"  Reviews on this page: {reviews_count}")
+
+    # 0 reviews = page doesn't exist (product has fewer pages than requested)
+    if reviews_count == 0:
+        return [], False
+
+    for i in range(reviews_count):
+        review = review_cards.nth(i)
+
+        try:
+            # 👤 AUTHOR INFO
+            author_card = review.locator("div.typo-10.text-neutral-90")
+            full_text = (await author_card.inner_text()).strip()
+            lines     = [l.strip() for l in full_text.split("\n") if l.strip()]
+
+            a_name     = lines[0]   # "Gunther C."
+            a_prof      = lines[1]   # "Software Engineer"
+            a_industry = lines[2]   # "Computer Software"
+            a_duration = lines[3]   # "Used the software for: 2+ years"
+
+            # 📝 TITLE
+            r_title = (await review.locator("h3").inner_text()).strip().replace('"', '')
+
+            # ⭐ RATING
+            r_stars = (await review.locator("span.sr2r3oj").nth(0).inner_text()).strip()
+
+            # 📅 DATEbb
+            r_date = (await review.locator("div.typo-0").inner_text()).strip()
+
+            # 📄 DESCRIPTION
+            desc_locator = review.locator("div.space-y-6 > p")
+            r_desc = (await desc_locator.inner_text()).strip() if await desc_locator.count() else ""
+
+            # 👍 PROS
+            pros_locator = review.locator("span:has-text('Pros') >> xpath=../following-sibling::p")
+            r_pros = (await pros_locator.inner_text()).strip() if await pros_locator.count() else ""
+
+            # 👎 CONS
+            cons_locator = review.locator("span:has-text('Cons') >> xpath=../following-sibling::p")
+            r_cons = (await cons_locator.inner_text()).strip() if await cons_locator.count() else ""
+
+            reviews.append({
+                "review_title": r_title,
+                "author_name": a_name,
+                "author_profession": a_prof,
+                "author_industry": a_industry,
+                "author_duratiion":a_duration,
+                "review_stars": r_stars,
+                "review_date": r_date,
+                "review_description": r_desc,
+                "review_pros": r_pros,
+                "review_cons": r_cons,
+            })
+
+        except Exception as e:
+            Actor.log.warning(f"Review {i} parse error: {e}")
+
+    return reviews, True
+
+
+# ──────────────────────────────────────────────────────────────────────────────
 # MAIN
 # ──────────────────────────────────────────────────────────────────────────────
 async def main() -> None:
     async with Actor:
-        actor_input    = await Actor.get_input() or {}
-        category_name  = actor_input.get('software_category', "website-security")
-        category_query = category_name.lower().replace(" ", "-")
-        start_url      = f"https://www.capterra.com/{category_query}-software/"
+        actor_input      = await Actor.get_input() or {}
+        category_name    = actor_input.get('software_category', "website-security")
+        category_query   = category_name.lower().replace(" ", "-")
+        start_url        = f"https://www.capterra.com/{category_query}-software/"
 
-        total_products = int(actor_input.get('total_products_to_scrape', 5))
-        max_retries    = int(actor_input.get('max_cf_retries', 4))
+        total_products   = int(actor_input.get('total_products_to_scrape', 5))
+        max_review_pages = int(actor_input.get('review_pages_per_product', 10))
+        max_retries      = int(actor_input.get('max_cf_retries', 4))
 
-        count_products = 0
-        stop_scrapping = False
+        # Enforce bounds — min 1, max 100
+        max_review_pages = max(1, min(100, max_review_pages))
+
+        count_products   = 0
+        stop_scrapping   = False
 
         request_queue = await Actor.open_request_queue(name=None)
         await request_queue.add_request(
             Request.from_url(start_url, user_data={'depth': 0, 'retries': 0})
         )
 
-        # country_code="US" ensures IPs match our timezone/locale/sec-ch-ua headers
-        # proxy_configuration = await Actor.create_proxy_configuration(
-            # groups=["RESIDENTIAL"],
-        #     country_code="US",
-        # )
+        proxy_configuration = await Actor.create_proxy_configuration(
+            groups=["RESIDENTIAL"],
+            country_code="US",
+        )
 
         async with async_playwright() as playwright:
             browser = await playwright.chromium.launch(
-                headless=True,
+                headless=False,
                 args=[
                     "--no-sandbox",
                     "--disable-setuid-sandbox",
@@ -279,7 +342,7 @@ async def main() -> None:
                     "--no-default-browser-check",
                     "--disable-extensions",
                     "--window-size=1920,1080",
-                    "--use-gl=swiftshader",   # fake GPU so WebGL fingerprint works
+                    "--use-gl=swiftshader",
                     "--enable-webgl",
                     "--enable-webgl2",
                     "--ignore-gpu-blocklist",
@@ -293,9 +356,8 @@ async def main() -> None:
 
                 Actor.log.info(f"→ {url}  depth={depth}  retry={retries}/{max_retries}")
 
-                # proxy_info = await proxy_configuration.new_proxy_info()
-                # context    = await make_context(browser, proxy_info)
-                context = await make_context(browser)
+                proxy_info = await proxy_configuration.new_proxy_info()
+                context    = await make_context(browser, proxy_info)
                 page       = await context.new_page()
 
                 try:
@@ -306,7 +368,7 @@ async def main() -> None:
 
                     if not cf_ok:
                         if retries < max_retries:
-                            wait_time = (2 ** retries) * 3   # 3s → 6s → 12s → 24s
+                            wait_time = (2 ** retries) * 3
                             Actor.log.warning(f"CF not cleared — retrying in {wait_time}s …")
                             await asyncio.sleep(wait_time)
                             await request_queue.add_request(
@@ -358,90 +420,101 @@ async def main() -> None:
                                 continue
                             if not href:
                                 continue
-                            product_url = urljoin(start_url, href)
+
+                            # Strip trailing slash then build /reviews/?page=1
+                            base_product_url = urljoin(start_url, href).rstrip("/")
+                            first_review_url = f"{base_product_url}/reviews/?page=1"
+
                             await request_queue.add_request(
-                                Request.from_url(product_url, user_data={'depth': 1, 'retries': 0})
+                                Request.from_url(
+                                    first_review_url,
+                                    user_data={
+                                        'depth':            1,
+                                        'retries':          0,
+                                        'current_page':     1,
+                                        'base_product_url': base_product_url,
+                                        'all_reviews':      [],
+                                        'product_title':    '',
+                                        'overview':         '',
+                                    }
+                                )
                             )
                             added += 1
-                            Actor.log.info(f"  Queued [{added}]: {product_url}")
+                            Actor.log.info(f"  Queued [{added}]: {first_review_url}")
 
                     # ══════════════════════════════════════════════════════
-                    # DEPTH 1 — product detail page
+                    # DEPTH 1 — review page (paginated)
                     # ══════════════════════════════════════════════════════
                     elif depth == 1:
-                        await page.wait_for_selector("h1", timeout=20_000)
+                        current_page     = int(request.user_data.get('current_page', 1))
+                        base_product_url = request.user_data.get('base_product_url', '')
+                        all_reviews      = request.user_data.get('all_reviews', [])
+                        product_title    = request.user_data.get('product_title', '')
+                        overview         = request.user_data.get('overview', '')
 
-                        title    = await page.locator("h1").first.inner_text()
-                        Actor.log.info(f"Product: {title}")
+                        Actor.log.info(f"  Review page {current_page}/{max_review_pages}")
 
-                        ov_loc   = page.locator("section#key-takeaways div.lg\\:w-7\\/12")
-                        overview = await ov_loc.inner_text() if await ov_loc.count() > 0 else ""
-
-                        await random_scroll(page)
-                        await human_delay(1.5, 3)
-
-                        reviews      = []
-                        review_cards = page.locator(
-                            "div.space-y-6 "
-                            "div.rounded-xl.border.border-neutral-40.bg-card"
-                            ".text-card-foreground.shadow-elevation-2.p-6"
-                        )
-                        reviews_count = await review_cards.count()
-                        Actor.log.info(f"Reviews: {reviews_count}")
-
-                        for i in range(reviews_count):
-                            review = review_cards.nth(i)
+                        # Grab title + overview only on page 1
+                        if current_page == 1:
                             try:
-                                ainfo      = review.locator("div.flex.justify-between.items-start div p")
-                                a_name     = await ainfo.nth(0).inner_text()
-                                a_prof     = await ainfo.nth(1).inner_text()
-                                a_industry = await ainfo.nth(2).inner_text()
-                            
-                                r_title = await review.locator("h3").inner_text()
-                                review_title = r_title.replace("\\" , " ")
-                                r_stars = await review.locator("span.text-typo-20.text-neutral-99").first.inner_text()
-                                r_date  = await review.locator("p.text-typo-0.text-neutral-90.mb-2").first.inner_text()
-
-                                dl     = review.locator("div.mb-4 p.text-typo-10.text-neutral-99")
-                                r_desc = await dl.first.inner_text() if await dl.count() > 0 else ""
-
-                                pl     = review.locator(
-                                    'div.flex.items-center.gap-2.mb-2:'
-                                    'has(span.text-typo-10.font-semibold.text-neutral-99:has-text("Pros")) '
-                                    '+ p.text-typo-20.text-neutral-90.mt-2'
-                                )
-                                r_pros = await pl.inner_text() if await pl.count() > 0 else ""
-
-                                cl     = review.locator(
-                                    'div.flex.items-center.gap-2.mb-2:'
-                                    'has(span.text-typo-10.font-semibold.text-neutral-99:has-text("Cons")) '
-                                    '+ p.text-typo-20.text-neutral-90.mt-2'
-                                )
-                                r_cons = await cl.inner_text() if await cl.count() > 0 else ""
-
-                                reviews.append({
-                                    "review_title":       review_title,
-                                    "author_name":        a_name,
-                                    "author_profession":  a_prof,
-                                    "author_industry":    a_industry,
-                                    "review_stars":       r_stars,
-                                    "review_date":        r_date,
-                                    "review_description": r_desc,
-                                    "review_pros":        r_pros,
-                                    "review_cons":        r_cons,
-                                })   
+                                await page.wait_for_selector("h1", timeout=20_000)
+                                product_title = " ".join((await page.locator("h1").first.inner_text()).split())
+                                ov_loc        = page.locator("section#key-takeaways div.lg\\:w-7\\/12")
+                                overview      = " ".join((await ov_loc.inner_text()).split()) if await ov_loc.count() > 0 else ""
+                                Actor.log.info(f"  Product: {product_title}")
                             except Exception as e:
-                                Actor.log.warning(f"Review {i} parse error: {e}")
-                                continue
+                                Actor.log.warning(f"  Could not get title/overview: {e}")
 
-                        await Actor.push_data({
-                            "title":    title,
-                            "overview": overview,
-                            "reviews":  reviews,
-                        })
-                        count_products += 1
-                        if count_products >= total_products:
-                            stop_scrapping = True
+                        # Scrape this page's reviews
+                        page_reviews, has_more = await scrape_review_page(page)
+                        all_reviews.extend(page_reviews)
+
+                        Actor.log.info(
+                            f"  Page {current_page}: +{len(page_reviews)} reviews "
+                            f"| total so far: {len(all_reviews)}"
+                        )
+
+                        next_page       = current_page + 1
+                        should_paginate = (
+                            has_more                        # this page had reviews
+                            and len(page_reviews) > 0       # safety double-check
+                            and next_page <= max_review_pages  # within user limit
+                        )
+
+                        if should_paginate:
+                            next_url = f"{base_product_url}/reviews/?page={next_page}"
+                            await request_queue.add_request(
+                                Request.from_url(
+                                    next_url,
+                                    user_data={
+                                        'depth':            1,
+                                        'retries':          0,
+                                        'current_page':     next_page,
+                                        'base_product_url': base_product_url,
+                                        'all_reviews':      all_reviews,
+                                        'product_title':    product_title,
+                                        'overview':         overview,
+                                    }
+                                ),
+                                forefront=True,  # finish this product before moving to next
+                            )
+                            Actor.log.info(f"  → Queued page {next_page}: {next_url}")
+
+                        else:
+                            # Done with this product — push all collected data
+                            reason = "no more reviews" if not has_more else f"page limit reached ({max_review_pages})"
+                            Actor.log.info(f"  ✓ Done ({reason}) — pushing {len(all_reviews)} total reviews.")
+
+                            await Actor.push_data({
+                                "title":                 product_title,
+                                # "overview":              overview,
+                                "total_reviews_scraped": len(all_reviews),
+                                "reviews":               all_reviews,
+                            })
+
+                            count_products += 1
+                            if count_products >= total_products:
+                                stop_scrapping = True
 
                 except Exception as e:
                     Actor.log.exception(f"Error on {url}: {e}")
