@@ -1,0 +1,12 @@
+{
+  "software_category": "Application Development",
+  "total_products_to_scrape": 2,
+  "review_pages_per_product": 1,
+  "max_cf_retries": 2,
+  "cf_wait_seconds": 150,
+  "headless": false,
+  "use_apify_proxy": true,
+  "proxy_groups": ["RESIDENTIAL"],
+  "proxy_country": "US",
+  "cloudflare_cookies": ""
+}

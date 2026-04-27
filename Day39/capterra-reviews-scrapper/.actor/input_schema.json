@@ -64,6 +64,20 @@
       "editor":"number",
       "default":4
     },
+    "headless": {
+      "title": "Headless Browser",
+      "description": "Run browser without opening a visible window. Keep false if Cloudflare blocks headless mode.",
+      "type": "boolean",
+      "editor": "checkbox",
+      "default": false
+    },
+    "use_stealth": {
+      "title": "Use Stealth Script",
+      "description": "Enable the older browser fingerprint overrides. Usually false works better for Capterra.",
+      "type": "boolean",
+      "editor": "checkbox",
+      "default": false
+    },
     "review_pages_per_product": {
       "title": "Review Pages Per Product",
       "description": "Number of review pages to scrape per product (25 reviews/page). Set to 100 for all reviews (max 2,500). Stops early if a product has fewer pages than this limit.",

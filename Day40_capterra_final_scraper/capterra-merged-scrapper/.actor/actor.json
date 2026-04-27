@@ -1,0 +1,18 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "capterra-merged-scrapper",
+  "title": "Capterra Products With Reviews Scraper",
+  "description": "Scrapes Capterra product cards and merges them with review pages.",
+  "version": "0.1",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "python-playwright"
+  },
+  "input": "./input_schema.json",
+  "output": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "dockerfile": "../Dockerfile"
+}

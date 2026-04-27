@@ -1,0 +1,16 @@
+{
+  "unique_key": "https://www.capterra.com/application-development-software/#retry-1-0.5764197423624343",
+  "url": "https://www.capterra.com/application-development-software/",
+  "method": "GET",
+  "payload": null,
+  "headers": {},
+  "user_data": {
+    "__crawlee": {},
+    "depth": 0,
+    "retries": 1
+  },
+  "retry_count": 0,
+  "no_retry": false,
+  "loaded_url": null,
+  "handled_at": "2026-04-27 10:28:58.938538+00:00"
+}

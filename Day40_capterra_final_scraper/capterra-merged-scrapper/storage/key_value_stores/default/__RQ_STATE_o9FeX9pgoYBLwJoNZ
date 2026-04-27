@@ -1,0 +1,17 @@
+{
+  "sequence_counter": 1,
+  "forefront_sequence_counter": 2,
+  "forefront_requests": {
+    "https://www.capterra.com/application-development-software/#retry-1-0.4948979603698437": 0,
+    "https://www.capterra.com/application-development-software/#retry-2-0.8083086317016019": 1
+  },
+  "regular_requests": {
+    "https://www.capterra.com/application-development-software": 0
+  },
+  "in_progress_requests": [],
+  "handled_requests": [
+    "https://www.capterra.com/application-development-software/#retry-1-0.4948979603698437",
+    "https://www.capterra.com/application-development-software",
+    "https://www.capterra.com/application-development-software/#retry-2-0.8083086317016019"
+  ]
+}

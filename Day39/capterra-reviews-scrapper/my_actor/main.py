@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import os
 import random
 import sys
 from urllib.parse import urljoin
@@ -12,7 +13,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 
 # ──────────────────────────────────────────────────────────────────────────────
 # STEALTH SCRIPT
-# ──────────────────────────────────────────────────────────────────────────────
+# ──────────────────────────────────────────────────────────────────────────
 STEALTH_SCRIPT = """
 (() => {
     Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
@@ -139,8 +140,9 @@ CF_TITLES = {
     "security check", "access denied",
 }
 
-async def wait_for_cloudflare(page, timeout_s=45) -> bool:
+async def wait_for_cloudflare(page, timeout_s=45, *, allow_manual=False) -> bool:
     deadline = asyncio.get_event_loop().time() + timeout_s
+    manual_notice_shown = False
     while asyncio.get_event_loop().time() < deadline:
         try:
             title = (await page.title()).lower().strip()
@@ -156,6 +158,12 @@ async def wait_for_cloudflare(page, timeout_s=45) -> bool:
             "div#cf-challenge-running"
         ).count()
         if captcha:
+            if allow_manual:
+                if not manual_notice_shown:
+                    Actor.log.warning("[CF] Manual checkbox detected. Click it in the opened browser; the actor will wait.")
+                    manual_notice_shown = True
+                await asyncio.sleep(2)
+                continue
             Actor.log.warning("[CF] CAPTCHA/Turnstile detected — will retry with new proxy.")
             return False
 
@@ -185,16 +193,9 @@ VIEWPORTS = [
     {"width": 1920, "height": 1080},
 ]
 
-async def make_context(browser):
+async def make_context(browser, *, use_stealth: bool = False):
     vp = random.choice(VIEWPORTS)
-    ua = random.choice(UA_POOL)
     context = await browser.new_context(
-        # proxy={
-        #     "server":   proxy_info.url,
-        #     "username": proxy_info.username,
-        #     "password": proxy_info.password,
-        # },
-        user_agent=ua,
         viewport=vp,
         screen=vp,
         locale="en-US",
@@ -202,23 +203,37 @@ async def make_context(browser):
         color_scheme="light",
         java_script_enabled=True,
         accept_downloads=False,
-        extra_http_headers={
-            "Accept":                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-            "Accept-Language":           "en-US,en;q=0.9",
-            "Accept-Encoding":           "gzip, deflate, br",
-            "Cache-Control":             "max-age=0",
-            "Upgrade-Insecure-Requests": "1",
-            "sec-ch-ua":                 '"Chromium";v="123", "Google Chrome";v="123", "Not-A.Brand";v="24"',
-            "sec-ch-ua-mobile":          "?0",
-            "sec-ch-ua-platform":        '"Windows"',
-            "sec-fetch-dest":            "document",
-            "sec-fetch-mode":            "navigate",
-            "sec-fetch-site":            "none",
-            "sec-fetch-user":            "?1",
-        },
     )
-    await context.add_init_script(STEALTH_SCRIPT)
+    if use_stealth:
+        await context.add_init_script(STEALTH_SCRIPT)
     return context
+
+
+async def launch_browser(playwright, *, headless: bool):
+    args = [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-blink-features=AutomationControlled",
+        "--window-size=1366,768",
+    ]
+
+    if os.name == "nt" and not headless:
+        try:
+            Actor.log.info("Launching installed Google Chrome")
+            return await playwright.chromium.launch(
+                channel="chrome",
+                headless=headless,
+                args=args,
+            )
+        except Exception as e:
+            Actor.log.warning(f"Could not launch Chrome channel, falling back to bundled Chromium: {e}")
+
+    Actor.log.info("Launching bundled Chromium")
+    return await playwright.chromium.launch(
+        headless=headless,
+        args=args,
+    )
 
 # ──────────────────────────────────────────────────────────────────────────────
 # Scrape reviews on a single page
@@ -305,10 +320,13 @@ async def main() -> None:
         category_name    = actor_input.get('software_category', "website-security")
         category_query   = category_name.lower().replace(" ", "-")
         start_url        = f"https://www.capterra.com/{category_query}-software/"
+        # start_url = "https://www.g2.com/categories/conversational-intelligence"
 
         total_products   = int(actor_input.get('total_products_to_scrape', 5))
         max_review_pages = int(actor_input.get('review_pages_per_product', 10))
         max_retries      = int(actor_input.get('max_cf_retries', 4))
+        headless         = False
+        use_stealth      = bool(actor_input.get('use_stealth', False))
 
         # Enforce bounds — min 1, max 100
         max_review_pages = max(1, min(100, max_review_pages))
@@ -327,27 +345,8 @@ async def main() -> None:
         # )
 
         async with async_playwright() as playwright:
-            browser = await playwright.chromium.launch(
-                headless=False,
-                args=[
-                    "--no-sandbox",
-                    "--disable-setuid-sandbox",
-                    "--disable-dev-shm-usage",
-                    "--disable-blink-features=AutomationControlled",
-                    "--disable-features=IsolateOrigins,site-per-process",
-                    "--disable-infobars",
-                    "--disable-background-networking",
-                    "--disable-default-apps",
-                    "--no-first-run",
-                    "--no-default-browser-check",
-                    "--disable-extensions",
-                    "--window-size=1920,1080",
-                    "--use-gl=swiftshader",
-                    "--enable-webgl",
-                    "--enable-webgl2",
-                    "--ignore-gpu-blocklist",
-                ],
-            )
+            browser = await launch_browser(playwright, headless=False)
+            context = await make_context(browser, use_stealth=use_stealth)
 
             while not stop_scrapping and (request := await request_queue.fetch_next_request()):
                 url     = request.url
@@ -357,14 +356,17 @@ async def main() -> None:
                 Actor.log.info(f"→ {url}  depth={depth}  retry={retries}/{max_retries}")
 
                 # proxy_info = await proxy_configuration.new_proxy_info()
-                context    = await make_context(browser)
                 page       = await context.new_page()
 
                 try:
                     response = await page.goto(url, wait_until="domcontentloaded", timeout=60_000)
                     Actor.log.info(f"HTTP {response.status if response else '?'}")
 
-                    cf_ok = await wait_for_cloudflare(page, timeout_s=45)
+                    cf_ok = await wait_for_cloudflare(
+                        page,
+                        timeout_s=180 if not headless else 45,
+                        allow_manual=not headless,
+                    )
 
                     if not cf_ok:
                         if retries < max_retries:
@@ -372,7 +374,11 @@ async def main() -> None:
                             Actor.log.warning(f"CF not cleared — retrying in {wait_time}s …")
                             await asyncio.sleep(wait_time)
                             await request_queue.add_request(
-                                Request.from_url(url, user_data={'depth': depth, 'retries': retries + 1}),
+                                Request.from_url(
+                                    url,
+                                    unique_key=f"{url}#cf-retry-{retries + 1}-{random.random()}",
+                                    user_data={'depth': depth, 'retries': retries + 1},
+                                ),
                                 forefront=True,
                             )
                         else:
@@ -397,7 +403,11 @@ async def main() -> None:
                             Actor.log.warning("Product cards not found — re-queuing.")
                             if retries < max_retries:
                                 await request_queue.add_request(
-                                    Request.from_url(url, user_data={'depth': 0, 'retries': retries + 1}),
+                                    Request.from_url(
+                                        url,
+                                        unique_key=f"{url}#cards-retry-{retries + 1}-{random.random()}",
+                                        user_data={'depth': 0, 'retries': retries + 1},
+                                    ),
                                     forefront=True,
                                 )
                             continue
@@ -521,7 +531,7 @@ async def main() -> None:
 
                 finally:
                     await page.close()
-                    await context.close()
                     await request_queue.mark_request_as_handled(request)
 
+            await context.close()
             await browser.close()

@@ -1,0 +1,16 @@
+{
+  "sequence_counter": 3,
+  "forefront_sequence_counter": 0,
+  "forefront_requests": {},
+  "regular_requests": {
+    "https://www.capterra.com/application-development-software": 0,
+    "https://www.capterra.com/p/19319/jira/reviews?page=1": 1,
+    "https://www.capterra.com/p/169007/wix/reviews?page=1": 2
+  },
+  "in_progress_requests": [],
+  "handled_requests": [
+    "https://www.capterra.com/p/169007/wix/reviews?page=1",
+    "https://www.capterra.com/application-development-software",
+    "https://www.capterra.com/p/19319/jira/reviews?page=1"
+  ]
+}

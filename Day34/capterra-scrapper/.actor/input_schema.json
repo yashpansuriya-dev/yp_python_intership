@@ -55,16 +55,7 @@
     "Website Security",
     "Website Builder",
     "Machine Learning"
-    ]},
-
-
-    "use_apify_proxy": {
-      "title": "Use Apify Proxy",
-      "type": "boolean",
-      "editor": "checkbox",
-      "description": "Recommended for BookMyShow because the site often blocks direct scraper traffic.",
-      "default": true
-    }
+    ]}
   },
 
   "required": ["software_category"]

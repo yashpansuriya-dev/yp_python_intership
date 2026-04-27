@@ -1,0 +1,12 @@
+{
+  "status": "blocked_by_cloudflare",
+  "url": "https://www.capterra.com/application-development-software/",
+  "page_title": "",
+  "headless": false,
+  "proxy_groups": [
+    "RESIDENTIAL"
+  ],
+  "proxy_country": "US",
+  "message": "Cloudflare did not clear in Apify cloud. In Apify cloud, headless=false runs inside a virtual display and cannot click human checks. Use a stronger residential proxy or provide fresh manually solved cookies.",
+  "body_sample": ""
+}

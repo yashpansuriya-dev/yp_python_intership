@@ -1,0 +1,5 @@
+{
+  "$schema": "https://apify.com/schemas/v1/output_schema.json",
+  "actorSpecification": 1,
+  "title": "Output"
+}

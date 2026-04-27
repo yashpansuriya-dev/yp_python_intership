@@ -1,0 +1,8 @@
+{
+  "software_category": "Application Development",
+  "total_products_to_scrape": 1,
+  "review_pages_per_product": 1,
+  "max_cf_retries": 1,
+  "headless": false,
+  "use_apify_proxy": false
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "actorSpecification": 1,
+  "fields": {},
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": ["name", "url", "rating", "reviews_count", "total_reviews_scraped"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "name": { "label": "Name", "format": "text" },
+          "url": { "label": "URL", "format": "link" },
+          "rating": { "label": "Rating", "format": "text" },
+          "reviews_count": { "label": "Reviews Count", "format": "text" },
+          "total_reviews_scraped": { "label": "Reviews Scraped", "format": "number" }
+        }
+      }
+    }
+  }
+}

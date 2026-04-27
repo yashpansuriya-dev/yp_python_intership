@@ -12,6 +12,7 @@ from urllib.parse import quote_plus
 async def main() -> None:
     async with Actor:
         actor_input = await Actor.get_input() or {}
+        request_queue = await Actor.open_request_queue(name=None)
 
         category_name = actor_input.get('software_category', "Ahmedabad")
         category_query = category_name.lower()
@@ -29,7 +30,7 @@ async def main() -> None:
 
             # browser = await playwright.chromium.launch(headless=False)
             browser = await playwright.chromium.launch(
-            headless=False,
+            headless=True,
             args=[
                 "--no-sandbox",
                 "--disable-blink-features=AutomationControlled",
@@ -49,7 +50,7 @@ async def main() -> None:
                 #     "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
                 #     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
                 # ]),
-                # user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
             )
 
             page = await context.new_page()

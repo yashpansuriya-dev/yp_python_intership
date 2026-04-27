@@ -1,0 +1,15 @@
+{
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": ".Xww7LDi0XPTKZAJNNTmunlK9LNi.PXck4OE9v3NZAY-1777289223.6064517-1.0.1.1-6D4TN0eiBC0DvLvOvb.JEhIAejuAPL0.DJ3IvUJcYOrmBGq1ElQHUEszFqoIW04rNpEp2sSeAB1QLsK0Xx8tlDcI1BdDGIIfgaTFBdmNay1p5l0ilqoGGvu1UhDUgYcB",
+      "domain": ".capterra.com",
+      "path": "/",
+      "expires": 1777291024.976052,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": []
+}
