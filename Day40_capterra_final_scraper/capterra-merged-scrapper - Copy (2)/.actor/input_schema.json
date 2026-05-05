@@ -1,0 +1,48 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "Capterra Merged Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "software_category": {
+      "title": "Software Category",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Capterra category name, for example Application Development or Website Builder.",
+      "default": "Application Development"
+    },
+    "total_products_to_scrape": {
+      "title": "Total Products",
+      "type": "integer",
+      "editor": "number",
+      "description": "Maximum number of products to scrape.",
+      "default": 1,
+      "minimum": 1
+    },
+    "review_pages_per_product": {
+      "title": "Review Pages Per Product",
+      "type": "integer",
+      "editor": "number",
+      "description": "Number of review pages to scrape for each product. Each page usually has 25 reviews.",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 100
+    },
+    "max_cf_retries": {
+      "title": "Maximum Cloudflare Retries",
+      "type": "integer",
+      "editor": "number",
+      "description": "Retry count when Cloudflare does not clear.",
+      "default": 2,
+      "minimum": 0
+    },
+    "headless": {
+      "title": "Headless Browser",
+      "type": "boolean",
+      "editor": "checkbox",
+      "description": "Run without opening Chrome. Capterra may block this more often.",
+      "default": false
+    }
+  },
+  "required": ["software_category"]
+}

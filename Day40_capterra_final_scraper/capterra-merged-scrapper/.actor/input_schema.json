@@ -16,6 +16,14 @@
       "type": "integer",
       "editor": "number",
       "description": "Maximum number of products to scrape.",
+      "default": 10,
+      "minimum": 1
+    },
+    "start_category_page": {
+      "title": "Start Category Page",
+      "type": "integer",
+      "editor": "number",
+      "description": "Category listing page to start from. Use 5 to continue after the first 100 products.",
       "default": 1,
       "minimum": 1
     },
@@ -24,7 +32,7 @@
       "type": "integer",
       "editor": "number",
       "description": "Number of review pages to scrape for each product. Each page usually has 25 reviews.",
-      "default": 1,
+      "default": 2,
       "minimum": 1,
       "maximum": 100
     },

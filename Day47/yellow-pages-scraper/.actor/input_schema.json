@@ -1,0 +1,124 @@
+{
+  "title": "Yellow Pages Scraper",
+  "description": "Scrapes business listings from yellowpages.com with browser-based navigation and block detection.",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "search_query": {
+      "title": "Search Query",
+      "description": "Type of business to search for (e.g. 'pizza', 'plumber', 'dentist').",
+      "type": "string",
+      "default": "pizza",
+      "editor": "textfield"
+    },
+    "search_location": {
+      "title": "Search Location",
+      "description": "City and state to search in (e.g. 'Los Angeles, CA', 'New York, NY').",
+      "type": "string",
+      "default": "Los Angeles, CA",
+      "editor": "textfield"
+    },
+    "max_businesses": {
+      "title": "Max Businesses",
+      "description": "Maximum number of business records to collect. The scraper stops queueing new businesses after this limit.",
+      "type": "integer",
+      "default": 50,
+      "minimum": 1,
+      "maximum": 1000,
+      "editor": "number"
+    },
+    "headless": {
+      "title": "Headless Browser",
+      "description": "Run browser in headless mode. Set to false for local debugging (shows browser window).",
+      "type": "boolean",
+      "default": false,
+      "editor": "checkbox"
+    },
+    "use_apify_proxy": {
+      "title": "Use Apify Proxy",
+      "description": "Enable Apify Proxy for requests. Strongly recommended to avoid blocks.",
+      "type": "boolean",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "proxy_groups": {
+      "title": "Proxy Groups",
+      "description": "Apify Proxy groups to use. RESIDENTIAL is recommended for Yellow Pages.",
+      "type": "array",
+      "default": ["RESIDENTIAL"],
+      "editor": "json"
+    },
+    "proxy_country": {
+      "title": "Proxy Country",
+      "description": "Two-letter ISO country code for proxy exit node (e.g. 'US', 'GB').",
+      "type": "string",
+      "default": "US",
+      "editor": "textfield",
+      "minLength": 2,
+      "maxLength": 2
+    },
+    "max_cf_retries": {
+      "title": "Max Cloudflare Retries",
+      "description": "How many times to retry a URL if Cloudflare challenge does not clear.",
+      "type": "integer",
+      "default": 2,
+      "minimum": 0,
+      "maximum": 5,
+      "editor": "number"
+    },
+    "cf_wait_seconds": {
+      "title": "Cloudflare Wait Timeout (seconds)",
+      "description": "How long to wait for a Cloudflare challenge to clear before giving up.",
+      "type": "integer",
+      "default": 120,
+      "minimum": 45,
+      "maximum": 300,
+      "editor": "number"
+    },
+    "cf_refresh_attempts": {
+      "title": "Cloudflare Refresh Attempts",
+      "description": "How many times to refresh a blocked search/results page before retrying the request.",
+      "type": "integer",
+      "default": 3,
+      "minimum": 0,
+      "maximum": 8,
+      "editor": "number"
+    },
+    "use_homepage_search": {
+      "title": "Use Homepage Search",
+      "description": "Open yellowpages.com first, type the query/location into the search form, and submit it for the first results page.",
+      "type": "boolean",
+      "default": true,
+      "editor": "checkbox"
+    },
+    "page_gap_seconds": {
+      "title": "Page Gap Seconds",
+      "description": "Random wait range between navigations, as [minimum, maximum] seconds.",
+      "type": "array",
+      "default": [8, 18],
+      "editor": "json"
+    },
+    "session_id": {
+      "title": "Proxy Session ID",
+      "description": "Optional fixed proxy session ID for consistent IP across requests. Auto-generated if left blank.",
+      "type": "string",
+      "default": "",
+      "editor": "textfield"
+    },
+    "fingerprint_seed": {
+      "title": "Fingerprint Seed",
+      "description": "Optional seed string to deterministically pick a browser fingerprint. Auto-generated if blank.",
+      "type": "string",
+      "default": "",
+      "editor": "textfield"
+    },
+    "cloudflare_cookies": {
+      "title": "Cloudflare Cookies",
+      "description": "Optional JSON array of cookies from a manually solved Cloudflare challenge. Paste the full cookies array exported from your browser.",
+      "type": "array",
+      "default": [],
+      "editor": "json"
+    }
+  },
+  "required": ["search_query", "search_location"]
+}

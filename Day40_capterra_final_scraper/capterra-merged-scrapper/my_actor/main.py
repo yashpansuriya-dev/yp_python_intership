@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import asyncio
+import csv
 import os
 import random
 import sys
-from urllib.parse import urljoin
+from pathlib import Path
+from urllib.parse import urljoin, urlparse, urlunparse
 
 from apify import Actor, Request
 from playwright.async_api import async_playwright
@@ -27,6 +29,31 @@ VIEWPORTS = [
     {"width": 1366, "height": 768},
     {"width": 1440, "height": 900},
     {"width": 1920, "height": 1080},
+]
+
+PRODUCT_CSV_FIELDS = [
+    "product_index",
+    "software_category",
+    "product_id",
+    "name",
+    "url",
+    "rating",
+    "reviews_count",
+    "description",
+]
+
+REVIEW_CSV_FIELDS = [
+    "product_id",
+    "review_title",
+    "description",
+    "author",
+    "rating",
+    "date",
+    "pros",
+    "cons",
+    "author_profession",
+    "author_industry",
+    "author_duration",
 ]
 
 
@@ -235,27 +262,172 @@ async def scrape_review_page(page) -> tuple[list[dict], bool]:
     return reviews, True
 
 
+async def get_category_cards(page, category_page: int):
+    card_selector = 'div[id^="product-card-container-"]'
+    try:
+        await page.wait_for_selector(card_selector, timeout=5_000)
+    except Exception:
+        title = (await page.title()).lower()
+        body_text = (await optional_inner_text(page.locator("body"))).lower()
+        if "not found" in title or "not found" in body_text or "404" in title:
+            Actor.log.warning(f"Category page {category_page} not found; stopping category pagination.")
+        else:
+            Actor.log.warning(f"No product cards found on category page {category_page}; stopping category pagination.")
+        return page.locator(card_selector), 0
+
+    cards = page.locator(card_selector)
+    return cards, await cards.count()
+
+
+def slugify(value: str, *, fallback: str = "item") -> str:
+    safe_name = "".join(
+        char.lower() if char.isalnum() else "_" for char in value.strip()
+    ).strip("_")
+    return "_".join(part for part in safe_name.split("_") if part) or fallback
+
+
+def unique_product_id(product: dict, used_ids: set[str]) -> str:
+    product_id = slugify(product.get("name", ""), fallback="product")
+    unique_id = product_id
+    suffix = 2
+    while unique_id in used_ids:
+        unique_id = f"{product_id}_{suffix}"
+        suffix += 1
+    used_ids.add(unique_id)
+    return unique_id
+
+
+def category_page_url(start_url: str, page_number: int) -> str:
+    clean_url = urlunparse(urlparse(start_url)._replace(query=""))
+    if page_number <= 1:
+        return clean_url
+    return f"{clean_url}?page={page_number}"
+
+
+def read_existing_product_rows(products_csv_path: Path) -> list[dict]:
+    if not products_csv_path.exists():
+        return []
+
+    with products_csv_path.open(newline="", encoding="utf-8-sig") as csv_file:
+        rows = list(csv.DictReader(csv_file))
+
+    for index, row in enumerate(rows, start=1):
+        row["product_index"] = row.get("product_index") or str(index)
+    return rows
+
+
+def write_csv_outputs(
+    category_name: str,
+    products: list[dict],
+    *,
+    base_dir: Path | str = "csv_outputs",
+    batch_label: str = "",
+) -> Path:
+    output_dir = Path(base_dir) / slugify(category_name, fallback="software")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    category_slug = slugify(category_name, fallback="software")
+    products_csv_path = output_dir / "products.csv"
+    named_products_csv_path = output_dir / f"00_{category_slug}_products.csv"
+    batch_products_csv_path = (
+        output_dir / f"00_{category_slug}_products_{slugify(batch_label, fallback='batch')}.csv"
+        if batch_label
+        else None
+    )
+
+    product_rows = read_existing_product_rows(products_csv_path)
+    used_ids = {row.get("product_id", "") for row in product_rows if row.get("product_id")}
+    existing_urls = {row.get("url", "") for row in product_rows if row.get("url")}
+    review_files = []
+    batch_product_rows = []
+
+    for product in products:
+        if product.get("url", "") in existing_urls:
+            continue
+
+        product_id = unique_product_id(product, used_ids)
+        product_row = {
+            "product_index": str(len(product_rows) + 1),
+            "software_category": category_name,
+            "product_id": product_id,
+            "name": product.get("name", ""),
+            "url": product.get("url", ""),
+            "rating": product.get("rating", ""),
+            "reviews_count": product.get("reviews_count", ""),
+            "description": product.get("description", ""),
+        }
+        product_rows.append(product_row)
+        batch_product_rows.append(product_row)
+        existing_urls.add(product.get("url", ""))
+
+        review_path = output_dir / f"{product_id}_reviews.csv"
+        review_files.append((review_path, product_id, product.get("reviews", [])))
+
+    for product_csv_path in (products_csv_path, named_products_csv_path):
+        with product_csv_path.open("w", newline="", encoding="utf-8-sig") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=PRODUCT_CSV_FIELDS)
+            writer.writeheader()
+            writer.writerows(product_rows)
+
+    if batch_products_csv_path:
+        with batch_products_csv_path.open("w", newline="", encoding="utf-8-sig") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=PRODUCT_CSV_FIELDS)
+            writer.writeheader()
+            writer.writerows(batch_product_rows)
+
+    for review_path, product_id, reviews in review_files:
+        with review_path.open("w", newline="", encoding="utf-8-sig") as csv_file:
+            writer = csv.DictWriter(csv_file, fieldnames=REVIEW_CSV_FIELDS)
+            writer.writeheader()
+            for review in reviews:
+                writer.writerow({
+                    "product_id": product_id,
+                    "review_title": review.get("review_title", ""),
+                    "description": review.get("review_description", ""),
+                    "author": review.get("author_name", ""),
+                    "rating": review.get("review_stars", ""),
+                    "date": review.get("review_date", ""),
+                    "pros": review.get("review_pros", ""),
+                    "cons": review.get("review_cons", ""),
+                    "author_profession": review.get("author_profession", ""),
+                    "author_industry": review.get("author_industry", ""),
+                    "author_duration": review.get("author_duration", ""),
+                })
+
+    return output_dir
+
+
 async def main() -> None:
     async with Actor:
         actor_input = await Actor.get_input() or {}
         category_name = actor_input.get("software_category", "Application Development")
-        total_products = int(actor_input.get("total_products_to_scrape", 5))
-        max_review_pages = max(1, min(100, int(actor_input.get("review_pages_per_product", 1))))
+        total_products = int(actor_input.get("total_products_to_scrape", 10))
+        start_category_page = max(1, int(actor_input.get("start_category_page", 1)))
+        max_review_pages = max(1, min(100, int(actor_input.get("review_pages_per_product", 2))))
         max_cf_retries = int(actor_input.get("max_cf_retries", 2))
         headless = bool(actor_input.get("headless", False))
 
         category_query = category_name.lower().replace(" ", "-")
-        start_url = f"https://www.capterra.com/{category_query}-software/"
+        # start_url = f"https://www.capterra.com/{category_query}-software/"
+        first_category_url  = "https://www.yellowpages.com/search?search_terms=restaurants&geo_location_terms=Los+angeles"
+        # first_category_url = category_page_url(start_url, start_category_page)
 
         request_queue = await Actor.open_request_queue(name=None)
-        await request_queue.add_request(Request.from_url(start_url, user_data={"depth": 0, "retries": 0}))
+        await request_queue.add_request(
+            Request.from_url(
+                first_category_url,
+                user_data={"depth": 0, "retries": 0, "category_page": start_category_page},
+            )
+        )
 
         products_done = 0
+        products_queued = 0
+        queued_product_urls = set()
+        scraped_products = []
 
         async with async_playwright() as playwright:
             browser = await launch_browser(playwright, headless=headless)
             context = await make_context(browser)
-
+            
             while products_done < total_products and (request := await request_queue.fetch_next_request()):
                 page = await context.new_page()
                 url = request.url
@@ -280,14 +452,20 @@ async def main() -> None:
                     await human_mouse_wander(page)
 
                     if depth == 0:
-                        await page.wait_for_selector('div[id^="product-card-container-"]', timeout=30_000)
-                        cards = page.locator('div[id^="product-card-container-"]')
-                        count_cards = await cards.count()
-                        Actor.log.info(f"Cards on page: {count_cards}")
+                        category_page = int(request.user_data.get("category_page", 1))
+                        cards, count_cards = await get_category_cards(page, category_page)
+                        Actor.log.info(f"Cards on category page {category_page}: {count_cards}")
 
-                        for i in range(min(total_products, count_cards)):
+                        if count_cards == 0:
+                            continue
+
+                        for i in range(count_cards):
+                            if products_queued >= total_products:
+                                break
                             product = await scrape_product_card(cards.nth(i), start_url)
                             if not product:
+                                continue
+                            if product["url"] in queued_product_urls:
                                 continue
 
                             review_url = f"{product['url']}/reviews/?page=1"
@@ -303,7 +481,27 @@ async def main() -> None:
                                     },
                                 )
                             )
+                            queued_product_urls.add(product["url"])
+                            products_queued += 1
                             Actor.log.info(f"Queued reviews: {review_url}")
+
+                        if products_queued < total_products and count_cards > 0:
+                            next_category_page = category_page + 1
+                            next_category_url = category_page_url(start_url, next_category_page)
+                            await request_queue.add_request(
+                                Request.from_url(
+                                    next_category_url,
+                                    user_data={
+                                        "depth": 0,
+                                        "retries": 0,
+                                        "category_page": next_category_page,
+                                    },
+                                ),
+                                forefront=True,
+                            )
+                            Actor.log.info(
+                                f"Queued category page {next_category_page}: {next_category_url}"
+                            )
 
                     elif depth == 1:
                         current_page = int(request.user_data.get("current_page", 1))
@@ -336,11 +534,14 @@ async def main() -> None:
                                 forefront=True,
                             )
                         else:
-                            await Actor.push_data({
+                            product_data = {
                                 **product,
+                                "software_category": category_name,
                                 "total_reviews_scraped": len(all_reviews),
                                 "reviews": all_reviews,
-                            })
+                            }
+                            await Actor.push_data(product_data)
+                            scraped_products.append(product_data)
                             products_done += 1
                             Actor.log.info(f"Done {products_done}/{total_products}: {product.get('name')}")
 
@@ -353,3 +554,8 @@ async def main() -> None:
 
             await context.close()
             await browser.close()
+
+        if scraped_products:
+            batch_label = f"from_page_{start_category_page}_limit_{total_products}"
+            csv_path = write_csv_outputs(category_name, scraped_products, batch_label=batch_label)
+            Actor.log.info(f"Saved CSV files in: {csv_path}")
